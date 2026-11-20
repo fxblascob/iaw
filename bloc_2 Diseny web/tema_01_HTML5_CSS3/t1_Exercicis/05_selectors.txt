@@ -1,0 +1,5 @@
+Tots els elements d'una pàgina: *   
+Tots els paràgrafs d'una pàgina: p   
+Un encapçalat de nivell 2 amb id "especial": h2#especial (o simplement #especial)   
+Totes les negretes de classe "clase1": strong.clase1 (o b.clase1)   
+Totes les cursives contingudes en encapçalats de nivell 2: h2 em (o h2 i)   

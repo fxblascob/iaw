@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulari Validat HTML5</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 25px; }
+        .campo { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; }
+        input[type="text"], input[type="email"] { width: 350px; padding: 4px; }
+        .dni-input { width: 140px !important; }
+        .opciones-radio label { display: inline; margin-right: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Rellena tus datos</h1>
+
+    <form action="#" method="post" enctype="multipart/form-data">
+        <div class="campo">
+            <label for="nombre">Nombre *</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+
+        <div class="campo">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" name="apellidos">
+        </div>
+
+        <div class="campo">
+            <label for="email">E-mail *</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+            <label for="dni">DNI</label>
+            <input type="text" id="dni" name="dni" class="dni-input" 
+                   pattern="[0-9]{8}[A-Za-z]{1}" 
+                   title="8 números y una letra">
+        </div>
+
+        <div class="campo opciones-radio">
+            <label><strong>Idioma materno</strong></label>
+            <div><input type="radio" id="castellano" name="idioma" value="castellano"> <label for="castellano">Castellano</label></div>
+            <div><input type="radio" id="valenciano" name="idioma" value="valenciano"> <label for="valenciano">Valenciano</label></div>
+            <div><input type="radio" id="otros" name="idioma" value="otros"> <label for="otros">Otros</label></div>
+        </div>
+
+        <div class="campo">
+            <label for="foto">Subir mi foto</label>
+            <input type="file" id="foto" name="foto">
+        </div>
+
+        <div class="campo">
+            <input type="checkbox" id="permiso" name="permiso">
+            <label for="permiso" style="display:inline;">Permitir que otros puedan ver mis datos</label>
+        </div>
+
+        <div class="campo">
+            <input type="submit" value="Guardar cambios">
+            <input type="reset" value="Borrar los datos introducidos">
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autoavaluació Tema 1 - IAW (2n ASIR)</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: var(--bs-body-bg); }
+    .card-question { transition: all 0.2s ease-in-out; }
+    .card-question.card-correct { --bs-card-bg: var(--bs-success-bg-subtle); --bs-card-border-color: var(--bs-success-border-subtle); }
+    .card-question.card-incorrect { --bs-card-bg: var(--bs-danger-bg-subtle); --bs-card-border-color: var(--bs-danger-border-subtle); }
+    .feedback-box { display: none; font-size: 0.95rem; }
+  </style>
+</head>
+<body class="py-4">
+
+<div class="container" style="max-width: 860px;">
+  
+  <!-- Encabezado -->
+  <header class="card shadow-sm mb-4 border-0">
+    <div class="card-body p-4">
+      <span class="badge bg-primary mb-2">IAW · 2n ASIR</span>
+      <h1 class="h3 fw-bold text-dark">Tema 1: Aplicacions Web · Característiques, funcionament i arquitectura</h1>
+      <p class="text-muted mb-0">Test d'autoavaluació per a l'alumnat. Selecciona una resposta per a cada qüestió i prem el botó final per a corregir.</p>
+    </div>
+  </header>
+
+  <!-- Formulario del cuestionario -->
+  <form id="quizForm">
+
+    <!-- Pregunta 1 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="c">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">1. Quina tecnologia d'execució en client permet córrer codi compilat d'alt rendiment (com C, Rust o Go) dins del navegador a velocitats properes a les natives?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q1" id="q1a" value="a">
+          <label class="form-check-label" for="q1a">a) ECMAScript 2022 / Fetch API</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q1" id="q1b" value="b">
+          <label class="form-check-label" for="q1b">b) FastCGI Client Runtime</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q1" id="q1c" value="c">
+          <label class="form-check-label" for="q1c">c) WebAssembly (Wasm)</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q1" id="q1d" value="d">
+          <label class="form-check-label" for="q1d">d) Service Workers amb IndexedDB</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q1">
+          <strong>Explicació:</strong> WebAssembly és el format binari dissenyat per executar codi compilat de baix nivell al navegador amb rendiment natiu.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="b">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">2. En una arquitectura clàssica corporativa de 3 nivells (3-Tier), quins components integren el segon nivell (Nivell d'Aplicació)?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q2" id="q2a" value="a">
+          <label class="form-check-label" for="q2a">a) El navegador web client i els arxius de plantilla HTML5</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q2" id="q2b" value="b">
+          <label class="form-check-label" for="q2b">b) Servidors web (Apache, Nginx) i runtimes de backend (PHP-FPM, Gunicorn, Node.js)</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q2" id="q2c" value="c">
+          <label class="form-check-label" for="q2c">c) Motors de bases de dades com MariaDB, PostgreSQL o Redis</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q2" id="q2d" value="d">
+          <label class="form-check-label" for="q2d">d) Únicament servidors DNS i balancejadors d'alta disponibilitat</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q2">
+          <strong>Explicació:</strong> El nivell 1 és la presentació (client), el nivell 2 és l'aplicació/lògica (servidor web + backend), i el nivell 3 són les dades.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="c">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">3. Considera la següent URL: <code>https://server.ies.es:8443/app/items?order=desc#section2</code>. Quina part corresponent mai és tramesa pel navegador cap al servidor web?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q3" id="q3a" value="a">
+          <label class="form-check-label" for="q3a">a) El port explícit (<code>:8443</code>)</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q3" id="q3b" value="b">
+          <label class="form-check-label" for="q3b">b) La Query String (<code>?order=desc</code>)</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q3" id="q3c" value="c">
+          <label class="form-check-label" for="q3c">c) L'àncora o fragment (<code>#section2</code>)</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q3" id="q3d" value="d">
+          <label class="form-check-label" for="q3d">d) El camí jeràrquic o Path (<code>/app/items</code>)</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q3">
+          <strong>Explicació:</strong> El fragment (#) és gestionat exclusivament pel client/navegador per situar el document i mai s'envia a la capçalera de la petició HTTP.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="a">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">4. En un patró de disseny Model-Vista-Controlador (MVC), quina és la funció clau assignada al <em>Controlador</em>?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q4" id="q4a" value="a">
+          <label class="form-check-label" for="q4a">a) Interceptar la petició HTTP, validar paràmetres, invocar el model i escollir la vista</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q4" id="q4b" value="b">
+          <label class="form-check-label" for="q4b">b) Definir els esquemes SQL i les operacions CRUD a la base de dades</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q4" id="q4c" value="c">
+          <label class="form-check-label" for="q4c">c) Renderitzar i aplicar els fulls d'estil CSS3 al client</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q4" id="q4d" value="d">
+          <label class="form-check-label" for="q4d">d) Gestionar els certificats SSL/TLS i fer de proxy invers</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q4">
+          <strong>Explicació:</strong> El Controlador actua d'intermediari: rep el trànsit, demana informació a la lògica de negoci (Model) i selecciona la sortida (Vista).
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="b">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">5. Quin canvi estructural fa que el protocol HTTP/3 solucioni el problema de <em>Head-of-Line Blocking</em> present en capes de transport prèvies?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q5" id="q5a" value="a">
+          <label class="form-check-label" for="q5a">a) Imposa canonades (pipelining) rígides sobre el protocol TCP</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q5" id="q5b" value="b">
+          <label class="form-check-label" for="q5b">b) Substitueix TCP pel protocol de transport QUIC funcionant sobre UDP</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q5" id="q5c" value="c">
+          <label class="form-check-label" for="q5c">c) Desactiva el xifratge TLS per tal d'evitar demores d'inici de sessió</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q5" id="q5d" value="d">
+          <label class="form-check-label" for="q5d">d) Força a realitzar una connexió TCP individualitzada per a cada arxiu web</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q5">
+          <strong>Explicació:</strong> HTTP/3 utilitza QUIC sobre UDP; si es perd un paquet en un flux determinat, la resta de fluxos continuen sense quedar bloquejats a nivell de socket TCP.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="c">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">6. En un model d'arquitectura desacoblada amb Single Page Application (SPA) i API REST:</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q6" id="q6a" value="a">
+          <label class="form-check-label" for="q6a">a) El servidor web genera tot el codi HTML de cada pantalla abans d'enviar-lo</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q6" id="q6b" value="b">
+          <label class="form-check-label" for="q6b">b) El client no requereix JavaScript, ja que tot es processa mitjançant FastCGI</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q6" id="q6c" value="c">
+          <label class="form-check-label" for="q6c">c) El servidor transmet principalment dades en brut (JSON) i el navegador les dibuixa</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q6" id="q6d" value="d">
+          <label class="form-check-label" for="q6d">d) No és possible utilitzar servidors com Nginx com a punt d'entrada</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q6">
+          <strong>Explicació:</strong> Les SPA descarreguen fitxers estàtics (JS/CSS) i consumeixen APIs que retornen exclusivament dades (JSON), renderitzant l'arbre DOM directament en el client.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="b">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">7. Què distingeix a una PWA (Progressive Web App) d'una aplicació web convencional estàndard?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q7" id="q7a" value="a">
+          <label class="form-check-label" for="q7a">a) Que requereix ser descarregada i instal·lada obligatòriament des de fitxers binaris .exe/.deb</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q7" id="q7b" value="b">
+          <label class="form-check-label" for="q7b">b) Ús de Service Workers i emmagatzematge local per a permetre operació fora de línia i notificacions push</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q7" id="q7c" value="c">
+          <label class="form-check-label" for="q7c">c) Que no empra protocols web com HTTPS</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q7" id="q7d" value="d">
+          <label class="form-check-label" for="q7d">d) Que s'executa exclusivament sobre la xarxa P2P de BitTorrent</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q7">
+          <strong>Explicació:</strong> Les PWAs combinen l'estàndard web amb capacitats pròpies d'apps natives (caché avançat, accés hardware, instal·lació d'icona) mitjançant Service Workers.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 8 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="d">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">8. Des del punt de vista de l'administració de sistemes (ASIR), quin és un dels principals avantatges operatius d'una aplicació web corporativa?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q8" id="q8a" value="a">
+          <label class="form-check-label" for="q8a">a) Accés natiu il·limitat i directe a la memòria gràfica (GPU) de cada equip</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q8" id="q8b" value="b">
+          <label class="form-check-label" for="q8b">b) Absència total de riscos de seguretat en estar exposada a Internet</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q8" id="q8c" value="c">
+          <label class="form-check-label" for="q8c">c) Independència absoluta de l'estat i disponibilitat de la xarxa</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q8" id="q8d" value="d">
+          <label class="form-check-label" for="q8d">d) Manteniment i actualització centralitzats al servidor sense desplegament de paquets a milers de clients</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q8">
+          <strong>Explicació:</strong> El desplegament centralitzat permet aplicar pegats i noves versions al servidor amb efecte immediat per a tots els usuaris sense tocar els seus llocs de treball.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 9 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="a">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">9. Quin rol té una eina com PHP-FPM en una pila d'aplicació web moderna amb Nginx?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q9" id="q9a" value="a">
+          <label class="form-check-label" for="q9a">a) Gestor de processos FastCGI per a executar codi PHP desacoblat del servidor web Nginx</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q9" id="q9b" value="b">
+          <label class="form-check-label" for="q9b">b) Base de dades NoSQL basada en clau-valor en memòria RAM</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q9" id="q9c" value="c">
+          <label class="form-check-label" for="q9c">c) Motor de renderitzat HTML integrat al navegador de l'usuari</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q9" id="q9d" value="d">
+          <label class="form-check-label" for="q9d">d) Protocol criptogràfic per a substituir els certificats TLS</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q9">
+          <strong>Explicació:</strong> Nginx no processa PHP de forma nativa; utilitza el protocol FastCGI per delegar l'execució dels scripts dinàmics al servei PHP-FPM.
+        </div>
+      </div>
+    </div>
+
+    <!-- Pregunta 10 -->
+    <div class="card mb-3 shadow-sm border card-question" data-correct="c">
+      <div class="card-body">
+        <h5 class="card-title h6 fw-bold">10. Quina millora clau va aportar HTTP/2 respecte a HTTP/1.1 per a millorar el rendiment de càrrega?</h5>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q10" id="q10a" value="a">
+          <label class="form-check-label" for="q10a">a) Va eliminar l'ús de capçaleres i cookies per a reduir el pes del trànsit</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q10" id="q10b" value="b">
+          <label class="form-check-label" for="q10b">b) Va deixar d'emprar connexions TCP persistents</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q10" id="q10c" value="c">
+          <label class="form-check-label" for="q10c">c) Format binari, compressió de capçaleres HPACK i multiplexació de peticions sobre una mateixa connexió TCP</label>
+        </div>
+        <div class="form-check my-2">
+          <input class="form-check-input" type="radio" name="q10" id="q10d" value="d">
+          <label class="form-check-label" for="q10d">d) Va canviar el port predeterminat 80 pel port 22</label>
+        </div>
+        <div class="feedback-box mt-3 alert alert-secondary" id="fb-q10">
+          <strong>Explicació:</strong> HTTP/2 va canviar el protocol textual per un format binari que permet multiplexar múltiples peticions i respostes bidireccionals en un sol socket TCP.
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+      <button type="button" class="btn btn-secondary px-4 me-md-2" onclick="reiniciar()">Reiniciar</button>
+      <button type="button" class="btn btn-primary px-5 fw-bold" onclick="corregir()">Avaluar Cüestionari</button>
+    </div>
+
+  </form>
+
+  <!-- Panel de Resultado -->
+  <div id="resultado" class="card border-0 shadow d-none">
+    <div class="card-body p-4 text-center">
+      <h3 class="card-title fw-bold" id="resTitulo">Resultat de l'Avaluació</h3>
+      <p class="display-6 fw-bold my-2" id="resNota">0.0 / 10</p>
+      <p class="lead mb-0" id="resDetalle"></p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function corregir() {
+  const cards = document.querySelectorAll('.card-question');
+  let encerts = 0;
+  let senseRespondre = 0;
+
+  cards.forEach((card, idx) => {
+    const num = idx + 1;
+    const correcta = card.getAttribute('data-correct');
+    const seleccionada = card.querySelector(`input[name="q${num}"]:checked`);
+    const fb = document.getElementById(`fb-q${num}`);
+
+    card.classList.remove('card-correct', 'card-incorrect');
+    if (fb) fb.style.display = 'block';
+
+    if (!seleccionada) {
+      senseRespondre++;
+      card.classList.add('card-incorrect');
+    } else if (seleccionada.value === correcta) {
+      encerts++;
+      card.classList.add('card-correct');
+    } else {
+      card.classList.add('card-incorrect');
+    }
+  });
+
+  const total = cards.length;
+  const nota = (encerts / total) * 10;
+  
+  const divRes = document.getElementById('resultado');
+  const txtNota = document.getElementById('resNota');
+  const txtDetalle = document.getElementById('resDetalle');
+
+  txtNota.textContent = `${nota.toFixed(2)} / 10`;
+  txtDetalle.innerHTML = `Has obtingut <strong>${encerts}</strong> encert(s) d'un total de <strong>${total}</strong> preguntes.<br>` +
+                         (senseRespondre > 0 ? `<span class="text-danger small">Atenció: Has deixat ${senseRespondre} qüestió(ns) sense contestar.</span>` : '');
+
+  // Colores del banner según la nota
+  divRes.className = 'card border-0 shadow text-white ' + (nota >= 5 ? 'bg-success' : 'bg-danger');
+  divRes.classList.remove('d-none');
+
+  divRes.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function reiniciar() {
+  document.getElementById('quizForm').reset();
+  document.querySelectorAll('.card-question').forEach(card => {
+    card.classList.remove('card-correct', 'card-incorrect');
+  });
+  document.querySelectorAll('.feedback-box').forEach(fb => {
+    fb.style.display = 'none';
+  });
+  const divRes = document.getElementById('resultado');
+  divRes.classList.add('d-none');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

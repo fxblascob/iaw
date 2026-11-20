@@ -1,0 +1,11 @@
+1. <p>blablablabla <span>blablablabla</span> blablablabla</p>
+2. <p class="miClase">blabla <span>blablabla<em>blabla</em></span> </p>
+3. <h1 class="miID">blablablabla <span class="miClase">aaaa</span> </h1>
+4. <p>blablablabla <span class="miClase">blablabla</span> blabla</p>
+5. <p class="miClase">blabla <span class="miClase2">blabla</span> </p>
+
+p: S'aplica a tots els paràgrafs (línies 1, 2, 4 i 5).   
+p.miClase: S'aplica als paràgrafs que tenen la classe miClase (línies 2 i 5).   
+p, #miID: S'aplica a tots els elements p (línies 1, 2, 4 i 5). (Nota: l'element de la línia 3 té class="miID", no id="miID", 
+        per la qual cosa no coincideix per ID).   
+p span em: S'aplica a l'element <em> contingut dins de l'element <span> del paràgraf de la línia 2 (text blabla).   

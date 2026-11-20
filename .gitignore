@@ -1,0 +1,15 @@
+# Fitxers de vídeo pesats (>100MB superen el límit màxim de GitHub)
+*.mov
+
+# Fitxers residuals de sistema operatiu i sincronització
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier*
+*:com.dropbox.attrs*
+
+# Fitxers temporals i còpies de seguretat
+*.tmp
+*.swp
+*.bak
+*~

@@ -1,0 +1,158 @@
+<!--
+================================================================================
+EXERCICI 1 (01responsiveLlibres.html)
+
+Enunciat:
+La pàgina se mostra amb resolució de mòbil (< 750px) com se veu a la dreta 
+(menú vertical i columnes apilades). Per a resolucions superiors (min-width: 750px) 
+se mostrarà com se veu a l'esquerra (menú horitzontal i llibres en columnes paral·leles).
+
+Crea una pàgina anomenada 01responsiveLlibres.html, i realitza en ella una cosa 
+similar a l'exemple anterior, únicament amb els teus propis estils CSS. 
+Fes que el menú siga adaptatiu per justificació, com s'ha explicat en aquest apartat.
+
+Text de l'exercici:
+- Títol: Página de información sobre libros
+- Intro: En esta web se tiene un breve resumen de algunos libros o novelas muy interesantes. 
+  Debajo puedes consultar un breve resumen de los mismos, y arriba puedes pinchar los enlaces 
+  para acceder a sus correspondientes páginas en Wikipedia.
+- Llibre 1: Cabo Trafalgar (Arturo Pérez-Reverte)
+- Llibre 2: El juego de Ender (Orson Scott Card)
+- Llibre 3: La tabla de Flandes (Arturo Pérez-Reverte)
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01responsiveLlibres - Ejercicio 1</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+      background-color: #fff;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Menú adaptatiu amb CSS propi */
+    #menu {
+      margin: 0 0 25px 0;
+      padding: 0;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    #menu li {
+      width: 100%;
+    }
+    #menu a {
+      display: block;
+      padding: 8px 16px;
+      border: 1px solid #0d6efd;
+      border-radius: 8px;
+      color: #0d6efd;
+      text-decoration: underline;
+      background-color: #fff;
+    }
+
+    .intro {
+      margin-bottom: 25px;
+    }
+    .intro h1 {
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    /* Targetes de llibres */
+    .books-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .book-card {
+      background-color: #d1d5db;
+      border-radius: 10px;
+      padding: 16px;
+      color: #111;
+    }
+    .book-card h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+    }
+    .book-card p {
+      font-size: 0.95rem;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+    .book-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Media query per a pantalla ampla (min-width: 750px) */
+    @media screen and (min-width: 750px) {
+      #menu {
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 12px;
+      }
+      #menu li {
+        width: auto;
+      }
+      #menu a {
+        display: inline-block;
+      }
+      .books-container {
+        flex-direction: row;
+      }
+      .book-card {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav>
+      <ul id="menu">
+        <li><a href="https://es.wikipedia.org/wiki/Cabo_Trafalgar_(novela)" target="_blank">Cabo Trafalgar</a></li>
+        <li><a href="https://es.wikipedia.org/wiki/El_juego_de_Ender" target="_blank">El juego de Ender</a></li>
+        <li><a href="https://es.wikipedia.org/wiki/La_tabla_de_Flandes" target="_blank">La tabla de Flandes</a></li>
+      </ul>
+    </nav>
+
+    <div class="intro">
+      <h1>Página de información sobre libros</h1>
+      <p>En esta web se tiene un breve resumen de algunos libros o novelas muy interesantes. Debajo puedes consultar un breve resumen de los mismos, y arriba puedes pinchar los enlaces para acceder a sus correspondientes páginas en Wikipedia.</p>
+    </div>
+
+    <div class="books-container">
+      <article class="book-card">
+        <h2>Cabo Trafalgar</h2>
+        <p>Es una novela escrita por Arturo Pérez Reverte que rememora la batalla de Trafalgar entre los navíos ingleses (comandados por el almirante Nelson) y los españoles.</p>
+        <p>Tiene la peculiaridad de estar escrita en un lenguaje llano y actual, lleno de palabras malsonantes que podrían haber dicho los protagonistas de esa batalla si se hubiera producido hoy en día.</p>
+      </article>
+
+      <article class="book-card">
+        <h2>El juego de Ender</h2>
+        <p>Novela escrita por Orson Scott Card, de ciencia ficción, donde en un mundo futurista, se reclutan niños para formar ejércitos con los que luchar contra seres de otro planeta. Uno de esos niños, Ender, resulta tener unas cualidades muy especiales que le harán destacar por encima del resto.</p>
+      </article>
+
+      <article class="book-card">
+        <h2>La tabla de Flandes</h2>
+        <p>Novela de intriga escrita por Arturo Pérez Reverte donde una restauradora de cuadros, a raíz de la restauración de uno donde se representa una partida de ajedrez, va averiguando datos sobre un asesino y sus crímenes.</p>
+      </article>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!--
+================================================================================
+EJERCICIO 4 (Grid): Layout general de una aplicación
+
+Objetivo:
+Crear la estructura típica de un panel de control con:
+- Cabecera completa arriba (height: 60px).
+- Columna lateral izquierda para menú (width: 220px).
+- Contenedor central que ocupe todo el resto del espacio disponible.
+- Pie de página completo abajo (height: 40px).
+
+HTML base:
+<div class="layout">
+  <header class="header">Cabecera</header>
+  <aside class="sidebar">Menú lateral</aside>
+  <main class="main">Contenido principal</main>
+  <footer class="footer">Pie de página</footer>
+</div>
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 4: Layout Grid</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .layout {
+      display: grid;
+      height: 100vh;
+      grid-template-rows: 60px 1fr 40px; /* Cabecera 60px, centro 1fr, pie 40px */
+      grid-template-columns: 220px 1fr;  /* Barra lateral 220px, resto 1fr */
+      grid-template-areas:
+        "header  header"
+        "sidebar main"
+        "footer  footer";
+    }
+    .header {
+      grid-area: header;
+      background-color: #1a233a;
+      color: white;
+      padding: 18px 20px;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    .sidebar {
+      grid-area: sidebar;
+      background-color: #2d3748;
+      color: white;
+      padding: 20px;
+    }
+    .main {
+      grid-area: main;
+      background-color: #f7fafc;
+      padding: 20px;
+    }
+    .footer {
+      grid-area: footer;
+      background-color: #e2e8f0;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <header class="header">Cabecera</header>
+    <aside class="sidebar">Menú lateral</aside>
+    <main class="main">Contenido principal</main>
+    <footer class="footer">Pie de página</footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!--
+================================================================================
+EJERCICIO 5 (Grid): Galería de métricas 100% responsive
+
+Objetivo:
+Mostrar 6 cajas de métricas (CPU, RAM, Disco, etc.). Deben colocarse en una rejilla 
+automática: en pantallas grandes se verán en 3 o 4 columnas, y al encoger la ventana 
+se reajustarán a 2 y luego a 1 columna sin escribir ninguna @media query.
+
+HTML base:
+<section class="metric-grid">
+  <div class="box">CPU: 24%</div>
+  <div class="box">RAM: 3.2 / 8 GB</div>
+  <div class="box">Disco: 68%</div>
+  <div class="box">Nginx: Activo</div>
+  <div class="box">MySQL: Activo</div>
+  <div class="box">Uptime: 14d</div>
+</section>
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 5: Grid Métricas Responsive</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      padding: 30px;
+      background-color: #ffffff;
+    }
+    /* Rejilla automática auto-fit con tamaño mínimo de 220px sin media queries */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+    .box {
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 35px 20px;
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: 500;
+      background-color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <section class="metric-grid">
+    <div class="box">CPU: 24%</div>
+    <div class="box">RAM: 3.2 / 8 GB</div>
+    <div class="box">Disco: 68%</div>
+    <div class="box">Nginx: Activo</div>
+    <div class="box">MySQL: Activo</div>
+    <div class="box">Uptime: 14d</div>
+  </section>
+</body>
+</html>

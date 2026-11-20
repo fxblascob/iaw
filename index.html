@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ca" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Implantació d'Aplicacions Web (IAW) · 2n ASIR</title>
+  
+  <!-- Bootstrap 5.3 CSS & Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estilos propios limpios y centralizados -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body class="bg-body-tertiary">
+
+  <!-- Navbar Superior Fija -->
+  <nav class="navbar navbar-expand-lg sticky-top bg-body border-bottom shadow-sm py-2">
+    <div class="container-fluid px-3">
+      
+      <!-- Botón Alternar Menú (Móvil y Escritorio) -->
+      <button class="btn btn-outline-secondary me-2 d-flex align-items-center gap-1" type="button" id="btnToggleSidebar" aria-label="Ocultar / Mostrar menú" title="Ocultar / Mostrar menú" data-i18n-attr="title:btnToggleMenu">
+        <i class="bi bi-layout-sidebar-inset fs-5" id="iconSidebarToggle"></i>
+        <span class="small d-none d-sm-inline" data-i18n="btnMenu">Menú</span>
+      </button>
+
+      <!-- Marca / Título -->
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-primary m-0" href="#" id="brandHome">
+        <i class="bi bi-mortarboard-fill fs-4"></i>
+        <span>IAW <span class="badge bg-primary-subtle text-primary border border-primary-subtle fs-6 d-none d-sm-inline" data-i18n="portalSubtitle">2n ASIR</span></span>
+      </a>
+
+      <!-- Acciones de Navegación -->
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        
+        <!-- Botón Volver al Dashboard (Home) -->
+        <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" id="btnDashboard">
+          <i class="bi bi-house-door"></i>
+          <span class="d-none d-md-inline" data-i18n="btnHome">Inici</span>
+        </button>
+
+        <!-- Dropdown Selector Rápido de Bloques -->
+        <div class="dropdown d-none d-md-block">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-folder2-open me-1"></i> <span data-i18n="btnBlocks">Blocs</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB0" data-i18n="b0Title">Bloc 0: Presentació</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB1" data-i18n="b1Title">Bloc 1: Introducció App Web</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB2" data-i18n="b2Title">Bloc 2: Disseny Web</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB3" data-i18n="b3Title">Bloc 3: Javascript</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB4" data-i18n="b4Title">Bloc 4: Servidor (PHP)</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB5" data-i18n="b5Title">Bloc 5: Asíncrona (AJAX)</a></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseB6" data-i18n="b6Title">Bloc 6: Gestió Continguts</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item nav-quick-jump" href="#" data-accordion-target="#collapseWP" data-i18n="wpTitle">WordPress Local & BD</a></li>
+          </ul>
+        </div>
+
+        <!-- Selector Bilingüe Valenciano / Castellano -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="btnLang" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Canviar idioma">
+            <i class="bi bi-translate"></i>
+            <span id="currentLangLabel">Valencià</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-switcher active" data-lang="va">
+                <span>Valencià</span>
+                <span class="badge text-bg-primary-subtle text-primary border ms-2">VA</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-switcher" data-lang="es">
+                <span>Castellano</span>
+                <span class="badge text-bg-secondary-subtle text-secondary border ms-2">ES</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Selector de Modo Claro/Oscuro -->
+        <div class="dropdown">
+          <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" aria-label="Canviar tema">
+            <i class="bi bi-circle-half theme-icon-active"></i>
+            <span class="visually-hidden" id="bd-theme-text">Canviar tema</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="bd-theme-text">
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center gap-2 active" data-bs-theme-value="light">
+                <i class="bi bi-sun-fill"></i> <span data-i18n="themeLight">Clar</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-bs-theme-value="dark">
+                <i class="bi bi-moon-stars-fill"></i> <span data-i18n="themeDark">Fosc</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="dropdown-item d-flex align-items-center gap-2" data-bs-theme-value="auto">
+                <i class="bi bi-circle-half"></i> <span data-i18n="themeAuto">Automàtic</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor Principal (Sidebar + Main) -->
+  <div class="container-fluid px-lg-4 py-3">
+    <div class="row g-4">
+      
+      <!-- Menú Lateral / Sidebar -->
+      <aside class="col-lg-4 col-xl-3" id="sidebarCol">
+        <div class="offcanvas-lg offcanvas-start bg-body rounded-3 border shadow-sm p-3 h-100" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+          
+          <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-3">
+            <h5 class="offcanvas-title fw-bold text-primary m-0" id="sidebarOffcanvasLabel">
+              <i class="bi bi-book-half me-2"></i> <span data-i18n="sidebarTitle">Temari IAW</span>
+            </h5>
+            <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#sidebarOffcanvas" aria-label="Tancar"></button>
+            <button type="button" class="btn btn-sm btn-outline-secondary d-none d-lg-inline-flex align-items-center" id="btnCollapseDesktop" title="Ocultar menú" data-i18n-attr="title:btnHideMenu">
+              <i class="bi bi-chevron-bar-left"></i>
+            </button>
+          </div>
+
+          <!-- Buscador de Contenidos -->
+          <div class="mb-3">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-body-tertiary border-end-0"><i class="bi bi-search"></i></span>
+              <input type="text" class="form-control border-start-0" id="filterInput" placeholder="Cercar recursos, temes..." data-i18n-attr="placeholder:searchPlaceholder">
+              <button class="btn btn-outline-secondary border-start-0" type="button" id="clearFilter" title="Netejar cerca" data-i18n-attr="title:clearSearchTitle" style="display:none;">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Acordeón de Bloques -->
+          <div class="accordion accordion-flush flex-grow-1 overflow-y-auto" id="accordionTemari">
+            
+            <!-- BLOC 0 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB0">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB0" aria-expanded="false" aria-controls="collapseB0">
+                  <i class="bi bi-compass me-2 text-info"></i> <span data-i18n="b0Title">Bloc 0: Presentació</span>
+                </button>
+              </h2>
+              <div id="collapseB0" class="accordion-collapse collapse" aria-labelledby="headingB0" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_0 presentacio planificacio/Presentacion.pdf" data-title-va="Presentació del Mòdul" data-title-es="Presentación del Módulo" data-block-va="Bloc 0" data-block-es="Bloque 0" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">Presentació IAW</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_0 presentacio planificacio/test_inicial.pdf" data-title-va="Test Inicial d'Avaluació" data-title-es="Test Inicial de Evaluación" data-block-va="Bloc 0" data-block-es="Bloque 0" data-badge-va="Avaluació" data-badge-es="Evaluación" data-type="pdf">
+                      <span><i class="bi bi-clipboard-check text-success me-2"></i><span class="res-label">Test Inicial</span></span>
+                      <span class="badge text-bg-success res-badge">Avaluació</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 1 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB1">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB1" aria-expanded="false" aria-controls="collapseB1">
+                  <i class="bi bi-diagram-3 me-2 text-primary"></i> <span data-i18n="b1Title">Bloc 1: Introducció App Web</span>
+                </button>
+              </h2>
+              <div id="collapseB1" class="accordion-collapse collapse" aria-labelledby="headingB1" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_1 Introduccio a les aplicacions web/Tema_01/t1_aplicacions_web.html" data-title-va="T1: Aplicacions Web · Arquitectura (Format Web)" data-title-es="T1: Aplicaciones Web · Arquitectura (Formato Web)" data-block-va="Bloc 1" data-block-es="Bloque 1" data-badge-va="Web" data-badge-es="Web" data-type="html">
+                      <span><i class="bi bi-file-earmark-richtext text-primary me-2"></i><span class="res-label">T1: Teoria Web</span></span>
+                      <span class="badge text-bg-primary res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_1 Introduccio a les aplicacions web/Tema_01/t1_ Aplicacions_Web_Caracteristiques_Funcionament_Arquitectura.pdf" data-title-va="Arquitectura i Funcionament d'Aplicacions Web (PDF)" data-title-es="Arquitectura y Funcionamiento de Aplicaciones Web (PDF)" data-block-va="Bloc 1" data-block-es="Bloque 1" data-badge-va="PDF" data-badge-es="PDF" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">T1: Document PDF</span></span>
+                      <span class="badge text-bg-secondary res-badge">PDF</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_1 Introduccio a les aplicacions web/Tema_01/t1_presentacion_cast.pdf" data-title-va="Resum de Presentació Tema 1" data-title-es="Resumen de Presentación Tema 1" data-block-va="Bloc 1" data-block-es="Bloque 1" data-badge-va="Diapos" data-badge-es="Diapos" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-slides text-warning me-2"></i><span class="res-label">T1: Diapositives</span></span>
+                      <span class="badge text-bg-secondary res-badge">Diapos</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_1 Introduccio a les aplicacions web/Tema_01/t1_cuestionari_autocorregible.html" data-title-va="Autoavaluació Tema 1" data-title-es="Autoevaluación Tema 1" data-block-va="Bloc 1" data-block-es="Bloque 1" data-badge-va="Interactiu" data-badge-es="Interactivo" data-type="html">
+                      <span><i class="bi bi-patch-question text-info me-2"></i><span class="res-label">T1: Autoavaluació</span></span>
+                      <span class="badge text-bg-info res-badge">Interactiu</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 2 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB2">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB2" aria-expanded="false" aria-controls="collapseB2">
+                  <i class="bi bi-palette me-2 text-warning"></i> <span data-i18n="b2Title">Bloc 2: Disseny Web</span>
+                </button>
+              </h2>
+              <div id="collapseB2" class="accordion-collapse collapse" aria-labelledby="headingB2" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <div class="list-group-item bg-body-tertiary fw-bold text-muted py-1 px-2 border-0" data-i18n="subHtmlCss">HTML5 i CSS3</div>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_01_HTML5_CSS3/t1_html5_css3.html" data-title-va="HTML5 i CSS3: Estructura i Estils" data-title-es="HTML5 y CSS3: Estructura y Estilos" data-block-va="Bloc 2 · T1" data-block-es="Bloque 2 · T1" data-badge-va="Web" data-badge-es="Web" data-type="html">
+                      <span><i class="bi bi-file-earmark-code text-info me-2"></i><span class="res-label">T1: HTML5 & CSS3 (Web)</span></span>
+                      <span class="badge text-bg-info res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_01_HTML5_CSS3/t1_html5_css3_val.pdf" data-title-va="HTML5 i CSS3 (PDF Original)" data-title-es="HTML5 y CSS3 (PDF Original)" data-block-va="Bloc 2 · T1" data-block-es="Bloque 2 · T1" data-badge-va="PDF" data-badge-es="PDF" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">T1: HTML5 & CSS3 (PDF)</span></span>
+                      <span class="badge text-bg-secondary res-badge">PDF</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_01_HTML5_CSS3/t1_Exercicis/01_pagina1.html" data-title-va="Exercici 01: Pàgina bàsica HTML5" data-title-es="Ejercicio 01: Página básica HTML5" data-block-va="Bloc 2 · T1" data-block-es="Bloque 2 · T1" data-badge-va="Pràctica" data-badge-es="Práctica" data-type="html">
+                      <span><i class="bi bi-code-slash text-success me-2"></i><span class="res-label">Pràctica 1: Pàgina bàsica</span></span>
+                      <span class="badge text-bg-success res-badge">HTML</span>
+                    </a>
+
+                    <div class="list-group-item bg-body-tertiary fw-bold text-muted py-1 px-2 border-0 mt-1" data-i18n="subLayoutForms">Maquetació i Formularis</div>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_02_maquetacio_formularis/t2_maquetacio_components_formularis.html" data-title-va="Maquetació, Components i Formularis" data-title-es="Maquetación, Componentes y Formularios" data-block-va="Bloc 2 · T2" data-block-es="Bloque 2 · T2" data-badge-va="Web" data-badge-es="Web" data-type="html">
+                      <span><i class="bi bi-file-earmark-code text-info me-2"></i><span class="res-label">T2: Maquetació & Formularis (Web)</span></span>
+                      <span class="badge text-bg-info res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_02_maquetacio_formularis/t2_maquetacio_components_formularis_val.pdf" data-title-va="Maquetació, Components i Formularis (PDF)" data-title-es="Maquetación, Componentes y Formularios (PDF)" data-block-va="Bloc 2 · T2" data-block-es="Bloque 2 · T2" data-badge-va="PDF" data-badge-es="PDF" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">T2: Maquetació & Formularis (PDF)</span></span>
+                      <span class="badge text-bg-secondary res-badge">PDF</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_02_maquetacio_formularis/ejercicios/11_formDades.html" data-title-va="Exercici: Formulari de dades" data-title-es="Ejercicio: Formulario de datos" data-block-va="Bloc 2 · T2" data-block-es="Bloque 2 · T2" data-badge-va="Pràctica" data-badge-es="Práctica" data-type="html">
+                      <span><i class="bi bi-ui-checks text-success me-2"></i><span class="res-label">Pràctica: Formulari Dades</span></span>
+                      <span class="badge text-bg-success res-badge">Form</span>
+                    </a>
+
+                    <div class="list-group-item bg-body-tertiary fw-bold text-muted py-1 px-2 border-0 mt-1" data-i18n="subBootstrap">Bootstrap 5 & Grid</div>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_03_Bootstrap/t3_bootstrap_frameworks.html" data-title-va="Frameworks i Disseny Web Adaptatiu" data-title-es="Frameworks y Diseño Web Adaptativo" data-block-va="Bloc 2 · T3" data-block-es="Bloque 2 · T3" data-badge-va="Web" data-badge-es="Web" data-type="html">
+                      <span><i class="bi bi-file-earmark-code text-info me-2"></i><span class="res-label">T3: Frameworks & Bootstrap (Web)</span></span>
+                      <span class="badge text-bg-info res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_03_Bootstrap/t5. Frameworks i disseny web adaptatiuv2023.pdf" data-title-va="Frameworks i Disseny Web Adaptatiu (PDF)" data-title-es="Frameworks y Diseño Web Adaptativo (PDF)" data-block-va="Bloc 2 · T3" data-block-es="Bloque 2 · T3" data-badge-va="PDF" data-badge-es="PDF" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">T3: Frameworks & Bootstrap (PDF)</span></span>
+                      <span class="badge text-bg-secondary res-badge">PDF</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_2 Diseny web/tema_03_Bootstrap/tema5_menusBootstrap.html" data-title-va="Exemples de Menús amb Bootstrap" data-title-es="Ejemplos de Menús con Bootstrap" data-block-va="Bloc 2 · T3" data-block-es="Bloque 2 · T3" data-badge-va="Exemple" data-badge-es="Ejemplo" data-type="html">
+                      <span><i class="bi bi-bootstrap text-purple me-2"></i><span class="res-label">Exemple Menús Bootstrap</span></span>
+                      <span class="badge text-bg-info res-badge">Bootstrap</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 3 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB3">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB3" aria-expanded="false" aria-controls="collapseB3">
+                  <i class="bi bi-filetype-js me-2 text-warning"></i> <span data-i18n="b3Title">Bloc 3: Javascript</span>
+                </button>
+              </h2>
+              <div id="collapseB3" class="accordion-collapse collapse" aria-labelledby="headingB3" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t1_introduccion_val.pdf" data-title-va="JS: Programació Bàsica" data-title-es="JS: Programación Básica" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT1: Sintaxi bàsica</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t2_funciones_val.pdf" data-title-va="JS: Funcions" data-title-es="JS: Funciones" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT2: Funcions</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t3_arrays_val.pdf" data-title-va="JS: Arrays" data-title-es="JS: Arrays" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT3: Arrays</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t4_dom_val.pdf" data-title-va="JS: Manipulació del DOM" data-title-es="JS: Manipulación del DOM" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT4: El DOM</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t5_eventos_val.pdf" data-title-va="JS: Gestió d'Esdeveniments" data-title-es="JS: Gestión de Eventos" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT5: Esdeveniments</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t6_formularis_val.pdf" data-title-va="JS: Validació de Formularis" data-title-es="JS: Validación de Formularios" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT6: Formularis</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/t7_dibujar_cast.pdf" data-title-va="JS: Canvas i Dibuix" data-title-es="JS: Canvas y Dibujo" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT7: Dibuix & Canvas</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_3_javascript/t6_Javascript/exercicis/t7_dibujoCanvas.html" data-title-va="Exercici Interactiu de Canvas" data-title-es="Ejercicio Interactivo de Canvas" data-block-va="Bloc 3" data-block-es="Bloque 3" data-badge-va="Pràctica" data-badge-es="Práctica" data-type="html">
+                      <span><i class="bi bi-brush text-success me-2"></i><span class="res-label">Pràctica: Dibuix Canvas</span></span>
+                      <span class="badge text-bg-success res-badge">JS</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 4 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB4">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB4" aria-expanded="false" aria-controls="collapseB4">
+                  <i class="bi bi-filetype-php me-2 text-primary"></i> <span data-i18n="b4Title">Bloc 4: Servidor (PHP)</span>
+                </button>
+              </h2>
+              <div id="collapseB4" class="accordion-collapse collapse" aria-labelledby="headingB4" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4 pwcs/ut_09/02_9. Us basic de PHP.pdf" data-title-va="Ús Bàsic de PHP" data-title-es="Uso Básico de PHP" data-block-va="Bloc 4" data-block-es="Bloque 4" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT9: Fonaments de PHP</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4 pwcs/ut_10 acces a bd/10. Acces a bases de dades amb PHP.pdf" data-title-va="Accés a Bases de Dades amb PHP" data-title-es="Acceso a Bases de Datos con PHP" data-block-va="Bloc 4" data-block-es="Bloque 4" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-database-check text-info me-2"></i><span class="res-label">UT10: Accés a BD (PDO)</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4 pwcs/ut_11 poo/11. Programacio orientada a objectes amb PHP.pdf" data-title-va="POO en PHP" data-title-es="POO en PHP" data-block-va="Bloc 4" data-block-es="Bloque 4" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-box-seam text-secondary me-2"></i><span class="res-label">UT11: POO en PHP</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <div class="list-group-item bg-body-tertiary fw-bold text-muted py-1 px-2 border-0 mt-1" data-i18n="subPhpWeb">Manual Web de PHP</div>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4_php/ficheros/00_primeros_pasos.html" data-title-va="00 Primers passos amb PHP" data-title-es="00 Primeros pasos con PHP" data-block-va="Bloc 4 · Web" data-block-es="Bloque 4 · Web" data-badge-va="Manual" data-badge-es="Manual" data-type="html">
+                      <span><i class="bi bi-journal-text text-success me-2"></i><span class="res-label">00: Primers Passos</span></span>
+                      <span class="badge text-bg-success res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4_php/ficheros/01_elementos_basicos.html" data-title-va="01 Elements Bàsics del Llenguatge" data-title-es="01 Elementos Básicos del Lenguaje" data-block-va="Bloc 4 · Web" data-block-es="Bloque 4 · Web" data-badge-va="Manual" data-badge-es="Manual" data-type="html">
+                      <span><i class="bi bi-journal-text text-success me-2"></i><span class="res-label">01: Elements Bàsics</span></span>
+                      <span class="badge text-bg-success res-badge">Web</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_4_php/ficheros/02_uso_funciones.html" data-title-va="02 Ús de Funcions en PHP" data-title-es="02 Uso de Funciones en PHP" data-block-va="Bloc 4 · Web" data-block-es="Bloque 4 · Web" data-badge-va="Manual" data-badge-es="Manual" data-type="html">
+                      <span><i class="bi bi-journal-text text-success me-2"></i><span class="res-label">02: Ús de Funcions</span></span>
+                      <span class="badge text-bg-success res-badge">Web</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 5 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB5">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB5" aria-expanded="false" aria-controls="collapseB5">
+                  <i class="bi bi-arrow-repeat me-2 text-success"></i> <span data-i18n="b5Title">Bloc 5: Asíncrona (AJAX)</span>
+                </button>
+              </h2>
+              <div id="collapseB5" class="accordion-collapse collapse" aria-labelledby="headingB5" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_5_programacio_web_asincrona/t1_Ajax/13. Introduccion a AJAX.pdf" data-title-va="Introducció a AJAX" data-title-es="Introducción a AJAX" data-block-va="Bloc 5" data-block-es="Bloque 5" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT13: Introducció a AJAX</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_5_programacio_web_asincrona/t2_jQuery/14. jQuery.pdf" data-title-va="Llenguatge i Llibreria jQuery" data-title-es="Lenguaje y Librería jQuery" data-block-va="Bloc 5" data-block-es="Bloque 5" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT14: Llibreria jQuery</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_5_programacio_web_asincrona/t1_Ajax/ejercicio01/usuarios.html" data-title-va="Pràctica 1: Peticions AJAX d'usuaris" data-title-es="Práctica 1: Peticiones AJAX de usuarios" data-block-va="Bloc 5" data-block-es="Bloque 5" data-badge-va="Pràctica" data-badge-es="Práctica" data-type="html">
+                      <span><i class="bi bi-people text-success me-2"></i><span class="res-label">Pràctica 1: Usuaris AJAX</span></span>
+                      <span class="badge text-bg-success res-badge">AJAX</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BLOC 6 -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingB6">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseB6" aria-expanded="false" aria-controls="collapseB6">
+                  <i class="bi bi-grid-1x2 me-2 text-danger"></i> <span data-i18n="b6Title">Bloc 6: Gestió Continguts</span>
+                </button>
+              </h2>
+              <div id="collapseB6" class="accordion-collapse collapse" aria-labelledby="headingB6" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_6 Gestio integral de continguts/16. CMS de propòsit general.pdf" data-title-va="CMS de Propòsit General" data-title-es="CMS de Propósito General" data-block-va="Bloc 6" data-block-es="Bloque 6" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-pdf text-danger me-2"></i><span class="res-label">UT16: CMS General</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./bloc_6 Gestio integral de continguts/16. wordpress.pdf" data-title-va="WordPress: Instal·lació i Administració" data-title-es="WordPress: Instalación y Administración" data-block-va="Bloc 6" data-block-es="Bloque 6" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-wordpress text-primary me-2"></i><span class="res-label">UT16: WordPress</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                    <!-- Recurso bilingüe con versiones específicas -->
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src-va="./bloc_6 Gestio integral de continguts/18. Ofimàtica web_val.pdf" data-src-es="./bloc_6 Gestio integral de continguts/18. Ofimática web_cas.pdf" data-src="./bloc_6 Gestio integral de continguts/18. Ofimàtica web_val.pdf" data-title-va="Suites d'Ofimàtica Web" data-title-es="Suites de Ofimática Web" data-block-va="Bloc 6" data-block-es="Bloque 6" data-badge-va="Teoria" data-badge-es="Teoría" data-type="pdf">
+                      <span><i class="bi bi-file-earmark-text text-info me-2"></i><span class="res-label">UT18: Ofimàtica Web</span></span>
+                      <span class="badge text-bg-primary res-badge">Teoria</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- WORDPRESS -->
+            <div class="accordion-item bg-transparent">
+              <h2 class="accordion-header" id="headingWP">
+                <button class="accordion-button collapsed py-2 px-3 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWP" aria-expanded="false" aria-controls="collapseWP">
+                  <i class="bi bi-wordpress me-2 text-primary"></i> <span data-i18n="wpTitle">WordPress Local & BD</span>
+                </button>
+              </h2>
+              <div id="collapseWP" class="accordion-collapse collapse" aria-labelledby="headingWP" data-bs-parent="#accordionTemari">
+                <div class="accordion-body p-1">
+                  <div class="list-group list-group-flush small">
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./wordpress/readme.html" data-title-va="Documentació de WordPress" data-title-es="Documentación de WordPress" data-block-va="WordPress" data-block-es="WordPress" data-badge-va="Guia" data-badge-es="Guía" data-type="html">
+                      <span><i class="bi bi-info-circle text-info me-2"></i><span class="res-label">Readme WordPress</span></span>
+                      <span class="badge text-bg-info res-badge">Guia</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action resource-link d-flex justify-content-between align-items-center py-2" data-src="./wordpress/wpress.sql" data-title-va="Volcat de Base de Dades WordPress (SQL)" data-title-es="Volcado de Base de Datos WordPress (SQL)" data-block-va="WordPress" data-block-es="WordPress" data-badge-va="SQL" data-badge-es="SQL" data-type="sql">
+                      <span><i class="bi bi-database text-warning me-2"></i><span class="res-label">Base de Dades (wpress.sql)</span></span>
+                      <span class="badge text-bg-warning res-badge">SQL</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- Fin Accordion -->
+
+        </div>
+      </aside>
+
+      <!-- Área Central de Contenido -->
+      <main class="col-lg-8 col-xl-9" id="mainContentCol">
+        
+        <!-- DASHBOARD INICIAL (Home) -->
+        <section id="dashboardSection">
+          
+          <!-- Hero de Bienvenida -->
+          <div class="card border-0 shadow-sm bg-body mb-4">
+            <div class="card-body p-4 p-md-5">
+              <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                <div>
+                  <span class="badge bg-primary px-3 py-2 rounded-pill mb-2" data-i18n="heroBadge">CFGS Administració de Sistemes Informàtics en Xarxa</span>
+                  <h1 class="display-6 fw-bold text-body-emphasis mb-2" data-i18n="heroTitle">Implantació d'Aplicacions Web (IAW)</h1>
+                  <p class="lead text-body-secondary mb-0" data-i18n="heroLead">Portal docent oficial del curs 2n ASIR. Selecciona un recurs del menú lateral o explora els blocs a continuació.</p>
+                </div>
+                <div class="d-none d-xl-block text-primary opacity-25">
+                  <i class="bi bi-laptop display-1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Malla de Tarjetas de Bloques -->
+          <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4 mb-4">
+            
+            <!-- Tarjeta Bloc 0 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-info-subtle text-info border border-info-subtle">Bloc 0</span>
+                    <i class="bi bi-compass fs-4 text-info"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b0CardTitle">Presentació i Planificació</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b0CardDesc">Avaluació inicial, criteris d'avaluació, eines de treball i organització del curs.</p>
+                  <button class="btn btn-sm btn-outline-info w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB0">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Bloc 1 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Bloc 1</span>
+                    <i class="bi bi-diagram-3 fs-4 text-primary"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b1CardTitle">Introducció a les App Web</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b1CardDesc">Arquitectura client/servidor, configuració de l'entorn de desenvolupament i test autocorregible.</p>
+                  <button class="btn btn-sm btn-outline-primary w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB1">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Bloc 2 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Bloc 2</span>
+                    <i class="bi bi-palette fs-4 text-warning"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b2CardTitle">Disseny Web & Bootstrap</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b2CardDesc">HTML5 semàntic, CSS3 modern, maquetació amb Flexbox i Grid, i components de Bootstrap 5.</p>
+                  <button class="btn btn-sm btn-outline-warning w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB2">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Bloc 3 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Bloc 3</span>
+                    <i class="bi bi-filetype-js fs-4 text-warning"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b3CardTitle">Programació Client (JS)</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b3CardDesc">Sintaxi moderna de JavaScript, estructures de dades, manipulació de l'arbre DOM i esdeveniments.</p>
+                  <button class="btn btn-sm btn-outline-warning w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB3">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Bloc 4 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Bloc 4</span>
+                    <i class="bi bi-filetype-php fs-4 text-primary"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b4CardTitle">Programació Servidor (PHP)</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b4CardDesc">Desenvolupament en servidor amb PHP, sessions, cookies, accés a bases de dades mitjançant PDO i POO.</p>
+                  <button class="btn btn-sm btn-outline-primary w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB4">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tarjeta Bloc 5 & 6 -->
+            <div class="col">
+              <div class="card h-100 border shadow-sm card-hover bg-body">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle" data-i18n="b5b6CardBadge">Bloc 5 & 6</span>
+                    <i class="bi bi-cloud-arrow-up fs-4 text-success"></i>
+                  </div>
+                  <h5 class="card-title fw-bold" data-i18n="b5b6CardTitle">Asíncrona & CMS</h5>
+                  <p class="card-text text-body-secondary small flex-grow-1" data-i18n="b5b6CardDesc">Comunicació asíncrona amb AJAX/jQuery, gestors de contingut (WordPress, PrestaShop) i ofimàtica web.</p>
+                  <button class="btn btn-sm btn-outline-success w-100 mt-2 nav-quick-jump" data-accordion-target="#collapseB5">
+                    <i class="bi bi-folder-symlink me-1"></i> <span data-i18n="btnExplore">Explorar Recursos</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Resumen de Competencias -->
+          <div class="card border shadow-sm bg-body">
+            <div class="card-body p-4">
+              <h5 class="fw-bold mb-3"><i class="bi bi-check2-circle text-primary me-2"></i><span data-i18n="raTitle">Objectius i Resultats d'Aprenentatge (RA)</span></h5>
+              <div class="row g-3 small text-body-secondary">
+                <div class="col-md-6">
+                  <div class="d-flex gap-2">
+                    <i class="bi bi-arrow-right-short text-primary fs-5 flex-shrink-0"></i>
+                    <span><strong>RA1:</strong> <span data-i18n="ra1">Instal·la i configura servidors d'aplicacions web verificant el seu correcte funcionament.</span></span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex gap-2">
+                    <i class="bi bi-arrow-right-short text-primary fs-5 flex-shrink-0"></i>
+                    <span><strong>RA2:</strong> <span data-i18n="ra2">Desenvolupa i desplega aplicacions amb llenguatges de guió d'execució en client.</span></span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex gap-2">
+                    <i class="bi bi-arrow-right-short text-primary fs-5 flex-shrink-0"></i>
+                    <span><strong>RA3:</strong> <span data-i18n="ra3">Implanta aplicacions web integrades amb servidors de bases de dades relacionals.</span></span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="d-flex gap-2">
+                    <i class="bi bi-arrow-right-short text-primary fs-5 flex-shrink-0"></i>
+                    <span><strong>RA4:</strong> <span data-i18n="ra4">Administra gestors de continguts web (CMS) personalitzant la seua aparença i funcionalitats.</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- SECCIÓN DEL VISOR DINÁMICO (Oculto inicialmente) -->
+        <section id="viewerSection" style="display:none;">
+          <div class="card border shadow-sm bg-body mb-4">
+            
+            <!-- Barra de Herramientas del Visor -->
+            <div class="card-header bg-body border-bottom py-2 px-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
+              
+              <!-- Título y Breadcrumb -->
+              <div class="d-flex align-items-center gap-2 flex-grow-1 overflow-hidden">
+                <button class="btn btn-sm btn-outline-secondary py-1 px-2" id="btnBackDashboard" title="Tancar visor i tornar a l'inici" data-i18n-attr="title:btnCloseViewer">
+                  <i class="bi bi-arrow-left"></i>
+                </button>
+                <div class="text-truncate">
+                  <span class="badge text-bg-primary me-2" id="viewerBadge">Recurs</span>
+                  <strong class="text-body-emphasis" id="viewerTitle">Títol del document</strong>
+                  <span class="text-muted small ms-2 d-none d-sm-inline" id="viewerBlock">Bloc</span>
+                </div>
+              </div>
+
+              <!-- Botones de Acción -->
+              <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                <a href="#" class="btn btn-sm btn-outline-secondary" id="btnOpenExternal" target="_blank" rel="noopener noreferrer" title="Obrir en nova pestanya">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="d-none d-sm-inline" data-i18n="btnNewTab">Nova pestanya</span>
+                </a>
+                <a href="#" class="btn btn-sm btn-primary" id="btnDownloadResource" download title="Descarregar fitxer">
+                  <i class="bi bi-download me-1"></i> <span class="d-none d-sm-inline" data-i18n="btnDownload">Descarregar</span>
+                </a>
+              </div>
+
+            </div>
+
+            <!-- Contenedor del Iframe -->
+            <div class="card-body p-0">
+              <div class="viewer-container">
+                <iframe id="docViewerFrame" class="viewer-iframe" src="about:blank" title="Visor de continguts IAW"></iframe>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Pie de Página -->
+        <footer class="py-4 my-2 border-top text-center text-body-secondary small">
+          <p class="mb-1" data-i18n="footerText1">Portal Docent · Implantació d'Aplicacions Web (IAW) · 2n ASIR</p>
+          <p class="mb-0 text-muted" data-i18n="footerText2">Desenvolupat amb HTML5 semàntic i Bootstrap 5.3 · Desplegable en GitHub Pages</p>
+        </footer>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- Bootstrap 5.3 Bundle JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lógica de la Interfaz Unificada y Bilingüe (Vanilla JS) -->
+  <script>
+    (function () {
+      'use strict';
+
+      // --- DICCIONARIO BILINGÜE (VALENCIÀ / CASTELLANO) ---
+      const i18nData = {
+        va: {
+          portalSubtitle: "2n ASIR",
+          btnHome: "Inici",
+          btnBlocks: "Blocs",
+          themeLight: "Clar",
+          themeDark: "Fosc",
+          themeAuto: "Automàtic",
+          sidebarTitle: "Temari IAW",
+          searchPlaceholder: "Cercar recursos, temes...",
+          clearSearchTitle: "Netejar cerca",
+          heroBadge: "CFGS Administració de Sistemes Informàtics en Xarxa",
+          heroTitle: "Implantació d'Aplicacions Web (IAW)",
+          heroLead: "Portal docent oficial del curs 2n ASIR. Selecciona un recurs del menú lateral o explora els blocs a continuació.",
+          btnExplore: "Explorar Recursos",
+          raTitle: "Objectius i Resultats d'Aprenentatge (RA)",
+          ra1: "Instal·la i configura servidors d'aplicacions web verificant el seu correcte funcionament.",
+          ra2: "Desenvolupa i desplega aplicacions amb llenguatges de guió d'execució en client.",
+          ra3: "Implanta aplicacions web integrades amb servidors de bases de dades relacionals.",
+          ra4: "Administra gestors de continguts web (CMS) personalitzant la seua aparença i funcionalitats.",
+          b0Title: "Bloc 0: Presentació",
+          b0CardTitle: "Presentació i Planificació",
+          b0CardDesc: "Avaluació inicial, criteris d'avaluació, eines de treball i organització del curs.",
+          b1Title: "Bloc 1: Introducció App Web",
+          b1CardTitle: "Introducció a les App Web",
+          b1CardDesc: "Arquitectura client/servidor, configuració de l'entorn de desenvolupament i test autocorregible.",
+          b2Title: "Bloc 2: Disseny Web",
+          b2CardTitle: "Disseny Web & Bootstrap",
+          b2CardDesc: "HTML5 semàntic, CSS3 modern, maquetació amb Flexbox i Grid, i components de Bootstrap 5.",
+          b3Title: "Bloc 3: Javascript",
+          b3CardTitle: "Programació Client (JS)",
+          b3CardDesc: "Sintaxi moderna de JavaScript, estructures de dades, manipulació de l'arbre DOM i esdeveniments.",
+          b4Title: "Bloc 4: Servidor (PHP)",
+          b4CardTitle: "Programació Servidor (PHP)",
+          b4CardDesc: "Desenvolupament en servidor amb PHP, sessions, cookies, accés a bases de dades mitjançant PDO i POO.",
+          b5Title: "Bloc 5: Asíncrona (AJAX)",
+          b5b6CardBadge: "Bloc 5 & 6",
+          b5b6CardTitle: "Asíncrona & CMS",
+          b5b6CardDesc: "Comunicació asíncrona amb AJAX/jQuery, gestors de contingut (WordPress, PrestaShop) i ofimàtica web.",
+          b6Title: "Bloc 6: Gestió Continguts",
+          wpTitle: "WordPress Local & BD",
+          subHtmlCss: "HTML5 i CSS3",
+          subLayoutForms: "Maquetació i Formularis",
+          subBootstrap: "Bootstrap 5 & Grid",
+          subPhpWeb: "Manual Web de PHP",
+          btnMenu: "Menú",
+          btnToggleMenu: "Ocultar / Mostrar menú lateral",
+          btnHideMenu: "Ocultar menú",
+          btnCloseViewer: "Tancar visor i tornar a l'inici",
+          btnNewTab: "Nova pestanya",
+          btnDownload: "Descarregar",
+          footerText1: "Portal Docent · Implantació d'Aplicacions Web (IAW) · 2n ASIR",
+          footerText2: "Desenvolupat amb HTML5 semàntic i Bootstrap 5.3 · Desplegable en GitHub Pages"
+        },
+        es: {
+          portalSubtitle: "2º ASIR",
+          btnHome: "Inicio",
+          btnBlocks: "Bloques",
+          themeLight: "Claro",
+          themeDark: "Oscuro",
+          themeAuto: "Automático",
+          sidebarTitle: "Temario IAW",
+          searchPlaceholder: "Buscar recursos, temas...",
+          clearSearchTitle: "Limpiar búsqueda",
+          btnMenu: "Menú",
+          btnToggleMenu: "Ocultar / Mostrar menú lateral",
+          btnHideMenu: "Ocultar menú",
+          heroBadge: "CFGS Administración de Sistemas Informáticos en Red",
+          heroTitle: "Implantación de Aplicaciones Web (IAW)",
+          heroLead: "Portal docente oficial del curso 2º ASIR. Selecciona un recurso del menú lateral o explora los bloques a continuación.",
+          btnExplore: "Explorar Recursos",
+          raTitle: "Objetivos y Resultados de Aprendizaje (RA)",
+          ra1: "Instala y configura servidores de aplicaciones web verificando su correcto funcionamiento.",
+          ra2: "Desarrolla y despliega aplicaciones con lenguajes de script de ejecución en cliente.",
+          ra3: "Implanta aplicaciones web integradas con servidores de bases de datos relacionales.",
+          ra4: "Administra gestores de contenidos web (CMS) personalizando su apariencia y funcionalidades.",
+          b0Title: "Bloque 0: Presentación",
+          b0CardTitle: "Presentación y Planificación",
+          b0CardDesc: "Evaluación inicial, criterios de evaluación, herramientas de trabajo y organización del curso.",
+          b1Title: "Bloque 1: Introducción App Web",
+          b1CardTitle: "Introducción a las App Web",
+          b1CardDesc: "Arquitectura cliente/servidor, configuración del entorno de desarrollo y test autocorregible.",
+          b2Title: "Bloque 2: Diseño Web",
+          b2CardTitle: "Diseño Web & Bootstrap",
+          b2CardDesc: "HTML5 semántico, CSS3 moderno, maquetación con Flexbox y Grid, y componentes de Bootstrap 5.",
+          b3Title: "Bloque 3: Javascript",
+          b3CardTitle: "Programación Cliente (JS)",
+          b3CardDesc: "Sintaxis moderna de JavaScript, estructuras de datos, manipulación del árbol DOM y eventos.",
+          b4Title: "Bloque 4: Servidor (PHP)",
+          b4CardTitle: "Programación Servidor (PHP)",
+          b4CardDesc: "Desarrollo en servidor con PHP, sesiones, cookies, acceso a bases de datos mediante PDO y POO.",
+          b5Title: "Bloque 5: Asíncrona (AJAX)",
+          b5b6CardBadge: "Bloque 5 & 6",
+          b5b6CardTitle: "Asíncrona & CMS",
+          b5b6CardDesc: "Comunicación asíncrona con AJAX/jQuery, gestores de contenidos (WordPress, PrestaShop) y ofimática web.",
+          b6Title: "Bloque 6: Gestión Contenidos",
+          wpTitle: "WordPress Local & BD",
+          subHtmlCss: "HTML5 y CSS3",
+          subLayoutForms: "Maquetación y Formularios",
+          subBootstrap: "Bootstrap 5 & Grid",
+          subPhpWeb: "Manual Web de PHP",
+          btnCloseViewer: "Cerrar visor y volver al inicio",
+          btnNewTab: "Nueva pestaña",
+          btnDownload: "Descargar",
+          footerText1: "Portal Docente · Implantación de Aplicaciones Web (IAW) · 2º ASIR",
+          footerText2: "Desarrollado con HTML5 semántico y Bootstrap 5.3 · Desplegable en GitHub Pages"
+        }
+      };
+
+      let currentLang = localStorage.getItem('iaw_lang') || 'va';
+
+      function applyLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('iaw_lang', lang);
+        document.documentElement.lang = lang === 'va' ? 'ca' : 'es';
+
+        // Actualizar etiqueta del botón selector
+        const labelEl = document.getElementById('currentLangLabel');
+        if (labelEl) labelEl.textContent = lang === 'va' ? 'Valencià' : 'Castellano';
+
+        // Actualizar estado en el menú desplegable
+        document.querySelectorAll('.lang-switcher').forEach(btn => {
+          const isActive = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+
+        // Traducir elementos estáticos
+        const dict = i18nData[lang] || i18nData.va;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) el.textContent = dict[key];
+        });
+
+        // Traducir atributos (placeholders, titles)
+        document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+          const parts = el.getAttribute('data-i18n-attr').split(':');
+          if (parts.length === 2) {
+            const attr = parts[0];
+            const key = parts[1];
+            if (dict[key]) el.setAttribute(attr, dict[key]);
+          }
+        });
+
+        // Traducir lista de recursos en el temario
+        document.querySelectorAll('.resource-link').forEach(link => {
+          const title = link.getAttribute(`data-title-${lang}`);
+          const badge = link.getAttribute(`data-badge-${lang}`);
+          const srcLang = link.getAttribute(`data-src-${lang}`);
+          
+          if (srcLang) link.setAttribute('data-src', srcLang);
+
+          const labelSpan = link.querySelector('.res-label');
+          if (labelSpan && title) labelSpan.textContent = title;
+
+          const badgeSpan = link.querySelector('.res-badge');
+          if (badgeSpan && badge) badgeSpan.textContent = badge;
+        });
+
+        // Si el visor está abierto, actualizar su encabezado
+        if (activeResource) {
+          updateViewerHeader(activeResource);
+        }
+
+        // Sincronizar idioma con el documento dentro del iframe si soporta postMessage
+        try {
+          if (docViewerFrame && docViewerFrame.contentWindow) {
+            docViewerFrame.contentWindow.postMessage({ type: 'SET_LANG', lang: lang }, '*');
+          }
+        } catch (e) {}
+      }
+
+      // Escuchar cambios de idioma emitidos desde documentos embebidos en el visor
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'SET_LANG' && e.data.lang !== currentLang) {
+          applyLanguage(e.data.lang);
+        }
+      });
+
+      // --- MODO CLARO / OSCURO / AUTO ---
+      const storedTheme = localStorage.getItem('theme');
+
+      const getPreferredTheme = () => {
+        if (storedTheme) return storedTheme;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      };
+
+      const setTheme = function (theme) {
+        if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', theme);
+        }
+      };
+
+      setTheme(getPreferredTheme());
+
+      const showActiveTheme = (theme) => {
+        const activeThemeIcon = document.querySelector('.theme-icon-active');
+        const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
+        if (!btnToActive) return;
+
+        document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+          element.classList.remove('active');
+          element.setAttribute('aria-pressed', 'false');
+        });
+
+        btnToActive.classList.add('active');
+        btnToActive.setAttribute('aria-pressed', 'true');
+
+        if (activeThemeIcon) {
+          activeThemeIcon.className = theme === 'light' ? 'bi bi-sun-fill' : (theme === 'dark' ? 'bi bi-moon-stars-fill' : 'bi bi-circle-half');
+        }
+      };
+
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme !== 'light' && currentTheme !== 'dark') {
+          setTheme(getPreferredTheme());
+        }
+      });
+
+      document.querySelectorAll('[data-bs-theme-value]').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          const theme = toggle.getAttribute('data-bs-theme-value');
+          localStorage.setItem('theme', theme);
+          setTheme(theme);
+          showActiveTheme(theme);
+        });
+      });
+
+      showActiveTheme(getPreferredTheme());
+
+      // --- VISOR DINÁMICO Y NAVEGACIÓN ---
+      const dashboardSection = document.getElementById('dashboardSection');
+      const viewerSection = document.getElementById('viewerSection');
+      const docViewerFrame = document.getElementById('docViewerFrame');
+      const viewerTitle = document.getElementById('viewerTitle');
+      const viewerBadge = document.getElementById('viewerBadge');
+      const viewerBlock = document.getElementById('viewerBlock');
+      const btnOpenExternal = document.getElementById('btnOpenExternal');
+      const btnDownloadResource = document.getElementById('btnDownloadResource');
+      const btnBackDashboard = document.getElementById('btnBackDashboard');
+      const btnDashboard = document.getElementById('btnDashboard');
+      const brandHome = document.getElementById('brandHome');
+
+      let activeResource = null;
+
+      function updateViewerHeader(res) {
+        if (!res) return;
+        const title = res[`title_${currentLang}`] || res.title;
+        const block = res[`block_${currentLang}`] || res.block;
+        const badge = res[`badge_${currentLang}`] || res.badge;
+        const src = res[`src_${currentLang}`] || res.src;
+
+        viewerTitle.textContent = title || 'Document';
+        viewerBlock.textContent = block ? `· ${block}` : '';
+        viewerBadge.textContent = badge || 'Recurs';
+        btnOpenExternal.href = src;
+        btnDownloadResource.href = src;
+      }
+
+      function openResource(data) {
+        if (!data || !data.src) return;
+
+        activeResource = data;
+
+        if (data.type === 'sql') {
+          window.location.href = data.src;
+          return;
+        }
+
+        const src = data[`src_${currentLang}`] || data.src;
+        docViewerFrame.src = src;
+        updateViewerHeader(data);
+
+        dashboardSection.style.display = 'none';
+        viewerSection.style.display = 'block';
+
+        const offcanvasElement = document.getElementById('sidebarOffcanvas');
+        if (offcanvasElement) {
+          const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+          if (bsOffcanvas) bsOffcanvas.hide();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showDashboard() {
+        activeResource = null;
+        docViewerFrame.src = 'about:blank';
+        viewerSection.style.display = 'none';
+        dashboardSection.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Eventos de los enlaces de recursos
+      document.querySelectorAll('.resource-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          const data = {
+            src: this.getAttribute('data-src'),
+            src_va: this.getAttribute('data-src-va'),
+            src_es: this.getAttribute('data-src-es'),
+            title: this.getAttribute(`data-title-${currentLang}`) || this.getAttribute('data-title-va'),
+            title_va: this.getAttribute('data-title-va'),
+            title_es: this.getAttribute('data-title-es'),
+            block: this.getAttribute(`data-block-${currentLang}`) || this.getAttribute('data-block-va'),
+            block_va: this.getAttribute('data-block-va'),
+            block_es: this.getAttribute('data-block-es'),
+            badge: this.getAttribute(`data-badge-${currentLang}`) || this.getAttribute('data-badge-va'),
+            badge_va: this.getAttribute('data-badge-va'),
+            badge_es: this.getAttribute('data-badge-es'),
+            type: this.getAttribute('data-type')
+          };
+          openResource(data);
+        });
+      });
+
+      btnBackDashboard.addEventListener('click', showDashboard);
+      btnDashboard.addEventListener('click', showDashboard);
+      brandHome.addEventListener('click', (e) => { e.preventDefault(); showDashboard(); });
+
+      // Selector de idioma en UI
+      document.querySelectorAll('.lang-switcher').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const lang = this.getAttribute('data-lang');
+          applyLanguage(lang);
+        });
+      });
+
+      // Saltos rápidos a Bloques en el acordeón
+      document.querySelectorAll('.nav-quick-jump').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          showDashboard();
+          const targetSelector = this.getAttribute('data-accordion-target');
+          if (targetSelector) {
+            const targetEl = document.querySelector(targetSelector);
+            if (targetEl) {
+              const collapseInstance = bootstrap.Collapse.getOrCreateInstance(targetEl, { toggle: false });
+              collapseInstance.show();
+              targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          }
+        });
+      });
+
+      // --- FILTRO DE BÚSQUEDA EN EL TEMARIO ---
+      const filterInput = document.getElementById('filterInput');
+      const clearFilter = document.getElementById('clearFilter');
+      const accordionItems = document.querySelectorAll('#accordionTemari .accordion-item');
+
+      filterInput.addEventListener('input', function () {
+        const query = this.value.toLowerCase().trim();
+        clearFilter.style.display = query ? 'block' : 'none';
+
+        accordionItems.forEach(item => {
+          const links = item.querySelectorAll('.resource-link');
+          let hasMatch = false;
+
+          links.forEach(link => {
+            const text = link.textContent.toLowerCase();
+            const blockVa = (link.getAttribute('data-block-va') || '').toLowerCase();
+            const blockEs = (link.getAttribute('data-block-es') || '').toLowerCase();
+            const match = text.includes(query) || blockVa.includes(query) || blockEs.includes(query);
+            link.style.display = match ? 'flex' : 'none';
+            if (match) hasMatch = true;
+          });
+
+          const collapseEl = item.querySelector('.accordion-collapse');
+          if (query) {
+            if (hasMatch) {
+              item.style.display = '';
+              if (collapseEl) bootstrap.Collapse.getOrCreateInstance(collapseEl, { toggle: false }).show();
+            } else {
+              item.style.display = 'none';
+            }
+          } else {
+            item.style.display = '';
+          }
+        });
+      });
+
+      clearFilter.addEventListener('click', function () {
+        filterInput.value = '';
+        filterInput.dispatchEvent(new Event('input'));
+        filterInput.focus();
+      });
+
+      // --- OCULTAR / MOSTRAR MENÚ (ESCRITORIO Y MÓVIL) ---
+      const sidebarCol = document.getElementById('sidebarCol');
+      const mainContentCol = document.getElementById('mainContentCol');
+      const btnToggleSidebar = document.getElementById('btnToggleSidebar');
+      const btnCollapseDesktop = document.getElementById('btnCollapseDesktop');
+      const iconSidebarToggle = document.getElementById('iconSidebarToggle');
+      const sidebarOffcanvas = document.getElementById('sidebarOffcanvas');
+
+      let isSidebarHiddenDesktop = localStorage.getItem('iaw_sidebar_hidden_desktop') === 'true';
+
+      function applyDesktopSidebarState() {
+        if (window.innerWidth >= 992) {
+          if (isSidebarHiddenDesktop) {
+            sidebarCol.classList.add('d-none');
+            mainContentCol.classList.remove('col-lg-8', 'col-xl-9');
+            mainContentCol.classList.add('col-12');
+            if (iconSidebarToggle) iconSidebarToggle.className = 'bi bi-layout-sidebar fs-5';
+          } else {
+            sidebarCol.classList.remove('d-none');
+            mainContentCol.classList.remove('col-12');
+            mainContentCol.classList.add('col-lg-8', 'col-xl-9');
+            if (iconSidebarToggle) iconSidebarToggle.className = 'bi bi-layout-sidebar-inset fs-5';
+          }
+        } else {
+          // En móviles se gestiona vía offcanvas de Bootstrap
+          sidebarCol.classList.remove('d-none');
+          mainContentCol.classList.remove('col-12');
+          mainContentCol.classList.add('col-lg-8', 'col-xl-9');
+          if (iconSidebarToggle) iconSidebarToggle.className = 'bi bi-list fs-5';
+        }
+      }
+
+      function toggleSidebar() {
+        if (window.innerWidth < 992) {
+          const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(sidebarOffcanvas);
+          bsOffcanvas.toggle();
+        } else {
+          isSidebarHiddenDesktop = !isSidebarHiddenDesktop;
+          localStorage.setItem('iaw_sidebar_hidden_desktop', isSidebarHiddenDesktop);
+          applyDesktopSidebarState();
+        }
+      }
+
+      if (btnToggleSidebar) btnToggleSidebar.addEventListener('click', toggleSidebar);
+      if (btnCollapseDesktop) {
+        btnCollapseDesktop.addEventListener('click', () => {
+          isSidebarHiddenDesktop = true;
+          localStorage.setItem('iaw_sidebar_hidden_desktop', 'true');
+          applyDesktopSidebarState();
+        });
+      }
+
+      window.addEventListener('resize', applyDesktopSidebarState);
+      applyDesktopSidebarState();
+
+      // Compatibilidad hacia atrás con scripts legados (codigo.js)
+      window.ocultarMenu = toggleSidebar;
+
+      // Inicializar idioma almacenado o por defecto
+      applyLanguage(currentLang);
+
+    })();
+  </script>
+
+</body>
+</html>

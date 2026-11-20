@@ -1,0 +1,72 @@
+:root {
+  --iaw-sidebar-width: 320px;
+  --iaw-transition-speed: 0.25s;
+}
+
+/* Tipografía de código y bloques técnicos */
+code, kbd, pre, samp {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875em;
+}
+
+pre {
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  padding: 1rem;
+}
+
+/* Micro-interacciones en listas y tarjetas */
+.resource-item {
+  transition: transform var(--iaw-transition-speed) ease, background-color var(--iaw-transition-speed) ease;
+  cursor: pointer;
+}
+
+.resource-item:hover {
+  background-color: var(--bs-secondary-bg);
+  transform: translateX(4px);
+}
+
+.card-hover {
+  transition: transform var(--iaw-transition-speed) ease, box-shadow var(--iaw-transition-speed) ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--bs-box-shadow-lg);
+}
+
+/* Contenedor del visor dinámico */
+.viewer-container {
+  min-height: calc(100vh - 170px);
+  height: calc(100vh - 170px);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  background-color: var(--bs-body-bg);
+}
+
+.viewer-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: calc(var(--bs-border-radius) - 1px);
+}
+
+/* Ajustes de scrollbar suave */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bs-tertiary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bs-secondary-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-primary);
+}

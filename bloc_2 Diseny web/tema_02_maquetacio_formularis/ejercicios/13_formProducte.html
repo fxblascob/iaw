@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Información sobre el producto</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        fieldset {
+            border: 1px solid #777;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+        legend { font-weight: normal; padding: 0 6px; }
+        .campo { margin-bottom: 12px; }
+        .campo label { display: block; margin-bottom: 4px; }
+        .input-ancho { width: 95%; padding: 4px; }
+        textarea { width: 95%; height: 90px; }
+        .fila-economica {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 15px;
+        }
+        .boton-centrado {
+            max-width: 600px;
+            text-align: center;
+            margin-top: 15px;
+        }
+        .boton-centrado input {
+            padding: 6px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Información sobre el producto</h1>
+
+    <form action="#" method="post" enctype="multipart/form-data">
+        <!-- Bloque 1: Datos básicos -->
+        <fieldset>
+            <legend>Datos básicos</legend>
+            
+            <div class="campo">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="input-ancho">
+            </div>
+
+            <div class="campo">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion"></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="foto">Foto</label>
+                <input type="file" id="foto" name="foto">
+            </div>
+
+            <div class="campo">
+                <input type="checkbox" id="contador" name="contador">
+                <label for="contador" style="display:inline;">Añadir contador de visitas</label>
+            </div>
+        </fieldset>
+
+        <!-- Bloque 2: Datos económicos -->
+        <fieldset>
+            <legend>Datos económicos</legend>
+            
+            <div class="fila-economica">
+                <div>
+                    <label for="precio" style="display:inline;">Precio</label>
+                    <input type="text" id="precio" name="precio" style="width: 70px;"> €
+                </div>
+                <div>
+                    <label for="impuestos" style="display:inline;">Impuestos</label>
+                    <select id="impuestos" name="impuestos">
+                        <option value="4">4%</option>
+                        <option value="7">7%</option>
+                        <option value="16">16%</option>
+                        <option value="25">25%</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo">
+                <label><strong>Promoción</strong></label>
+                <div><input type="radio" id="p_ninguno" name="promocion" value="ninguno" checked> <label for="p_ninguno" style="display:inline;">Ninguno</label></div>
+                <div><input type="radio" id="p_transporte" name="promocion" value="transporte"> <label for="p_transporte" style="display:inline;">Transporte gratuito</label></div>
+                <div><input type="radio" id="p_descuento" name="promocion" value="descuento5"> <label for="p_descuento" style="display:inline;">Descuento 5%</label></div>
+            </div>
+        </fieldset>
+
+        <!-- Botón Enviar centrado -->
+        <div class="boton-centrado">
+            <input type="submit" value="Enviar">
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<html>
+<head>
+   <meta charset="utf8" />
+   <script type="text/javascript">
+
+      var xmlhttp;
+
+      function busca()
+      {
+         var texto=document.getElementById("busqueda").value;
+         var url = "busca.php?texto=" + texto;
+         if (window.XMLHttpRequest)
+         {
+            xmlhttp=new XMLHttpRequest();
+         }
+         else if (window.ActiveXObject)
+         {
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         if (xmlhttp)
+         {
+            xmlhttp.onreadystatechange=recogerPeticion;
+            xmlhttp.open("GET",url,true);
+            xmlhttp.send(null);
+         }
+      }
+
+      function recogerPeticion()
+      {
+         if (xmlhttp.readyState==4)
+         {
+            if (xmlhttp.status==200)
+            {
+               document.getElementById("resultados").innerHTML=
+                  xmlhttp.responseText;
+            }
+            else
+            {
+               alert("Problema conectando con servidor: " + xmlhttp.status);
+            }
+         }
+      }
+
+   </script>
+</head>
+<body>
+<h1>Buscador de personas</h1>
+<input type="text" id="busqueda" onkeyup="javascript:busca()" />
+<div id="resultados">
+</div>
+</body>
+</html>

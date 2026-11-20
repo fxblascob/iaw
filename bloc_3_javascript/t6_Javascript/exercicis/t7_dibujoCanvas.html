@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Dibuixar amb Canvas</title>
+		<style>
+            #miCanvas
+            {
+                border-style: solid;
+                border-width: 2px;
+                border-color: black;
+            }
+        </style>
+        <script>
+            window.onload = function() {
+                let canvas = document.getElementById("miCanvas");
+                let contexto = canvas.getContext("2d");
+                //color de front i relleno
+                contexto.strokeStyle = "blue";
+                contexto.fillStyle = "red";
+                //fre rectangle
+                contexto.strokeRect(10, 10, 100, 50);
+                contexto.fillRect(10, 10, 100, 50);
+                
+                //fer linia
+                contexto.moveTo(200, 200);
+                contexto.lineTo(300, 300);
+                contexto.strokeStyle = "green";
+                contexto.stroke();
+                
+                //fer cercle
+                contexto.beginPath();
+                contexto.arc(400, 200, 40, 0, Math.PI * 2);
+                contexto.fillStyle = 'yellow';
+                contexto.fill();
+                contexto.closePath();
+                
+            }
+            
+        </script>
+	</head>
+	<body>
+		<canvas id="miCanvas" width=600" height="400">
+            Tu navegador no soporta canvas
+        </canvas>
+
+	</body>
+</html>

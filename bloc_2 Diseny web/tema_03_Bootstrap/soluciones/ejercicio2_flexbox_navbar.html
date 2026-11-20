@@ -1,0 +1,77 @@
+<!--
+================================================================================
+EJERCICIO 2 (Flexbox): Barra de navegación con acciones separadas
+
+Objetivo:
+Crear una barra de navegación con el logo a la izquierda, y a la derecha un 
+enlace de soporte y un botón de login separados entre sí por 10px.
+
+HTML base:
+<nav class="navbar">
+  <div class="logo">SysAdmin Hub</div>
+  <div class="nav-links">
+    <a href="#">Soporte</a>
+    <button>Acceder</button>
+  </div>
+</nav>
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 2: Flexbox - Barra de navegación</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between; /* Separa el logo a la izquierda y nav-links a la derecha */
+      align-items: center;
+      padding: 12px 24px;
+      border-bottom: 1px solid #e0e0e0;
+      background-color: #ffffff;
+    }
+    .logo {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px; /* Enlace y botón separados entre sí por 10px */
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #0066cc;
+      font-size: 0.95rem;
+    }
+    .nav-links button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 7px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .nav-links button:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">SysAdmin Hub</div>
+    <div class="nav-links">
+      <a href="#">Soporte</a>
+      <button>Acceder</button>
+    </div>
+  </nav>
+</body>
+</html>

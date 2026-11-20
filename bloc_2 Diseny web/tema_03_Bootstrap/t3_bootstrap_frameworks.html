@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ca" data-lang="va" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 3: Frameworks i Disseny Web Adaptatiu (Bootstrap 5.3)</title>
+
+  <!-- Bootstrap 5.3 CSS & Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estils del portal -->
+  <link rel="stylesheet" href="../../css/styles.css">
+
+  <style>
+    /* Conmutacio neta d'idioma amb Bootstrap */
+    html[data-lang="va"] .lang-es { display: none; }
+    html[data-lang="es"] .lang-va { display: none; }
+
+    /* Estils didàctics per a la reixeta */
+    .demo-grid-box {
+      background-color: rgba(13, 110, 253, 0.12);
+      border: 1px solid rgba(13, 110, 253, 0.3);
+      padding: 10px;
+      text-align: center;
+      font-weight: 600;
+      font-family: monospace;
+      color: #0d6efd;
+      border-radius: 4px;
+    }
+  </style>
+
+  <!-- Mermaid.js per a diagrames tècnics -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose'
+      });
+    });
+  </script>
+</head>
+<body class="bg-body-tertiary py-4">
+
+  <div class="container" style="max-width: 1020px;">
+
+    <!-- Capçalera del Tema amb Selector d'Idioma -->
+    <header class="card border shadow-sm mb-4 bg-body">
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <span class="badge bg-primary px-3 py-2 rounded-pill">IAW · Bloc 2 · Tema 3</span>
+          
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Selector Bilingüe -->
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="btnLangToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-translate text-primary"></i>
+                <span id="currentLangLabel">Valencià</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn active" data-set-lang="va">
+                    <span>Valencià</span>
+                    <span class="badge text-bg-primary-subtle text-primary border ms-2">VA</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn" data-set-lang="es">
+                    <span>Castellano</span>
+                    <span class="badge text-bg-secondary-subtle text-secondary border ms-2">ES</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botó Descarregar PDF Original -->
+            <a href="./t5. Frameworks i disseny web adaptatiuv2023.pdf" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" target="_blank" download>
+              <i class="bi bi-file-earmark-pdf"></i>
+              <span class="lang-va">Descarregar PDF</span>
+              <span class="lang-es">Descargar PDF</span>
+            </a>
+            <!-- Botó Accés Exercicis -->
+            <a href="#sec-exercicis" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
+              <i class="bi bi-code-slash"></i>
+              <span class="lang-va">Pràctiques d'Aula</span>
+              <span class="lang-es">Prácticas de Aula</span>
+            </a>
+          </div>
+        </div>
+
+        <h1 class="display-6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Tema 3: Frameworks i Disseny Web Adaptatiu</span>
+          <span class="lang-es">Tema 3: Frameworks y Diseño Web Adaptativo</span>
+        </h1>
+        <p class="lead text-primary fw-semibold mb-3">
+          <span class="lang-va">Maquetació responsiva pura (Flexbox, CSS Grid) i desenvolupament d'interfícies modernes amb Bootstrap 5.3</span>
+          <span class="lang-es">Maquetación responsiva pura (Flexbox, CSS Grid) y desarrollo de interfaces modernas con Bootstrap 5.3</span>
+        </p>
+        <p class="text-body-secondary mb-0 small">
+          <i class="bi bi-mortarboard me-1"></i>
+          <span class="lang-va">Implantació d'Aplicacions Web (IAW) — 2n ASIR · Bloc 2: Disseny Web</span>
+          <span class="lang-es">Implantación de Aplicaciones Web (IAW) — 2º ASIR · Bloque 2: Diseño Web</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- Barra Ràpida de Navegació / Índex de Continguts -->
+    <nav class="card border shadow-sm mb-4 bg-body sticky-top" style="top: 1rem; z-index: 1020;">
+      <div class="card-body p-2 p-md-3">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <span class="fw-bold text-primary small d-flex align-items-center gap-1">
+            <i class="bi bi-list-nested"></i>
+            <span class="lang-va">Índex del tema:</span>
+            <span class="lang-es">Índice del tema:</span>
+          </span>
+          <div class="d-flex flex-wrap gap-1 small">
+            <a href="#sec-responsive-intro" class="btn btn-sm btn-light border py-1 px-2">1. <span class="lang-va">Disseny Adaptatiu</span><span class="lang-es">Diseño Adaptativo</span></a>
+            <a href="#sec-flexbox-grid" class="btn btn-sm btn-light border py-1 px-2">2. <span class="lang-va">Flexbox vs Grid</span><span class="lang-es">Flexbox vs Grid</span></a>
+            <a href="#sec-grid-bootstrap" class="btn btn-sm btn-light border py-1 px-2">3. <span class="lang-va">Reixeta 12 Cols</span><span class="lang-es">Rejilla 12 Cols</span></a>
+            <a href="#sec-breakpoints" class="btn btn-sm btn-light border py-1 px-2">4. <span class="lang-va">Breakpoints</span><span class="lang-es">Breakpoints</span></a>
+            <a href="#sec-formularis-botons" class="btn btn-sm btn-light border py-1 px-2">5. <span class="lang-va">Controls & Botons</span><span class="lang-es">Controles & Botones</span></a>
+            <a href="#sec-components" class="btn btn-sm btn-light border py-1 px-2">6. <span class="lang-va">Components & Cards</span><span class="lang-es">Componentes & Cards</span></a>
+            <a href="#sec-navbars" class="btn btn-sm btn-light border py-1 px-2">7. <span class="lang-va">Navbars & Menús</span><span class="lang-es">Navbars & Menús</span></a>
+            <a href="#sec-exercicis" class="btn btn-sm btn-primary-subtle text-primary border py-1 px-2 fw-semibold">
+              <i class="bi bi-check2-circle"></i>
+              <span class="lang-va">Pràctiques d'Aula</span>
+              <span class="lang-es">Prácticas de Aula</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 1: DISSENY ADAPTATIU I MEDIA QUERIES-->
+    <!-- ========================================== -->
+    <section id="sec-responsive-intro" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-phone-flip"></i>
+          <span class="lang-va">1. Fonaments del Disseny Web Adaptatiu (Responsive Web Design)</span>
+          <span class="lang-es">1. Fundamentos del Diseño Web Adaptativo (Responsive Web Design)</span>
+        </h2>
+        <span class="badge bg-primary-subtle text-primary border">Mobile-First</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">El <strong>Disseny Web Adaptatiu (RWD)</strong> és la tècnica de desenvolupament que garanteix que un lloc web s'adapte harmònicament a la resolució, mida de pantalla i orientació de qualsevol dispositiu (des d'un rellotge o smartphone fins a monitors 4K), sense duplicar el codi HTML.</span>
+          <span class="lang-es">El <strong>Diseño Web Adaptativo (RWD)</strong> es la técnica de desarrollo que garantiza que un sitio web se adapte armónicamente a la resolución, tamaño de pantalla y orientación de cualquier dispositivo (desde un smartphone hasta monitores 4K), sin duplicar el código HTML.</span>
+        </p>
+
+        <!-- Els tres pilars del RWD -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <span class="lang-va">Els 3 pilars tècnics del Disseny Web Adaptatiu:</span>
+          <span class="lang-es">Los 3 pilares técnicos del Diseño Web Adaptativo:</span>
+        </h3>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">1. Meta Viewport</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va"><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code>. Obliga el navegador mòbil a renderitzar a la seua amplada física real i no amb un zoom artificial de 980px.</span>
+                <span class="lang-es"><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code>. Obliga al navegador móvil a renderizar a su anchura física real y no con un zoom artificial de 980px.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">2. Graelles i Imatges Fluides</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Ús d'unitats relatives (<code>%</code>, <code>rem</code>, <code>fr</code>) en lloc de mides estàtiques rígides en píxels, i regles com <code>img { max-width: 100%; height: auto; }</code>.</span>
+                <span class="lang-es">Uso de unidades relativas (<code>%</code>, <code>rem</code>, <code>fr</code>) en lugar de medidas estáticas rígidas en píxeles, y reglas como <code>img { max-width: 100%; height: auto; }</code>.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">3. CSS Media Queries</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Condicions de full d'estils (<code>@media (min-width: 768px) { ... }</code>) que apliquen regles específiques quan la pantalla supera o baixa d'un determinat punt de tall (<em>breakpoint</em>).</span>
+                <span class="lang-es">Condiciones de hoja de estilo (<code>@media (min-width: 768px) { ... }</code>) que aplican reglas específicas cuando la pantalla supera o baja de un determinado punto de corte (<em>breakpoint</em>).</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 01 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 01</span>
+                <span class="lang-es">Ejercicio Práctico 01</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">01responsiveLlibres.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-7">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Maquetació adaptativa pura amb Media Queries manuals</span>
+                  <span class="lang-es">Maquetación adaptativa pura con Media Queries manuales</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea una pàgina de ressenyes de llibres que en pantalles grans (<code>min-width: 750px</code>) mostre un menú horitzontal i llibres en columnes paral·leles, mentre que en mòbils (<code>&lt; 750px</code>) el menú passe a vertical i les columnes s'apilen una sota l'altra.</span>
+                  <span class="lang-es">Crea una página de reseñas de libros que en pantallas grandes (<code>min-width: 750px</code>) muestre un menú horizontal y libros en columnas paralelas, mientras que en móviles (<code>&lt; 750px</code>) el menú pase a vertical y las columnas se apilen una bajo la otra.</span>
+                </p>
+                <div class="d-flex flex-wrap gap-2">
+                  <a href="./soluciones/01responsiveLlibres_memu_normal.html" target="_blank" class="btn btn-sm btn-primary">
+                    <i class="bi bi-box-arrow-up-right me-1"></i>
+                    <span class="lang-va">Solució: Menú Normal</span>
+                    <span class="lang-es">Solución: Menú Normal</span>
+                  </a>
+                  <a href="./soluciones/01esponsiveLlibres_menu_hamburguesa.html" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-list me-1"></i>
+                    <span class="lang-va">Solució: Menú Hamburguesa</span>
+                    <span class="lang-es">Solución: Menú Hamburguesa</span>
+                  </a>
+                </div>
+              </div>
+              <div class="col-lg-5 text-center">
+                <div class="row g-2">
+                  <div class="col-6">
+                    <img src="./img/ex01_desktop.jpg" alt="Escriptori" class="img-fluid rounded border shadow-sm">
+                    <div class="small text-muted mt-1">Escriptori (&gt;750px)</div>
+                  </div>
+                  <div class="col-6">
+                    <img src="./img/ex01_mobile.jpg" alt="Mòbil" class="img-fluid rounded border shadow-sm">
+                    <div class="small text-muted mt-1">Mòbil (&lt;750px)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 2: FLEXBOX VS CSS GRID              -->
+    <!-- ========================================== -->
+    <section id="sec-flexbox-grid" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-grid-1x2-fill"></i>
+          <span class="lang-va">2. Flexbox vs CSS Grid: Criteri de Decisió Arquitectònica</span>
+          <span class="lang-es">2. Flexbox vs CSS Grid: Criterio de Decisión Arquitectónica</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">CSS Layout Engine</span>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- Taula de Decisió -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Quan utilitzar Flexbox, quan CSS Grid i quan Bootstrap?</span>
+          <span class="lang-es">¿Cuándo utilizar Flexbox, cuándo CSS Grid y cuándo Bootstrap?</span>
+        </h3>
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 20%;">Tecnologia</th>
+                <th style="width: 25%;">Model Mental</th>
+                <th style="width: 35%;"><span class="lang-va">Punts Forts</span><span class="lang-es">Puntos Fuertes</span></th>
+                <th style="width: 20%;"><span class="lang-va">Cas d'Ús Ideal</span><span class="lang-es">Caso de Uso Ideal</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-primary">Flexbox (CSS)</td>
+                <td><strong>1D (Unidimensional)</strong><br><span class="text-muted">Només files O columnes</span></td>
+                <td><span class="lang-va">Distribució d'espai interior, alineació vertical perfecta (<code>align-items: center</code>), canvis d'ordre.</span><span class="lang-es">Distribución de espacio interior, alineación vertical perfecta (<code>align-items: center</code>), cambios de orden.</span></td>
+                <td><span class="lang-va">Navbars, botons interns de cards, formularis en línia.</span><span class="lang-es">Navbars, botones internos de cards, formularios en línea.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-success">CSS Grid</td>
+                <td><strong>2D (Bidimensional)</strong><br><span class="text-muted">Files I columnes alhora</span></td>
+                <td><span class="lang-va">Estructures globals, graelles fluides amb <code>minmax()</code>, àrees semàntiques (<code>grid-template-areas</code>).</span><span class="lang-es">Estructuras globales, rejillas fluidas con <code>minmax()</code>, áreas semánticas (<code>grid-template-areas</code>).</span></td>
+                <td><span class="lang-va">Layout complet de l'app (sidebar + header + main), galeries de mètriques.</span><span class="lang-es">Layout completo de la app (sidebar + header + main), galerías de métricas.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-purple">Bootstrap 5.3</td>
+                <td><strong>Sistema de 12 columnes</strong><br><span class="text-muted">Mobile-First basat en Flexbox</span></td>
+                <td><span class="lang-va">Velocitat de desenvolupament, components preconstruïts accesibles, estandardització empresarial.</span><span class="lang-es">Velocidad de desarrollo, componentes preconstruidos accesibles, estandarización empresarial.</span></td>
+                <td><span class="lang-va">Panells d'administració, aplicacions de gestió corporatives.</span><span class="lang-es">Paneles de administración, aplicaciones de gestión corporativas.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- EXERCICI 02 & 03: FLEXBOX -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <i class="bi bi-arrows-expand text-primary me-2"></i>
+          <span class="lang-va">Pràctiques amb Flexbox</span>
+          <span class="lang-es">Prácticas con Flexbox</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 02</span><span class="lang-es">Ejercicio 02</span> · Flexbox Navbar</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Barra de navegació amb accions separades</span><span class="lang-es">Barra de navegación con acciones separadas</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Crea una barra de navegació amb el logotip a l'esquerra i a la dreta un enllaç de suport i un botó de login amb 10px d'espaiat emprant <code>justify-content: space-between</code>.</span>
+                  <span class="lang-es">Crea una barra de navegación con el logo a la izquierda y a la derecha un enlace de soporte y un botón de login con 10px de espaciado empleando <code>justify-content: space-between</code>.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex02_flexbox_navbar.png" alt="Exercici 02" class="img-fluid rounded border shadow-sm" style="max-height: 45px;">
+                </div>
+                <a href="./soluciones/ejercicio2_flexbox_navbar.html" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir ejercicio2_flexbox_navbar.html</span><span class="lang-es">Abrir ejercicio2_flexbox_navbar.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 03</span><span class="lang-es">Ejercicio 03</span> · Flexbox Cards</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Targetes amb botó ancorat al fons</span><span class="lang-es">Tarjetas con botón anclado al fondo</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Aconsegueix que 3 targetes tinguen la mateixa alçària i que el botó d'acció quede sempre clavat al fons mitjançant la tècnica <code>margin-top: auto</code> en l'eix flex vertical.</span>
+                  <span class="lang-es">Consigue que 3 tarjetas tengan la misma altura y que el botón de acción quede siempre fijado al fondo mediante la técnica <code>margin-top: auto</code> en el eje flex vertical.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex03_flexbox_cards.png" alt="Exercici 03" class="img-fluid rounded border shadow-sm" style="max-height: 85px;">
+                </div>
+                <a href="./soluciones/ejercicio3_flexbox_cards.html" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir ejercicio3_flexbox_cards.html</span><span class="lang-es">Abrir ejercicio3_flexbox_cards.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 04 & 05: CSS GRID -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <i class="bi bi-grid-3x3-gap-fill text-success me-2"></i>
+          <span class="lang-va">Pràctiques amb CSS Grid</span>
+          <span class="lang-es">Prácticas con CSS Grid</span>
+        </h3>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card border-success border-opacity-50 bg-success-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-success text-white mb-2"><span class="lang-va">Exercici 04</span><span class="lang-es">Ejercicio 04</span> · Grid Layout</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Estructura general d'un panell de control</span><span class="lang-es">Estructura general de un panel de control</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Estructura una aplicació amb capçalera completa (60px), barra lateral (220px), contingut principal i peu de pàgina (40px) emprant <code>grid-template-areas</code>.</span>
+                  <span class="lang-es">Estructura una aplicación con cabecera completa (60px), barra lateral (220px), contenido principal y pie de página (40px) empleando <code>grid-template-areas</code>.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex04_grid_layout.png" alt="Exercici 04" class="img-fluid rounded border shadow-sm" style="max-height: 80px;">
+                </div>
+                <a href="./soluciones/ejercicio4_grid_layout.html" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir ejercicio4_grid_layout.html</span><span class="lang-es">Abrir ejercicio4_grid_layout.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-success border-opacity-50 bg-success-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-success text-white mb-2"><span class="lang-va">Exercici 05</span><span class="lang-es">Ejercicio 05</span> · Grid Mètriques</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Galeria de mètriques 100% responsive sense Media Queries</span><span class="lang-es">Galería de métricas 100% responsive sin Media Queries</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Mostra 6 caixes de mètriques de servidor (CPU, RAM, Disc) que es reorganitzen automàticament de 4 a 2 i 1 columna mitjançant <code>repeat(auto-fit, minmax(200px, 1fr))</code>.</span>
+                  <span class="lang-es">Muestra 6 cajas de métricas de servidor (CPU, RAM, Disco) que se reorganizan automáticamente de 4 a 2 y 1 columna mediante <code>repeat(auto-fit, minmax(200px, 1fr))</code>.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex05_grid_metricas.png" alt="Exercici 05" class="img-fluid rounded border shadow-sm" style="max-height: 80px;">
+                </div>
+                <a href="./soluciones/ejercicio5_grid_metricas.html" target="_blank" class="btn btn-sm btn-outline-success w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir ejercicio5_grid_metricas.html</span><span class="lang-es">Abrir ejercicio5_grid_metricas.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 3: LA REIXETA DE 12 COLUMNES       -->
+    <!-- ========================================== -->
+    <section id="sec-grid-bootstrap" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-columns-gap"></i>
+          <span class="lang-va">3. El Sistema de Reixeta (Grid System) de Bootstrap 5.3</span>
+          <span class="lang-es">3. El Sistema de Rejilla (Grid System) de Bootstrap 5.3</span>
+        </h2>
+        <span class="badge bg-primary">12 Columnes</span>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- Jerarquia d'or -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">La Jerarquia Obligatòria: Container &rarr; Row &rarr; Col</span>
+          <span class="lang-es">La Jerarquía Obligatoria: Container &rarr; Row &rarr; Col</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">Perquè el sistema de graella de Bootstrap funcione correctament, cal respectar rigorosament aquest ordre d'anidament:</span>
+          <span class="lang-es">Para que el sistema de rejilla de Bootstrap funcione correctamente, debe respetarse rigurosamente este orden de anidamiento:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-primary mb-1">.container / .container-fluid</code>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">L'embolcall exterior. Fixa l'amplada màxima segons la pantalla, centra el contingut i afegeix el padding lateral de seguretat.</span>
+                <span class="lang-es">El contenedor exterior. Fija la anchura máxima según la pantalla, centra el contenido y añade el padding lateral de seguridad.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-success mb-1">.row</code>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">La fila flexbox. Només pot contindre directament elements de tipus columna (<code>.col-*</code>). Aplica marges negatius per a compensar el padding.</span>
+                <span class="lang-es">La fila flexbox. Solo puede contener directamente elementos de tipo columna (<code>.col-*</code>). Aplica márgenes negativos para compensar el padding.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-warning-emphasis mb-1">.col-{breakpoint}-{mida}</code>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Les columnes de contingut. La suma de mides en una mateixa fila ha de totalitzar <strong>12</strong> per a cobrir el 100% de l'ample disponible.</span>
+                <span class="lang-es">Las columnas de contenido. La suma de tamaños en una misma fila debe totalizar <strong>12</strong> para cubrir el 100% del ancho disponible.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mb-4">
+          <img src="./img/diagrama_grid_hierarchy.png" alt="Jerarquia Grid" class="img-fluid rounded border shadow-sm" style="max-height: 110px;">
+        </div>
+
+        <!-- Exemples de distribució de 12 columnes -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Distribucions típiques de la regla de la suma de 12:</span>
+          <span class="lang-es">Distribuciones típicas de la regla de la suma de 12:</span>
+        </h3>
+
+        <div class="d-flex flex-column gap-2 mb-4 font-monospace small">
+          <div class="row g-1">
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+            <div class="col-1"><div class="demo-grid-box">1</div></div>
+          </div>
+          <div class="row g-1">
+            <div class="col-4"><div class="demo-grid-box">col-4 (33.3%)</div></div>
+            <div class="col-4"><div class="demo-grid-box">col-4 (33.3%)</div></div>
+            <div class="col-4"><div class="demo-grid-box">col-4 (33.3%)</div></div>
+          </div>
+          <div class="row g-1">
+            <div class="col-4"><div class="demo-grid-box">col-4 (Sidebar)</div></div>
+            <div class="col-8"><div class="demo-grid-box">col-8 (Contingut Principal)</div></div>
+          </div>
+          <div class="row g-1">
+            <div class="col-6"><div class="demo-grid-box">col-6 (50%)</div></div>
+            <div class="col-6"><div class="demo-grid-box">col-6 (50%)</div></div>
+          </div>
+          <div class="row g-1">
+            <div class="col-12"><div class="demo-grid-box">col-12 (Amplada completa - 100%)</div></div>
+          </div>
+        </div>
+
+        <!-- PRÀCTICA D'AULA EXERCICIS 6 AL 9 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Pràctica d'Aula: Exercicis 6 al 9</span>
+                <span class="lang-es">Práctica de Aula: Ejercicios 6 al 9</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">ejercicios_6_al_9_grid_bootstrap.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Domini complet del Grid System de Bootstrap 5</span>
+              <span class="lang-es">Dominio completo del Grid System de Bootstrap 5</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Aquest arxiu conté la implementació completa dels 4 exercicis de reixeta: suma exacta de 12 (Ex 6), comportament multipantalla mòbil/tablet/escriptori (Ex 7), columnes automàtiques igualades (Ex 8) i buits de centrat mitjançant desplaçament <code>offset</code> (Ex 9).</span>
+              <span class="lang-es">Este archivo contiene la implementación completa de los 4 ejercicios de rejilla: suma exacta de 12 (Ex 6), comportamiento multipantalla móvil/tablet/escritorio (Ex 7), columnas automáticas igualadas (Ex 8) y huecos de centrado mediante desplazamiento <code>offset</code> (Ex 9).</span>
+            </p>
+            <a href="./soluciones/ejercicios_6_al_9_grid_bootstrap.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Arxiu d'Exercicis 6 al 9</span>
+              <span class="lang-es">Abrir Archivo de Ejercicios 6 al 9</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 4: ELS BREAKPOINTS DE BOOTSTRAP 5.3 -->
+    <!-- ========================================== -->
+    <section id="sec-breakpoints" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-display"></i>
+          <span class="lang-va">4. Els 6 Breakpoints i la Filosofia Mobile-First</span>
+          <span class="lang-es">4. Los 6 Breakpoints y la Filosofía Mobile-First</span>
+        </h2>
+        <span class="badge bg-warning-subtle text-warning-emphasis border">Responsive Tiers</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">Bootstrap està dissenyat seguint l'estratègia <strong>Mobile-First</strong>: els estils es defineixen primer per a la pantalla més xicoteta i s'amplien mitjançant media queries amb <code>min-width</code>:</span>
+          <span class="lang-es">Bootstrap está diseñado siguiendo la estrategia <strong>Mobile-First</strong>: los estilos se definen primero para la pantalla más pequeña y se amplían mediante media queries con <code>min-width</code>:</span>
+        </p>
+
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Breakpoint</th>
+                <th>Infix de classe</th>
+                <th>Dimensions de pantalla</th>
+                <th>Dispositiu típic</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Extra small</strong></td>
+                <td><em>Cap (col-*)</em></td>
+                <td>&lt; 576 px</td>
+                <td><span class="lang-va">Smartphones en vertical</span><span class="lang-es">Smartphones en vertical</span></td>
+              </tr>
+              <tr>
+                <td><strong>Small</strong></td>
+                <td><code>sm</code></td>
+                <td>&ge; 576 px</td>
+                <td><span class="lang-va">Mòbils en apaïsat (horitzontal)</span><span class="lang-es">Móviles en apaisado (horizontal)</span></td>
+              </tr>
+              <tr>
+                <td><strong>Medium</strong></td>
+                <td><code>md</code></td>
+                <td>&ge; 768 px</td>
+                <td><span class="lang-va">Tauletes (tablets) en vertical</span><span class="lang-es">Tablets en vertical</span></td>
+              </tr>
+              <tr>
+                <td><strong>Large</strong></td>
+                <td><code>lg</code></td>
+                <td>&ge; 992 px</td>
+                <td><span class="lang-va">Portàtils i pantalles d'escriptori</span><span class="lang-es">Portátiles y pantallas de escritorio</span></td>
+              </tr>
+              <tr>
+                <td><strong>Extra large</strong></td>
+                <td><code>xl</code></td>
+                <td>&ge; 1200 px</td>
+                <td><span class="lang-va">Monitors de sobretaula grans</span><span class="lang-es">Monitores de sobremesa grandes</span></td>
+              </tr>
+              <tr>
+                <td><strong>Extra extra large</strong></td>
+                <td><code>xxl</code></td>
+                <td>&ge; 1400 px</td>
+                <td><span class="lang-va">Monitors ultrawide i pantalles 4K</span><span class="lang-es">Monitores ultrawide y pantallas 4K</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="alert alert-info py-2 px-3 small mb-0">
+          <i class="bi bi-info-circle-fill me-1"></i>
+          <span class="lang-va"><strong>Regla d'herència ascendent:</strong> Si definim <code>col-md-6</code>, aquesta regla s'aplicarà a <code>md</code>, <code>lg</code>, <code>xl</code> i <code>xxl</code> automàticament, llevat que especifiquem una regla superior (per exemple, <code>col-md-6 col-lg-4</code>). En pantalles inferiors (<code>&lt; 768px</code>), ocuparà el 100% (<code>col-12</code>) per defecte.</span>
+          <span class="lang-es"><strong>Regla de herencia ascendente:</strong> Si definimos <code>col-md-6</code>, esta regla se aplicará a <code>md</code>, <code>lg</code>, <code>xl</code> y <code>xxl</code> automáticamente, a menos que especifiquemos una regla superior (por ejemplo, <code>col-md-6 col-lg-4</code>). En pantallas inferiores (<code>&lt; 768px</code>), ocupará el 100% (<code>col-12</code>) por defecto.</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 5: FORMULARIS I BOTONS BOOTSTRAP    -->
+    <!-- ========================================== -->
+    <section id="sec-formularis-botons" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-input-cursor-text"></i>
+          <span class="lang-va">5. Controls de Formulari i Botons en Bootstrap 5.3</span>
+          <span class="lang-es">5. Controles de Formulario y Botones en Bootstrap 5.3</span>
+        </h2>
+        <span class="badge bg-success-subtle text-success border">UI Controls</span>
+      </div>
+      <div class="card-body p-4">
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Classes Essencials de Formularis:</span>
+          <span class="lang-es">Clases Esenciales de Formularios:</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-2 text-center">
+              <code class="fw-bold">.form-label</code>
+              <p class="small text-muted mb-0"><span class="lang-va">Etiqueta amb espaiat inferior òptim.</span><span class="lang-es">Etiqueta con espaciado inferior óptimo.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-2 text-center">
+              <code class="fw-bold">.form-control</code>
+              <p class="small text-muted mb-0"><span class="lang-va">Inputs i textareas estilitzats a l'ample complet.</span><span class="lang-es">Inputs y textareas estilizados a ancho completo.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-2 text-center">
+              <code class="fw-bold">.form-select</code>
+              <p class="small text-muted mb-0"><span class="lang-va">Desplegables amb fletxa personalitzada.</span><span class="lang-es">Desplegables con flecha personalizada.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-2 text-center">
+              <code class="fw-bold">.form-check-input</code>
+              <p class="small text-muted mb-0"><span class="lang-va">Checkboxes i radios amb disseny homogeni.</span><span class="lang-es">Checkboxes y radios con diseño homogéneo.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Paleta Contextual de Botons (.btn):</span>
+          <span class="lang-es">Paleta Contextual de Botones (.btn):</span>
+        </h3>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          <button class="btn btn-primary btn-sm">btn-primary</button>
+          <button class="btn btn-secondary btn-sm">btn-secondary</button>
+          <button class="btn btn-success btn-sm">btn-success</button>
+          <button class="btn btn-danger btn-sm">btn-danger</button>
+          <button class="btn btn-warning btn-sm">btn-warning</button>
+          <button class="btn btn-info btn-sm">btn-info</button>
+          <button class="btn btn-outline-primary btn-sm">btn-outline-primary</button>
+          <button class="btn btn-outline-danger btn-sm">btn-outline-danger</button>
+        </div>
+
+        <!-- EXERCICI 10 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 10</span>
+                <span class="lang-es">Ejercicio Práctico 10</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">exemple_Bootstrap.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Integració completa de reixeta, alertes, formularis i botons</span>
+                  <span class="lang-es">Integración completa de rejilla, alertas, formularios y botones</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>exemple_Bootstrap.html</code> distribuint la pantalla en dues columnes: l'esquerra (8 columnes) conté un text explicatiu i un panell d'alerta (warning); la dreta (4 columnes) integra un formulari de registre amb botons de submit i reset amb icones de Bootstrap.</span>
+                  <span class="lang-es">Crea <code>exemple_Bootstrap.html</code> distribuyendo la pantalla en dos columnas: la izquierda (8 columnas) contiene un texto explicativo y un panel de alerta (warning); la derecha (4 columnas) integra un formulario de registro con botones de submit y reset con iconos de Bootstrap.</span>
+                </p>
+                <a href="./soluciones/exemple_Bootstrap.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer exemple_Bootstrap.html</span>
+                  <span class="lang-es">Abrir Archivo exemple_Bootstrap.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex10_exemple_bootstrap.jpg" alt="Exercici 10" class="img-fluid rounded border shadow-sm" style="max-height: 140px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 6: COMPONENTS ESSENCIALS            -->
+    <!-- ========================================== -->
+    <section id="sec-components" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-collection-fill"></i>
+          <span class="lang-va">6. Components Essencials: Cards, Badges, Alertes i Breadcrumbs</span>
+          <span class="lang-es">6. Componentes Esenciales: Cards, Badges, Alertas y Breadcrumbs</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">Bootstrap Components</span>
+      </div>
+      <div class="card-body p-4">
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-2">Targetes (.card)</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">El component estrella per a encapsular continguts modulars. Disposa de subelements clars:</span>
+                <span class="lang-es">El componente estrella para encapsular contenidos modulares. Dispone de subelementos claros:</span>
+              </p>
+              <ul class="small text-body-secondary ps-3 mb-0">
+                <li><code>.card-header</code> : Capçalera de la targeta.</li>
+                <li><code>.card-body</code> : Cos amb padding integrat.</li>
+                <li><code>.card-title</code> &amp; <code>.card-text</code> : Jerarquia tipogràfica.</li>
+                <li><code>.card-footer</code> : Zona inferior per a accions o metadades.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-2">Badges, Breadcrumbs i Alertes</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Components de senyalització i navegació contextual:</span>
+                <span class="lang-es">Componentes de señalización y navegación contextual:</span>
+              </p>
+              <ul class="small text-body-secondary ps-3 mb-0">
+                <li><code>.badge.text-bg-*</code> : Insígnies de comptador o estat.</li>
+                <li><code>.breadcrumb</code> : Rastre de molles de pa jeràrquiques.</li>
+                <li><code>.alert.alert-*</code> : Notificacions visuals per a l'usuari.</li>
+                <li><code>i.bi.bi-*</code> : Més de 2.000 icones vectorials de Bootstrap Icons.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 7: NAVBARS I MENÚS ADAPTATIUS       -->
+    <!-- ========================================== -->
+    <section id="sec-navbars" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-segmented-nav"></i>
+          <span class="lang-va">7. Barres de Navegació Adaptatives (Navbar)</span>
+          <span class="lang-es">7. Barras de Navegación Adaptativas (Navbar)</span>
+        </h2>
+        <span class="badge bg-danger-subtle text-danger border">Header Navigation</span>
+      </div>
+      <div class="card-body p-4">
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Anatomia de la Navbar de Bootstrap: Com funciona el botó hamburguesa?</span>
+          <span class="lang-es">Anatomía de la Navbar de Bootstrap: ¿Cómo funciona el botón hamburguesa?</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">Una navbar de Bootstrap es desplega horitzontalment en pantalles grans i col·lapsa automàticament en un menú desplegable vertical en mòbils:</span>
+          <span class="lang-es">Una navbar de Bootstrap se despliega horizontalmente en pantallas grandes y colapsa automáticamente en un menú desplegable vertical en móviles:</span>
+        </p>
+
+        <div class="p-3 bg-body-tertiary rounded border font-monospace small mb-4">
+          &lt;nav class=&quot;<span class="text-primary fw-bold">navbar navbar-expand-lg bg-body-tertiary</span>&quot;&gt;<br>
+          &nbsp;&nbsp;&lt;div class=&quot;container-fluid&quot;&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;a class=&quot;<span class="text-success fw-bold">navbar-brand</span>&quot; href=&quot;#&quot;&gt;El Meu Lloc Web&lt;/a&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;button class=&quot;<span class="text-danger fw-bold">navbar-toggler</span>&quot; type=&quot;button&quot; <span class="text-warning-emphasis">data-bs-toggle=&quot;collapse&quot; data-bs-target=&quot;#menuNavbar&quot;</span>&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;span class=&quot;navbar-toggler-icon&quot;&gt;&lt;/span&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;div class=&quot;<span class="text-info-emphasis fw-bold">collapse navbar-collapse</span>&quot; id=&quot;menuNavbar&quot;&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ul class=&quot;navbar-nav me-auto mb-2 mb-lg-0&quot;&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li class=&quot;nav-item&quot;&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot;&gt;Inici&lt;/a&gt;&lt;/li&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ul&gt;<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;<br>
+          &nbsp;&nbsp;&lt;/div&gt;<br>
+          &lt;/nav&gt;
+        </div>
+
+        <div class="row g-3 align-items-center mb-4">
+          <div class="col-md-7">
+            <div class="alert alert-warning py-2 px-3 small mb-0">
+              <i class="bi bi-exclamation-triangle-fill me-1"></i>
+              <span class="lang-va"><strong>Dependència de JavaScript:</strong> El botó hamburguesa empra els atributs <code>data-bs-toggle=&quot;collapse&quot;</code> i <code>data-bs-target=&quot;#id&quot;</code>, que requereixen obligatòriament la inclusió de <code>bootstrap.bundle.min.js</code> abans del tancament del <code>&lt;/body&gt;</code> per a poder funcionar sense recarregar la pàgina.</span>
+              <span class="lang-es"><strong>Dependencia de JavaScript:</strong> El botón hamburguesa emplea los atributos <code>data-bs-toggle=&quot;collapse&quot;</code> y <code>data-bs-target=&quot;#id&quot;</code>, que requieren obligatoriamente la inclusión de <code>bootstrap.bundle.min.js</code> antes del cierre del <code>&lt;/body&gt;</code> para poder funcionar sin recargar la página.</span>
+            </div>
+          </div>
+          <div class="col-md-5 text-center">
+            <img src="./img/navbar_responsive.png" alt="Navbar Responsive" class="img-fluid rounded border shadow-sm" style="max-height: 90px;">
+          </div>
+        </div>
+
+        <!-- EXERCICI FINAL: MENÚS BOOTSTRAP -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exemple Pràctic de Menús</span>
+                <span class="lang-es">Ejemplo Práctico de Menús</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">tema5_menusBootstrap.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Exemples complets de barres de navegació amb Bootstrap</span>
+              <span class="lang-es">Ejemplos completos de barras de navegación con Bootstrap</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Demostració de diferents variants de barres de navegació amb logotip, enllaços actius, desplegables (dropdowns), formularis de cerca integrats i adaptabilitat mòbil completa.</span>
+              <span class="lang-es">Demostración de diferentes variantes de barras de navegación con logotipo, enlaces activos, desplegables (dropdowns), formularios de búsqueda integrados y adaptabilidad móvil completa.</span>
+            </p>
+            <a href="./tema5_menusBootstrap.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir tema5_menusBootstrap.html</span>
+              <span class="lang-es">Abrir tema5_menusBootstrap.html</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 8: QUADRE DE LES PRÀCTIQUES D'AULA -->
+    <!-- ========================================== -->
+    <section id="sec-exercicis" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-list-check"></i>
+          <span class="lang-va">8. Resum de les Pràctiques i Solucions d'Aula</span>
+          <span class="lang-es">8. Resumen de las Prácticas y Soluciones de Aula</span>
+        </h2>
+        <span class="badge bg-primary">Bloc 2 · Tema 3</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">Pots obrir directament cadascun dels codis d'exemple i solucions preparades per a aquest tema:</span>
+          <span class="lang-es">Puedes abrir directamente cada uno de los códigos de ejemplo y soluciones preparadas para este tema:</span>
+        </p>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 10%;">Exercici</th>
+                <th style="width: 30%;">Arxiu</th>
+                <th style="width: 45%;">Tècnica Clau</th>
+                <th style="width: 15%;">Acció</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-center">Ex 01-A</td>
+                <td><code>01responsiveLlibres_memu_normal.html</code></td>
+                <td><span class="lang-va">Media Queries manuals (750px) i justificació d'enllaços.</span><span class="lang-es">Media Queries manuales (750px) y justificación de enlaces.</span></td>
+                <td><a href="./soluciones/01responsiveLlibres_memu_normal.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 01-B</td>
+                <td><code>01esponsiveLlibres_menu_hamburguesa.html</code></td>
+                <td><span class="lang-va">Menú hamburguesa responsive amb Bootstrap 5.3.</span><span class="lang-es">Menú hamburguesa responsive con Bootstrap 5.3.</span></td>
+                <td><a href="./soluciones/01esponsiveLlibres_menu_hamburguesa.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 02</td>
+                <td><code>ejercicio2_flexbox_navbar.html</code></td>
+                <td><span class="lang-va">Flexbox 1D: Barra amb logo a l'esquerra i accions a la dreta.</span><span class="lang-es">Flexbox 1D: Barra con logo a la izquierda y acciones a la derecha.</span></td>
+                <td><a href="./soluciones/ejercicio2_flexbox_navbar.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 03</td>
+                <td><code>ejercicio3_flexbox_cards.html</code></td>
+                <td><span class="lang-va">Flexbox 1D: Targetes amb botó ancorat al fons (margin-top: auto).</span><span class="lang-es">Flexbox 1D: Tarjetas con botón anclado al fondo (margin-top: auto).</span></td>
+                <td><a href="./soluciones/ejercicio3_flexbox_cards.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 04</td>
+                <td><code>ejercicio4_grid_layout.html</code></td>
+                <td><span class="lang-va">CSS Grid 2D: Layout de panell amb grid-template-areas.</span><span class="lang-es">CSS Grid 2D: Layout de panel con grid-template-areas.</span></td>
+                <td><a href="./soluciones/ejercicio4_grid_layout.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 05</td>
+                <td><code>ejercicio5_grid_metricas.html</code></td>
+                <td><span class="lang-va">CSS Grid 2D: Galeria amb repeat(auto-fit, minmax(200px, 1fr)).</span><span class="lang-es">CSS Grid 2D: Galería con repeat(auto-fit, minmax(200px, 1fr)).</span></td>
+                <td><a href="./soluciones/ejercicio5_grid_metricas.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 06-09</td>
+                <td><code>ejercicios_6_al_9_grid_bootstrap.html</code></td>
+                <td><span class="lang-va">Reixeta Bootstrap 5: suma de 12, multipantalla, auto i offsets.</span><span class="lang-es">Rejilla Bootstrap 5: suma de 12, multipantalla, auto y offsets.</span></td>
+                <td><a href="./soluciones/ejercicios_6_al_9_grid_bootstrap.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Ex 10</td>
+                <td><code>exemple_Bootstrap.html</code></td>
+                <td><span class="lang-va">Pàgina completa amb reixeta (8+4), alertes, formulari i botons.</span><span class="lang-es">Página completa con rejilla (8+4), alertas, formulario y botones.</span></td>
+                <td><a href="./soluciones/exemple_Bootstrap.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">Menús</td>
+                <td><code>tema5_menusBootstrap.html</code></td>
+                <td><span class="lang-va">Exemples de barres de navegació responsives amb dropdowns.</span><span class="lang-es">Ejemplos de barras de navegación responsivas con dropdowns.</span></td>
+                <td><a href="./tema5_menusBootstrap.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Peu del Document -->
+    <footer class="text-center text-body-secondary small py-3">
+      <p class="mb-1">Implantació d'Aplicacions Web · 2n ASIR</p>
+      <p class="mb-0 text-muted">
+        <span class="lang-va">Format web bilingüe millorat i actualitzat amb Bootstrap 5.3 a partir del temari oficial</span>
+        <span class="lang-es">Formato web bilingüe mejorado y actualizado con Bootstrap 5.3 a partir del temario oficial</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap 5.3 Bundle JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lògica Bilingüe i Sincronització amb el Portal Principal -->
+  <script>
+    (function () {
+      'use strict';
+
+      const labelEl = document.getElementById('currentLangLabel');
+      const langBtns = document.querySelectorAll('.lang-btn');
+
+      function setLang(lang) {
+        const selectedLang = lang === 'es' ? 'es' : 'va';
+        document.documentElement.setAttribute('data-lang', selectedLang);
+        document.documentElement.lang = selectedLang === 'va' ? 'ca' : 'es';
+        localStorage.setItem('iaw_lang', selectedLang);
+
+        if (labelEl) {
+          labelEl.textContent = selectedLang === 'va' ? 'Valencià' : 'Castellano';
+        }
+
+        langBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-set-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+        });
+
+        // Notificar al portal pare si està incrustat en un iframe
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'SET_LANG', lang: selectedLang }, '*');
+        }
+      }
+
+      // Esdeveniments botons del selector
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          setLang(this.getAttribute('data-set-lang'));
+        });
+      });
+
+      // Escoltar canvis d'idioma del portal principal
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'SET_LANG') {
+          setLang(e.data.lang);
+        }
+      });
+
+      // Inicialitzar segons preferència desada o per defecte
+      const stored = localStorage.getItem('iaw_lang') || 'va';
+      setLang(stored);
+
+    })();
+  </script>
+
+</body>
+</html>

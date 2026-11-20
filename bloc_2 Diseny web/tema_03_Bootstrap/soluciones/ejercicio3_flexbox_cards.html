@@ -1,0 +1,105 @@
+<!--
+================================================================================
+EJERCICIO 3 (Flexbox): Tarjeta de producto con botón anclado
+
+Objetivo:
+Lograr que tres tarjetas tengan la misma altura y que el botón de acción quede 
+siempre pegado al fondo, aunque una tarjeta tenga tres líneas de texto y otra tenga diez.
+
+HTML base:
+<div class="cards-container">
+  <article class="card">
+    <h3>Servidor Web</h3>
+    <p>Apache2 configurado con virtualhosts y certificados Let's Encrypt para entornos productivos.</p>
+    <button class="btn">Gestionar</button>
+  </article>
+  <article class="card">
+    <h3>DNS</h3>
+    <p>Bind9 local.</p>
+    <button class="btn">Gestionar</button>
+  </article>
+  <article class="card">
+    <h3>Base de Datos</h3>
+    <p>Cluster MariaDB Galera con replicación síncrona multimaestro, copias de seguridad automáticas en almacenamiento externo y monitorización activa de slow queries.</p>
+    <button class="btn">Gestionar</button>
+  </article>
+</div>
+================================================================================
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicio 3: Tarjetas Flexbox</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      padding: 30px;
+      background-color: #f8f9fa;
+    }
+    .cards-container {
+      display: flex;
+      gap: 20px;
+      align-items: stretch; /* Asegura que todas las tarjetas tengan exactamente la misma altura */
+    }
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column; /* Estructura vertical interna */
+      padding: 20px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.2rem;
+    }
+    .card p {
+      color: #4b5563;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+    .card .btn {
+      margin-top: auto; /* Clave: empuja el botón siempre hasta el fondo del contenedor */
+      align-self: flex-start;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+    .card .btn:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div class="cards-container">
+    <article class="card">
+      <h3>Servidor Web</h3>
+      <p>Apache2 configurado con virtualhosts y certificados Let's Encrypt para entornos productivos.</p>
+      <button class="btn">Gestionar</button>
+    </article>
+    <article class="card">
+      <h3>DNS</h3>
+      <p>Bind9 local.</p>
+      <button class="btn">Gestionar</button>
+    </article>
+    <article class="card">
+      <h3>Base de Datos</h3>
+      <p>Cluster MariaDB Galera con replicación síncrona multimaestro, copias de seguridad automáticas en almacenamiento externo y monitorización activa de slow queries.</p>
+      <button class="btn">Gestionar</button>
+    </article>
+  </div>
+</body>
+</html>

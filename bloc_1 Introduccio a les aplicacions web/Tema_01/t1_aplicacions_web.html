@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="ca" data-lang="va" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 1: Aplicacions Web · Característiques, funcionament i arquitectura</title>
+
+  <!-- Bootstrap 5.3 CSS & Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estilos del portal -->
+  <link rel="stylesheet" href="../../css/styles.css">
+
+  <style>
+    /* Conmutacion limpia de idioma con Bootstrap */
+    html[data-lang="va"] .lang-es { display: none; }
+    html[data-lang="es"] .lang-va { display: none; }
+  </style>
+
+  <!-- Mermaid.js para diagramas técnicos interactivos -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose'
+      });
+    });
+  </script>
+</head>
+<body class="bg-body-tertiary py-4">
+
+  <div class="container" style="max-width: 980px;">
+
+    <!-- Encabezado del Tema con Selector de Idioma -->
+    <header class="card border shadow-sm mb-4 bg-body">
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <span class="badge bg-primary px-3 py-2 rounded-pill">IAW · 2n ASIR</span>
+          
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Selector Bilingüe -->
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="btnLangToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-translate text-primary"></i>
+                <span id="currentLangLabel">Valencià</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn active" data-set-lang="va">
+                    <span>Valencià</span>
+                    <span class="badge text-bg-primary-subtle text-primary border ms-2">VA</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn" data-set-lang="es">
+                    <span>Castellano</span>
+                    <span class="badge text-bg-secondary-subtle text-secondary border ms-2">ES</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botones de Acción -->
+            <a href="./t1_ Aplicacions_Web_Caracteristiques_Funcionament_Arquitectura.pdf" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" target="_blank" download>
+              <i class="bi bi-file-earmark-pdf"></i>
+              <span class="lang-va">Descarregar PDF</span>
+              <span class="lang-es">Descargar PDF</span>
+            </a>
+            <a href="./t1_cuestionari_autocorregible.html" class="btn btn-sm btn-outline-info d-flex align-items-center gap-1">
+              <i class="bi bi-patch-question"></i>
+              <span class="lang-va">Autoavaluació</span>
+              <span class="lang-es">Autoevaluación</span>
+            </a>
+          </div>
+        </div>
+
+        <h1 class="display-6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Tema 1: Aplicacions Web</span>
+          <span class="lang-es">Tema 1: Aplicaciones Web</span>
+        </h1>
+        <p class="lead text-primary fw-semibold mb-3">
+          <span class="lang-va">Característiques, funcionament, arquitectura i bastionat per a administradors de sistemes</span>
+          <span class="lang-es">Características, funcionamiento, arquitectura y bastionado para administradores de sistemas</span>
+        </p>
+        <p class="text-body-secondary mb-0 small">
+          <i class="bi bi-mortarboard me-1"></i>
+          <span class="lang-va">Implantació d'Aplicacions Web (IAW) — Cicle Formatiu de Grau Superior d'Administració de Sistemes Informàtics en Xarxa (ASIR)</span>
+          <span class="lang-es">Implantación de Aplicaciones Web (IAW) — Ciclo Formativo de Grado Superior de Administración de Sistemas Informáticos en Red (ASIR)</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- Barra Rápida de Navegación / Índice de Contenidos -->
+    <nav class="card border shadow-sm mb-4 bg-body sticky-top" style="top: 1rem; z-index: 1020;">
+      <div class="card-body p-2 p-md-3">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <span class="fw-bold text-primary small d-flex align-items-center gap-1">
+            <i class="bi bi-list-nested"></i>
+            <span class="lang-va">Seccions:</span>
+            <span class="lang-es">Secciones:</span>
+          </span>
+          <div class="d-flex flex-wrap gap-1 small">
+            <a href="#sec-tipus" class="btn btn-sm btn-light border py-1 px-2">1. <span class="lang-va">Tipus</span><span class="lang-es">Tipos</span></a>
+            <a href="#sec-arquitectura" class="btn btn-sm btn-light border py-1 px-2">2. Arquitectura</a>
+            <a href="#sec-url" class="btn btn-sm btn-light border py-1 px-2">3. URL</a>
+            <a href="#sec-tecnologies" class="btn btn-sm btn-light border py-1 px-2">4. <span class="lang-va">Tecnologies & Servidors</span><span class="lang-es">Tecnologías & Servidores</span></a>
+            <a href="#sec-avantatges" class="btn btn-sm btn-light border py-1 px-2">5. <span class="lang-va">Balanç</span><span class="lang-es">Balance</span></a>
+            <a href="#sec-protocols" class="btn btn-sm btn-light border py-1 px-2">6. <span class="lang-va">Protocols & Seguretat</span><span class="lang-es">Protocolos & Seguridad</span></a>
+            <a href="#sec-mvc" class="btn btn-sm btn-light border py-1 px-2">7. MVC</a>
+            <a href="#sec-faqs" class="btn btn-sm btn-primary-subtle text-primary border py-1 px-2 fw-semibold">
+              <i class="bi bi-question-circle"></i>
+              <span class="lang-va">Preguntes Clau</span>
+              <span class="lang-es">Preguntas Clave</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- SECCIÓ 1 -->
+    <section id="sec-tipus" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-grid-fill"></i>
+          <span class="lang-va">1. Tipus d'aplicacions</span>
+          <span class="lang-es">1. Tipos de aplicaciones</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">En l'actualitat, l'ecosistema del programari es divideix principalment segons <strong>on s'executa el codi</strong> i <strong>on resideixen les dades</strong>:</span>
+          <span class="lang-es">En la actualidad, el ecosistema del software se divide principalmente según <strong>dónde se ejecuta el código</strong> y <strong>dónde residen los datos</strong>:</span>
+        </p>
+
+        <div class="row g-3 mt-1 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border">
+              <div class="card-body">
+                <h5 class="h6 fw-bold text-body-emphasis">
+                  <i class="bi bi-display me-2 text-primary"></i>
+                  <span class="lang-va">Aplicacions d'escriptori / natives</span>
+                  <span class="lang-es">Aplicaciones de escritorio / nativas</span>
+                </h5>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">S'executen directament sobre el sistema operatiu del dispositiu (compilades o interpretades localment). No requereixen obligatòriament connexió a la xarxa per a funcionar (per exemple, un editor gràfic com GIMP, entorns com VS Code o reproductors multimèdia locals).</span>
+                  <span class="lang-es">Se ejecutan directamente sobre el sistema operativo del dispositivo (compiladas o interpretadas localmente). No requieren obligatoriamente conexión a la red para funcionar (por ejemplo, un editor gráfico como GIMP, entornos como VS Code o reproductores multimedia locales).</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border border-primary-subtle">
+              <div class="card-body">
+                <h5 class="h6 fw-bold text-primary">
+                  <i class="bi bi-globe me-2"></i>
+                  <span class="lang-va">Aplicacions web</span>
+                  <span class="lang-es">Aplicaciones web</span>
+                </h5>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Subtipus principal del model client-servidor on la interfície s'executa de manera nativa dins d'un navegador web mitjançant tecnologies estàndard (<strong>HTML5, CSS3, JavaScript/WebAssembly</strong>), sense requerir cap paquet d'instal·lació prèvia en el sistema amfitrió.</span>
+                  <span class="lang-es">Subtipo principal del modelo cliente-servidor donde la interfaz se ejecuta de forma nativa dentro de un navegador web mediante tecnologías estándar (<strong>HTML5, CSS3, JavaScript/WebAssembly</strong>), sin requerir ningún paquete de instalación previa en el sistema anfitrión.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border">
+              <div class="card-body">
+                <h5 class="h6 fw-bold text-body-emphasis">
+                  <i class="bi bi-arrows-fullscreen me-2 text-warning"></i>
+                  <span class="lang-va">Arquitectures P2P (Peer-to-Peer)</span>
+                  <span class="lang-es">Arquitecturas P2P (Peer-to-Peer)</span>
+                </h5>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Descentralitzades, on els equips connectats tenen un rang equivalent i comparteixen recursos simultàniament actuant tant de clients com de servidors (ex: BitTorrent, IPFS).</span>
+                  <span class="lang-es">Descentralizadas, donde los equipos conectados tienen un rango equivalente y comparten recursos simultáneamente actuando tanto de clientes como de servidores (ej: BitTorrent, IPFS).</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border">
+              <div class="card-body">
+                <h5 class="h6 fw-bold text-body-emphasis">
+                  <i class="bi bi-phone me-2 text-success"></i>
+                  <span class="lang-va">Aplicacions Web Progressives (PWA) i Híbrides</span>
+                  <span class="lang-es">Aplicaciones Web Progresivas (PWA) e Híbridas</span>
+                </h5>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Combinen la portabilitat web amb funcionalitats natives del dispositiu mòbil o escriptori (notificacions push, càmera, accés fora de línia mitjançant <em>Service Workers</em> i magatzems locals).</span>
+                  <span class="lang-es">Combinan la portabilidad web con funcionalidades nativas del dispositivo móvil o escritorio (notificaciones push, cámara, acceso offline mediante <em>Service Workers</em> y almacenamiento local).</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Callout Didáctico ASIR -->
+        <div class="alert alert-primary border-start border-4 d-flex align-items-start gap-3 mb-0">
+          <i class="bi bi-lightbulb-fill text-primary fs-4 flex-shrink-0"></i>
+          <div>
+            <strong class="d-block mb-1">
+              <span class="lang-va">💡 Consell per a l'Administrador (Tip ASIR):</span>
+              <span class="lang-es">💡 Consejo para el Administrador (Tip ASIR):</span>
+            </strong>
+            <span class="small text-body-secondary">
+              <span class="lang-va">Quan una organització decideix migrar una aplicació d'escriptori a una aplicació web o PWA, la càrrega de manteniment passa de donar suport lloc a lloc a gestionar la disponibilitat, ciberseguretat i còpies de seguretat del clúster de servidors centralitzat.</span>
+              <span class="lang-es">Cuando una organización decide migrar una aplicación de escritorio a una aplicación web o PWA, la carga de mantenimiento pasa de dar soporte puesto a puesto a gestionar la alta disponibilidad, ciberseguridad y copias de seguridad del clúster de servidores centralizado.</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓ 2 -->
+    <section id="sec-arquitectura" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-diagram-3-fill"></i>
+          <span class="lang-va">2. Arquitectura d'una aplicació web</span>
+          <span class="lang-es">2. Arquitectura de una aplicación web</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <span class="lang-va">2.1. El model Client-Servidor i el cicle de petició/resposta</span>
+          <span class="lang-es">2.1. El modelo Cliente-Servidor y el ciclo de petición/respuesta</span>
+        </h3>
+        <p class="text-body-secondary">
+          <span class="lang-va">El funcionament troncal respon a un cicle estandarditzat de <strong>petició i resposta (request-response cycle)</strong>:</span>
+          <span class="lang-es">El funcionamiento troncal responde a un ciclo estandarizado de <strong>petición y respuesta (request-response cycle)</strong>:</span>
+        </p>
+
+        <!-- Diagrama Mermaid Interactivo del Ciclo de Vida -->
+        <div class="card bg-body-tertiary border p-3 mb-4 text-center">
+          <h6 class="fw-bold text-primary mb-3">
+            <span class="lang-va">Diagrama de seqüència: Cicle de Petició / Resposta complet</span>
+            <span class="lang-es">Diagrama de secuencia: Ciclo de Petición / Respuesta completo</span>
+          </h6>
+          <pre class="mermaid bg-transparent border-0 p-0 mb-0">
+sequenceDiagram
+    autonumber
+    actor Client as Navegador (Client / Cliente)
+    participant DNS as Servidor DNS
+    participant Proxy as Proxy Invers / Reverse Proxy (Nginx)
+    participant Backend as Backend Runtime (PHP-FPM / Node)
+    participant DB as Base de Dades / Datos (MariaDB)
+
+    Client->>DNS: Consulta resolució de domini (ex. www.exemple.com)
+    DNS-->>Client: Retorna IP pública del servidor
+    Client->>Proxy: Negociació TLS 1.3 + Petició HTTPS GET /recurs
+    Proxy->>Backend: Canalitza per socket FastCGI o proxy intern
+    Backend->>DB: Executa consulta SQL (SELECT / INSERT)
+    DB-->>Backend: Retorna conjunt de dades
+    Backend-->>Proxy: Construeix resposta (HTML / JSON)
+    Proxy-->>Client: Resposta HTTP 200 OK + Capçaleres de seguretat
+    Client->>Client: Renderitza DOM, CSS i executa JavaScript
+          </pre>
+          <small class="text-body-secondary mt-2 d-block">
+            <span class="lang-va">Traça tècnica d'una petició web des de la introducció de la URL fins al renderitzat final.</span>
+            <span class="lang-es">Traza técnica de una petición web desde la introducción de la URL hasta el renderizado final.</span>
+          </small>
+        </div>
+
+        <ol class="list-group list-group-numbered mb-4">
+          <li class="list-group-item d-flex align-items-start gap-2 bg-body-tertiary">
+            <div class="ms-2">
+              <strong class="lang-va">Petició inicial del client:</strong>
+              <strong class="lang-es">Petición inicial del cliente:</strong>
+              <span class="lang-va">El client (navegador web) realitza una petició HTTP/HTTPS demanant un recurs (document web, actiu estàtic o dades estructurades).</span>
+              <span class="lang-es">El cliente (navegador web) realiza una petición HTTP/HTTPS solicitando un recurso (documento web, activo estático o datos estructurados).</span>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-start gap-2 bg-body-tertiary">
+            <div class="ms-2">
+              <strong class="lang-va">Recepció i filtratge al servidor web:</strong>
+              <strong class="lang-es">Recepción y filtrado en el servidor web:</strong>
+              <span class="lang-va">El servidor web (Nginx, Apache) avalua capçaleres, aplica regles de seguretat i la transfereix a l'element encarregat (fitxers estàtics, procés FastCGI com PHP-FPM o servei en Node.js/Python).</span>
+              <span class="lang-es">El servidor web (Nginx, Apache) evalúa cabeceras, aplica reglas de seguridad y la transfiere al elemento encargado (archivos estáticos, proceso FastCGI como PHP-FPM o servicio en Node.js/Python).</span>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-start gap-2 bg-body-tertiary">
+            <div class="ms-2">
+              <strong class="lang-va">Processament de negoci i accés a dades:</strong>
+              <strong class="lang-es">Procesamiento de negocio y acceso a datos:</strong>
+              <span class="lang-va">El backend executa la lògica de negoci, consulta el servidor de bases de dades relacional o NoSQL si cal i compon la informació.</span>
+              <span class="lang-es">El backend ejecuta la lógica de negocio, consulta el servidor de bases de datos relacional o NoSQL si es necesario y compone la información.</span>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-start gap-2 bg-body-tertiary">
+            <div class="ms-2">
+              <strong class="lang-va">Emissió de resposta:</strong>
+              <strong class="lang-es">Emisión de respuesta:</strong>
+              <span class="lang-va">El servidor web afegeix capçaleres HTTP, codi d'estat (200 OK, 404 Not Found, 500 Error...) i transmet el flux de dades cap al client.</span>
+              <span class="lang-es">El servidor web añade cabeceras HTTP, código de estado (200 OK, 404 Not Found, 500 Error...) y transmite el flujo de datos hacia el cliente.</span>
+            </div>
+          </li>
+          <li class="list-group-item d-flex align-items-start gap-2 bg-body-tertiary">
+            <div class="ms-2">
+              <strong class="lang-va">Renderitzat al client:</strong>
+              <strong class="lang-es">Renderizado en el cliente:</strong>
+              <span class="lang-va">El motor del navegador interpreta el DOM, aplica fulls d'estil CSS i executa el JavaScript per a mostrar la interfície interactiva.</span>
+              <span class="lang-es">El motor del navegador interpreta el DOM, aplica hojas de estilo CSS y ejecuta el JavaScript para mostrar la interfaz interactiva.</span>
+            </div>
+          </li>
+        </ol>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <span class="lang-va">2.2. Arquitectures per nivells (N-Tier) i Contenidors</span>
+          <span class="lang-es">2.2. Arquitecturas por niveles (N-Tier) y Contenedores</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="border rounded p-3 bg-body-tertiary h-100">
+              <span class="badge text-bg-secondary mb-2">2 Nivells / 2-Tier</span>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">El mateix servidor assumeix la capa web i la capa de dades (per exemple, fitxers plans o SQLite). Útil per a entorns mínims, però no escalable.</span>
+                <span class="lang-es">El mismo servidor asume la capa web y la capa de datos (por ejemplo, ficheros planos o SQLite). Útil para entornos mínimos, pero no escalable.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="border rounded p-3 bg-body-tertiary border-primary-subtle h-100">
+              <span class="badge text-bg-primary mb-2">3 Nivells / 3-Tier</span>
+              <ul class="small text-body-secondary ps-3 mb-0">
+                <li><strong class="lang-va">Presentació:</strong><strong class="lang-es">Presentación:</strong> <span class="lang-va">Navegador web client.</span><span class="lang-es">Navegador web cliente.</span></li>
+                <li><strong class="lang-va">Aplicació:</strong><strong class="lang-es">Aplicación:</strong> <span class="lang-va">Servidor Web + Backend (Nginx/Apache + PHP-FPM).</span><span class="lang-es">Servidor Web + Backend (Nginx/Apache + PHP-FPM).</span></li>
+                <li><strong class="lang-va">Dades:</strong><strong class="lang-es">Datos:</strong> <span class="lang-va">Servidor dedicat MariaDB/PostgreSQL.</span><span class="lang-es">Servidor dedicado MariaDB/PostgreSQL.</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="border rounded p-3 bg-body-tertiary border-info-subtle h-100">
+              <span class="badge text-bg-info mb-2">Cloud Native (Docker)</span>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">L'aplicació es divideix en contenidors aïllats orquestrats amb Docker Compose o Kubernetes: proxy invers, contenidor d'aplicació, servidor de base de dades i memòria cau Redis.</span>
+                <span class="lang-es">La aplicación se divide en contenedores aislados orquestados con Docker Compose o Kubernetes: proxy inverso, contenedor de aplicación, servidor de base de datos y memoria caché Redis.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico del ODT 3-Tier -->
+        <div class="card bg-body-tertiary border text-center p-3 mb-4">
+          <img src="./img/100002010000025E00000132647994BB8AC48B1D.png" class="img-fluid rounded mx-auto shadow-sm" alt="Diagrama de l'arquitectura en 3 nivells" style="max-height: 280px;">
+          <small class="text-body-secondary mt-2 d-block">
+            <span class="lang-va">Figura 1: Arquitectura clàssica en 3 nivells (Presentació, Aplicació i Dades).</span>
+            <span class="lang-es">Figura 1: Arquitectura clásica en 3 niveles (Presentación, Aplicación y Datos).</span>
+          </small>
+        </div>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">2.3. Desacoblament: Frontend (SPA) vs Backend (APIs)</span>
+          <span class="lang-es">2.3. Desacoplamiento: Frontend (SPA) vs Backend (APIs)</span>
+        </h3>
+        <p class="small text-body-secondary">
+          <span class="lang-va">En el desenvolupament actual és pràctica estàndard separar estrictament les responsabilitats:</span>
+          <span class="lang-es">En el desarrollo actual es práctica estándar separar estrictamente las responsabilidades:</span>
+        </p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="border rounded p-3 bg-body-tertiary h-100">
+              <h5 class="h6 fw-bold text-info"><i class="bi bi-window-fullscreen me-2"></i>Frontend (SPA - Single Page Application)</h5>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Construït amb frameworks moderns (Vue, React, Angular). S'allotja com a fitxers estàtics servits de forma immediata per Nginx o una CDN i s'executa íntegrament en el navegador del client.</span>
+                <span class="lang-es">Construido con frameworks modernos (Vue, React, Angular). Se aloja como archivos estáticos servidos de forma inmediata por Nginx o una CDN y se ejecuta íntegramente en el navegador del cliente.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="border rounded p-3 bg-body-tertiary h-100">
+              <h5 class="h6 fw-bold text-primary"><i class="bi bi-hdd-network me-2"></i>Backend (API REST / GraphQL)</h5>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">El servidor no construeix ni envia etiquetes HTML, sinó dades en brut mitjançant format <strong>JSON</strong>:</span>
+                <span class="lang-es">El servidor no construye ni envía etiquetas HTML, sino datos en bruto mediante formato <strong>JSON</strong>:</span>
+              </p>
+              <pre class="bg-body p-2 rounded border small mb-0"><code>{
+  "status": "success",
+  "data": { "usuari": "asir2", "rol": "administrador" }
+}</code></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓ 3 -->
+    <section id="sec-url" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-link-45deg"></i>
+          <span class="lang-va">3. Anatomia d'una URL (Uniform Resource Locator)</span>
+          <span class="lang-es">3. Anatomía de una URL (Uniform Resource Locator)</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">La URL constitueix l'identificador estàndard per a localitzar recursos en la xarxa:</span>
+          <span class="lang-es">La URL constituye el identificador estándar para localizar recursos en la red:</span>
+        </p>
+
+        <!-- Bloque interactivo de la URL -->
+        <div class="bg-body-tertiary p-3 rounded border text-break font-monospace small mb-4">
+          <span class="text-primary fw-bold">https://</span><span class="text-success fw-bold">www.exemple.com</span><span class="text-warning fw-bold">:443</span><span class="text-danger fw-bold">/botiga/productes</span><span class="text-info fw-bold">?categoria=hardware&ordre=asc</span><span class="text-secondary fw-bold">#especificacions</span>
+        </div>
+
+        <div class="table-responsive mb-4">
+          <table class="table table-hover table-striped align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" style="width: 25%;">
+                  <span class="lang-va">Component</span>
+                  <span class="lang-es">Componente</span>
+                </th>
+                <th scope="col" style="width: 30%;">
+                  <span class="lang-va">Fragment d'exemple</span>
+                  <span class="lang-es">Fragmento de ejemplo</span>
+                </th>
+                <th scope="col">
+                  <span class="lang-va">Funció i descripció</span>
+                  <span class="lang-es">Función y descripción</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-primary"><span class="lang-va">Esquema / Protocol</span><span class="lang-es">Esquema / Protocolo</span></td>
+                <td><code>https://</code></td>
+                <td><span class="lang-va">Indica el protocol de transferència (habitualment <code>https://</code> o <code>http://</code>).</span><span class="lang-es">Indica el protocolo de transferencia (habitualmente <code>https://</code> o <code>http://</code>).</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-success"><span class="lang-va">Nom de domini o Host</span><span class="lang-es">Nombre de dominio o Host</span></td>
+                <td><code>www.exemple.com</code></td>
+                <td><span class="lang-va">Nom resolt pel servei DNS cap a l'adreça IP del servidor amfitrió.</span><span class="lang-es">Nombre resuelto por el servicio DNS hacia la dirección IP del servidor anfitrión.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-warning"><span class="lang-va">Port de xarxa</span><span class="lang-es">Puerto de red</span></td>
+                <td><code>:443</code></td>
+                <td><span class="lang-va">Port d'escolta del servei (80 per defecte en HTTP, 443 en HTTPS).</span><span class="lang-es">Puerto de escucha del servicio (80 por defecto en HTTP, 443 en HTTPS).</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-danger"><span class="lang-va">Ruta (Path)</span><span class="lang-es">Ruta (Path)</span></td>
+                <td><code>/botiga/productes</code></td>
+                <td><span class="lang-va">Camí jeràrquic cap a l'arxiu o punt d'entrada lògic (<em>endpoint</em>) del servidor.</span><span class="lang-es">Camino jerárquico hacia el archivo o punto de entrada lógico (<em>endpoint</em>) del servidor.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-info">Query String</td>
+                <td><code>?categoria=hardware&amp;ordre=asc</code></td>
+                <td><span class="lang-va">Paràmetres clau-valor per a filtrar o enviar variables al servidor, units per <code>&amp;</code>.</span><span class="lang-es">Parámetros clave-valor para filtrar o enviar variables al servidor, unidos por <code>&amp;</code>.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-secondary"><span class="lang-va">Àncora / Fragment</span><span class="lang-es">Áncora / Fragmento</span></td>
+                <td><code>#especificacions</code></td>
+                <td>
+                  <span class="lang-va">Referència interna gestionada només pel navegador per a situar la vista. <strong>No s'envia mai al servidor</strong>.</span>
+                  <span class="lang-es">Referencia interna gestionada solo por el navegador para situar la vista. <strong>No se envía nunca al servidor</strong>.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="alert alert-secondary border-start border-4 mb-0 small">
+          <strong>
+            <span class="lang-va">💡 Consell ASIR sobre URLs amigables (Pretty URLs):</span>
+            <span class="lang-es">💡 Consejo ASIR sobre URLs amigables (Pretty URLs):</span>
+          </strong>
+          <span class="lang-va">Els servidors web moderns fan servir regles de reescriptura (com <code>try_files $uri $uri/ /index.php?$args;</code> en Nginx) per a amagar l'extensió dels fitxers i encaminar tot el trànsit cap a un únic punt d'entrada central (patró <em>Front Controller</em>).</span>
+          <span class="lang-es">Los servidores web modernos emplean reglas de reescritura (como <code>try_files $uri $uri/ /index.php?$args;</code> en Nginx) para ocultar la extensión de los archivos y encaminar todo el tráfico hacia un único punto de entrada central (patrón <em>Front Controller</em>).</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓ 4 -->
+    <section id="sec-tecnologies" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-code-square"></i>
+          <span class="lang-va">4. Tecnologies, llenguatges i servidors web</span>
+          <span class="lang-es">4. Tecnologías, lenguajes y servidores web</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- Frontend -->
+        <div class="mb-4">
+          <h3 class="h6 fw-bold text-body-emphasis mb-3">
+            <i class="bi bi-window me-2 text-info"></i>
+            <span class="lang-va">4.1. Entorn Client (Frontend)</span>
+            <span class="lang-es">4.1. Entorno Cliente (Frontend)</span>
+          </h3>
+          <div class="row row-cols-1 row-cols-md-2 g-3">
+            <div class="col">
+              <div class="border rounded p-3 bg-body-tertiary h-100">
+                <span class="badge text-bg-primary mb-2">HTML5</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Estructura el contingut semàntic del document web (elements de bloc, text, formularis i elements multimèdia).</span>
+                  <span class="lang-es">Estructura el contenido semántico del documento web (elementos de bloque, texto, formularios y elementos multimedia).</span>
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="border rounded p-3 bg-body-tertiary h-100">
+                <span class="badge text-bg-warning text-dark mb-2">CSS3</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Gestiona la presentació estètica, posicionament visual i disseny responsiu (Media Queries, Flexbox, CSS Grid).</span>
+                  <span class="lang-es">Gestiona la presentación estética, posicionamiento visual y diseño adaptativo (Media Queries, Flexbox, CSS Grid).</span>
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="border rounded p-3 bg-body-tertiary h-100">
+                <span class="badge text-bg-success mb-2">JavaScript (ECMAScript)</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Aporta dinamisme, gestió d'esdeveniments interactius i comunicació asíncrona en segon pla (Fetch API / AJAX).</span>
+                  <span class="lang-es">Aporta dinamismo, gestión de eventos interactivos y comunicación asíncrona en segundo plano (Fetch API / AJAX).</span>
+                </p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="border rounded p-3 bg-body-tertiary h-100">
+                <span class="badge text-bg-info mb-2">WebAssembly (Wasm)</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Format binari que permet executar codi compilat d'alt rendiment (C, Rust, Go) dins del navegador a velocitats quasi natives.</span>
+                  <span class="lang-es">Formato binario que permite ejecutar código compilado de alto rendimiento (C, Rust, Go) dentro del navegador a velocidades casi nativas.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backend -->
+        <div class="mb-4">
+          <h3 class="h6 fw-bold text-body-emphasis mb-3">
+            <i class="bi bi-server me-2 text-primary"></i>
+            <span class="lang-va">4.2. Entorn Servidor (Backend)</span>
+            <span class="lang-es">4.2. Entorno Servidor (Backend)</span>
+          </h3>
+          <p class="small text-body-secondary">
+            <span class="lang-va">S'executa al costat del servidor gestionant transaccions de dades, autenticació, validació d'usuaris i connectivitat amb magatzems SQL/NoSQL:</span>
+            <span class="lang-es">Se ejecuta en el lado del servidor gestionando transacciones de datos, autenticación, validación de usuarios y conectividad con almacenes SQL/NoSQL:</span>
+          </p>
+          <div class="list-group list-group-flush border rounded small">
+            <div class="list-group-item bg-body-tertiary py-2">
+              <strong class="text-primary">PHP:</strong>
+              <span class="lang-va">Llenguatge troncal d'IAW (present en WordPress, Moodle i grans plataformes). En entorns d'administració de sistemes actuals, s'executa desacoblat del servidor web via el servei de processos <strong>PHP-FPM (FastCGI Process Manager)</strong>.</span>
+              <span class="lang-es">Lenguaje troncal de IAW (presente en WordPress, Moodle y grandes plataformas). En entornos de administración de sistemas actuales, se ejecuta desacoplado del servidor web vía el servicio de procesos <strong>PHP-FPM (FastCGI Process Manager)</strong>.</span>
+            </div>
+            <div class="list-group-item bg-body-tertiary py-2">
+              <strong class="text-success">Node.js:</strong>
+              <span class="lang-va">Entorn asíncron basat en el motor V8, idoni per a microserveis d'alta concurrència i sockets en temps real.</span>
+              <span class="lang-es">Entorno asíncrono basado en el motor V8, idóneo para microservicios de alta concurrencia y sockets en tiempo real.</span>
+            </div>
+            <div class="list-group-item bg-body-tertiary py-2">
+              <strong class="text-warning text-dark">Python:</strong>
+              <span class="lang-va">Àmpliament emprat mitjançant servidors d'aplicació WSGI/ASGI com Gunicorn o Uvicorn amb FastAPI i Django.</span>
+              <span class="lang-es">Ampliamente empleado mediante servidores de aplicación WSGI/ASGI como Gunicorn o Uvicorn con FastAPI y Django.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Servidores Web en Linux -->
+        <div class="border rounded p-3 bg-body-tertiary">
+          <h3 class="h6 fw-bold text-primary mb-3">
+            <i class="bi bi-cpu me-2"></i>
+            <span class="lang-va">4.3. Comparativa de Servidors Web en entorns Linux (Sysadmin)</span>
+            <span class="lang-es">4.3. Comparativa de Servidores Web en entornos Linux (Sysadmin)</span>
+          </h3>
+          <div class="table-responsive mb-3">
+            <table class="table table-bordered table-hover align-middle small mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th><span class="lang-va">Servidor Web</span><span class="lang-es">Servidor Web</span></th>
+                  <th><span class="lang-va">Model d'Arquitectura</span><span class="lang-es">Modelo de Arquitectura</span></th>
+                  <th><span class="lang-va">Punt Fort</span><span class="lang-es">Punto Fuerte</span></th>
+                  <th><span class="lang-va">Cas d'Ús Recomanat</span><span class="lang-es">Caso de Uso Recomendado</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-bold">Nginx</td>
+                  <td><span class="lang-va">Orientada a esdeveniments (Asíncron)</span><span class="lang-es">Orientada a eventos (Asíncrono)</span></td>
+                  <td><span class="lang-va">Molt baix consum de RAM i gran rendiment amb fitxers estàtics i com a Reverse Proxy.</span><span class="lang-es">Muy bajo consumo de RAM y gran rendimiento con ficheros estáticos y como Reverse Proxy.</span></td>
+                  <td><span class="lang-va">Frontals d'alta concurrència, balancejadors i integració amb PHP-FPM.</span><span class="lang-es">Frontales de alta concurrencia, balanceadores e integración con PHP-FPM.</span></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Apache (httpd)</td>
+                  <td><span class="lang-va">Multiprocessament (Prefork, Worker, Event MPM)</span><span class="lang-es">Multiprocesamiento (Prefork, Worker, Event MPM)</span></td>
+                  <td><span class="lang-va">Gran ecosistema de mòduls i configuració descentralitzada mitjançant fitxers <code>.htaccess</code>.</span><span class="lang-es">Gran ecosistema de módulos y configuración descentralizada mediante archivos <code>.htaccess</code>.</span></td>
+                  <td><span class="lang-va">Allotjament compartit (Shared Hosting) i entorns acadèmics clàssics (LAMP).</span><span class="lang-es">Alojamiento compartido (Shared Hosting) y entornos académicos clásicos (LAMP).</span></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold">Caddy</td>
+                  <td><span class="lang-va">Escrit en Go, multithread natiu</span><span class="lang-es">Escrito en Go, multihilo nativo</span></td>
+                  <td><span class="lang-va">Configuració ultra-senzilla i gestió 100% automatitzada de certificats HTTPS (Let's Encrypt).</span><span class="lang-es">Configuración ultra-sencilla y gestión 100% automatizada de certificados HTTPS (Let's Encrypt).</span></td>
+                  <td><span class="lang-va">Desplegaments ràpids, microserveis i entorns de desenvolupament moderns.</span><span class="lang-es">Despliegues rápidos, microservicios y entornos de desarrollo modernos.</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Snippet real de configuració Nginx -->
+          <h4 class="h6 fw-bold text-body-emphasis mt-3 mb-2">
+            <span class="lang-va">Exemple real: Bloc de servidor Nginx integrat amb PHP-FPM</span>
+            <span class="lang-es">Ejemplo real: Bloque de servidor Nginx integrado con PHP-FPM</span>
+          </h4>
+          <pre class="bg-body p-3 rounded border small mb-0"><code>server {
+    listen 80;
+    server_name iaw.local;
+    root /var/www/iaw;
+    index index.php index.html;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.2-fpm.sock;
+    }
+}</code></pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓ 5 -->
+    <section id="sec-avantatges" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-arrow-left-right"></i>
+          <span class="lang-va">5. Avantatges i inconvenients de les aplicacions web</span>
+          <span class="lang-es">5. Ventajas e inconvenientes de las aplicaciones web</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead>
+              <tr class="table-light">
+                <th scope="col" class="text-success text-center w-50">
+                  <i class="bi bi-check-circle-fill me-1"></i>
+                  <span class="lang-va">Avantatges</span>
+                  <span class="lang-es">Ventajas</span>
+                </th>
+                <th scope="col" class="text-danger text-center w-50">
+                  <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                  <span class="lang-va">Inconvenients</span>
+                  <span class="lang-es">Inconvenientes</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong class="lang-va">Sense desplegament al client:</strong><strong class="lang-es">Sin despliegue en cliente:</strong>
+                  <span class="lang-va">Només requereix un navegador; s'elimina la complexitat d'instal·lar paquets individuals en milers de llocs de treball.</span>
+                  <span class="lang-es">Solo requiere un navegador; se elimina la complejidad de instalar paquetes individuales en miles de puestos de trabajo.</span>
+                </td>
+                <td>
+                  <strong class="lang-va">Dependència de la xarxa:</strong><strong class="lang-es">Dependencia de la red:</strong>
+                  <span class="lang-va">La disponibilitat del servei requereix una connexió estable, llevat de components parcials en aplicacions amb estratègies PWA.</span>
+                  <span class="lang-es">La disponibilidad del servicio requiere una conexión estable, salvo componentes parciales en aplicaciones con estrategias PWA.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="lang-va">Manteniment centralitzat:</strong><strong class="lang-es">Mantenimiento centralizado:</strong>
+                  <span class="lang-va">Els canvis o pedaços de seguretat s'apliquen al servidor i impacten immediatament sobre tots els clients.</span>
+                  <span class="lang-es">Los cambios o parches de seguridad se aplican en el servidor e impactan inmediatamente sobre todos los clientes.</span>
+                </td>
+                <td>
+                  <strong class="lang-va">Latència de comunicació:</strong><strong class="lang-es">Latencia de comunicación:</strong>
+                  <span class="lang-va">Cada petició depèn de la velocitat i temps d'anada i tornada (<em>round-trip time</em>) entre client i servidor.</span>
+                  <span class="lang-es">Cada petición depende de la velocidad y tiempo de ida y vuelta (<em>round-trip time</em>) entre cliente y servidor.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="lang-va">Portabilitat multiplataforma:</strong><strong class="lang-es">Portabilidad multiplataforma:</strong>
+                  <span class="lang-va">Funcionament homogeni en Linux, Windows, macOS, Android i iOS sota estàndards comuns del W3C.</span>
+                  <span class="lang-es">Funcionamiento homogéneo en Linux, Windows, macOS, Android e iOS bajo estándares comunes del W3C.</span>
+                </td>
+                <td>
+                  <strong class="lang-va">Consum en còmput crític:</strong><strong class="lang-es">Consumo en cómputo crítico:</strong>
+                  <span class="lang-va">Tot i WebAssembly, les aplicacions d'escriptori natives mantenen un accés més directe a instruccions de baix nivell i GPU.</span>
+                  <span class="lang-es">A pesar de WebAssembly, las aplicaciones nativas de escritorio mantienen un acceso más directo a instrucciones de bajo nivel y GPU.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong class="lang-va">Escalabilitat des de la infraestructura:</strong><strong class="lang-es">Escalabilidad de infraestructura:</strong>
+                  <span class="lang-va">Possibilitat d'escalat vertical o horitzontal darrere de balancejadors de càrrega segons demanda.</span>
+                  <span class="lang-es">Posibilidad de escalado vertical u horizontal detrás de balanceadores de carga según la demanda.</span>
+                </td>
+                <td>
+                  <strong class="lang-va">Exposició a riscos de ciberseguretat:</strong><strong class="lang-es">Exposición a ciberseguridad:</strong>
+                  <span class="lang-va">En romandre exposades públicament, són diana directa d'atacs comuns (OWASP Top 10, bots automatitzats, DoS).</span>
+                  <span class="lang-es">Al permanecer expuestas públicamente, son diana directa de ataques comunes (OWASP Top 10, bots automatizados, DoS).</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓ 6 -->
+    <section id="sec-protocols" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-shield-lock-fill"></i>
+          <span class="lang-va">6. Protocols de la capa d'aplicació i ciberseguretat</span>
+          <span class="lang-es">6. Protocolos de la capa de aplicación y ciberseguridad</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- Evolución HTTP -->
+        <div class="card bg-body-tertiary border mb-4">
+          <div class="card-body">
+            <h5 class="h6 fw-bold text-primary mb-3">
+              <i class="bi bi-hdd-network me-2"></i>
+              <span class="lang-va">Evolució del protocol HTTP (HyperText Transfer Protocol)</span>
+              <span class="lang-es">Evolución del protocolo HTTP (HyperText Transfer Protocol)</span>
+            </h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="border rounded p-3 bg-body h-100">
+                  <span class="badge text-bg-secondary mb-2">HTTP/1.1 (RFC 2616)</span>
+                  <p class="small text-body-secondary mb-0">
+                    <span class="lang-va">Estandarditzà connexions persistents (<em>Keep-Alive</em>), però pateix de bloqueig en cap de línia (<em>Head-of-Line Blocking</em>) a nivell d'aplicació.</span>
+                    <span class="lang-es">Estandarizó conexiones persistentes (<em>Keep-Alive</em>), pero sufre de bloqueo en cabeza de línea (<em>Head-of-Line Blocking</em>) a nivel de aplicación.</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="border rounded p-3 bg-body h-100">
+                  <span class="badge text-bg-primary mb-2">HTTP/2 (RFC 7540)</span>
+                  <p class="small text-body-secondary mb-0">
+                    <span class="lang-va">Format binari amb <strong>multiplexació completa</strong> (múltiples fluxos simultanis sobre una sola connexió TCP) i compressió de capçaleres mitjançant HPACK.</span>
+                    <span class="lang-es">Formato binario con <strong>multiplexación completa</strong> (múltiples flujos simultáneos sobre una sola conexión TCP) y compresión de cabeceras mediante HPACK.</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="border rounded p-3 bg-body h-100">
+                  <span class="badge text-bg-success mb-2">HTTP/3 (RFC 9114)</span>
+                  <p class="small text-body-secondary mb-0">
+                    <span class="lang-va">Substitueix TCP pel protocol <strong>QUIC sobre UDP</strong>, eliminant el bloqueig de transport per pèrdua de paquets i permetent negociacions 0-RTT.</span>
+                    <span class="lang-es">Sustituye TCP por el protocolo <strong>QUIC sobre UDP</strong>, eliminando el bloqueo de transporte por pérdida de paquetes y permitiendo negociaciones 0-RTT.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Códigos de Estado HTTP -->
+        <div class="card bg-body-tertiary border mb-4">
+          <div class="card-body">
+            <h5 class="h6 fw-bold text-body-emphasis mb-3">
+              <i class="bi bi-tags me-2 text-warning"></i>
+              <span class="lang-va">Famílies de Códigos d'Estat HTTP (HTTP Status Codes)</span>
+              <span class="lang-es">Familias de Códigos de Estado HTTP (HTTP Status Codes)</span>
+            </h5>
+            <div class="row g-2 small">
+              <div class="col-md-6 col-lg-3">
+                <div class="border rounded p-2 bg-body h-100">
+                  <span class="badge text-bg-info mb-1">1xx Informatius</span>
+                  <p class="text-body-secondary mb-0">
+                    <span class="lang-va">Petició rebuda; continuant procés (ex: <code>101 Switching Protocols</code> en WebSockets).</span>
+                    <span class="lang-es">Petición recibida; continuando proceso (ej: <code>101 Switching Protocols</code> en WebSockets).</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="border rounded p-2 bg-body h-100">
+                  <span class="badge text-bg-success mb-1">2xx Èxit / Éxito</span>
+                  <p class="text-body-secondary mb-0">
+                    <span class="lang-va">Acció rebuda, entesa i acceptada amb èxit (ex: <code>200 OK</code>, <code>201 Created</code>).</span>
+                    <span class="lang-es">Acción recibida, entendida y aceptada con éxito (ej: <code>200 OK</code>, <code>201 Created</code>).</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="border rounded p-2 bg-body h-100">
+                  <span class="badge text-bg-warning text-dark mb-1">3xx Redireccions</span>
+                  <p class="text-body-secondary mb-0">
+                    <span class="lang-va">Cal acció addicional del client (ex: <code>301 Moved Permanently</code>, <code>304 Not Modified</code>).</span>
+                    <span class="lang-es">Requiere acción adicional del cliente (ej: <code>301 Moved Permanently</code>, <code>304 Not Modified</code>).</span>
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="border rounded p-2 bg-body h-100">
+                  <span class="badge text-bg-danger mb-1">4xx & 5xx Errors</span>
+                  <p class="text-body-secondary mb-0">
+                    <span class="lang-va">Error del client (<code>403</code>, <code>404</code>) o fallada interna del servidor (<code>500</code>, <code>502 Bad Gateway</code>).</span>
+                    <span class="lang-es">Error del cliente (<code>403</code>, <code>404</code>) o fallo interno del servidor (<code>500</code>, <code>502 Bad Gateway</code>).</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HTTPS y TLS -->
+        <div class="card bg-body-tertiary border mb-4">
+          <div class="card-body">
+            <h5 class="h6 fw-bold text-success mb-2"><i class="bi bi-shield-check me-2"></i>HTTPS (HTTP Secure) i Seguretat TLS 1.3</h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Canal HTTP protegit mitjançant la capa <strong>TLS (Transport Layer Security)</strong>. Constitueix el requisit base imprescindible per a qualsevol desplegament en producció:</span>
+              <span class="lang-es">Canal HTTP protegido mediante la capa <strong>TLS (Transport Layer Security)</strong>. Constituye el requisito base imprescindible para cualquier despliegue en producción:</span>
+            </p>
+            <ul class="small text-body-secondary ps-3 mb-3">
+              <li>
+                <strong class="lang-va">Confidencialitat:</strong><strong class="lang-es">Confidencialidad:</strong>
+                <span class="lang-va">Xifratge simètric per a les dades i asimètric per a l'intercanvi de claus.</span>
+                <span class="lang-es">Cifrado simétrico para los datos y asimétrico para el intercambio de claves.</span>
+              </li>
+              <li>
+                <strong class="lang-va">Integritat:</strong><strong class="lang-es">Integridad:</strong>
+                <span class="lang-va">Comprovació mitjançant sumes criptogràfiques (hashes) evitant alteracions en trànsit.</span>
+                <span class="lang-es">Comprobación mediante sumas criptográficas (hashes) evitando alteraciones en tránsito.</span>
+              </li>
+              <li>
+                <strong class="lang-va">Autenticació:</strong><strong class="lang-es">Autenticación:</strong>
+                <span class="lang-va">Validació de la identitat del domini mitjançant certificats digitals (emissió automatitzada via ACME / Let's Encrypt).</span>
+                <span class="lang-es">Validación de la identidad del dominio mediante certificados digitales (emisión automatizada vía ACME / Let's Encrypt).</span>
+              </li>
+            </ul>
+
+            <!-- Gráfico del ODT HTTPS -->
+            <div class="text-center p-2 bg-body rounded border">
+              <img src="./img/1000000000000147000000CD419C443655BD8E65.png" class="img-fluid rounded mx-auto shadow-sm" alt="Il·lustració del protocol segur HTTPS i TLS" style="max-height: 240px;">
+              <small class="text-body-secondary mt-2 d-block">
+                <span class="lang-va">Figura 2: Xifratge i canal segur punt a punt amb HTTPS / TLS.</span>
+                <span class="lang-es">Figura 2: Cifrado y canal seguro punto a punto con HTTPS / TLS.</span>
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bastionat de Servidors Web (Hardening ASIR) -->
+        <div class="border rounded p-3 bg-body-tertiary">
+          <h5 class="h6 fw-bold text-danger mb-2">
+            <i class="bi bi-shield-shaded me-2"></i>
+            <span class="lang-va">Bastionat del Servidor Web: Capçaleres de Seguretat Recomanades</span>
+            <span class="lang-es">Bastionado del Servidor Web: Cabeceras de Seguridad Recomendadas</span>
+          </h5>
+          <p class="small text-body-secondary mb-3">
+            <span class="lang-va">Tot administrador de sistemes ha de configurar al servidor web les següents capçaleres de seguretat HTTP per a protegir els clients d'atacs comuns (OWASP):</span>
+            <span class="lang-es">Todo administrador de sistemas debe configurar en el servidor web las siguientes cabeceras de seguridad HTTP para proteger a los clientes de ataques comunes (OWASP):</span>
+          </p>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered table-hover align-middle small mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th><span class="lang-va">Capçalera HTTP</span><span class="lang-es">Cabecera HTTP</span></th>
+                  <th><span class="lang-va">Valor típic de configuració</span><span class="lang-es">Valor típico de configuración</span></th>
+                  <th><span class="lang-va">Amenaça que mitiga</span><span class="lang-es">Amenaza que mitiga</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-monospace text-primary">Strict-Transport-Security</td>
+                  <td><code>max-age=31536000; includeSubDomains</code></td>
+                  <td><span class="lang-va">Força connexions HTTPS i prevé atacs de degradació SSL Stripping (HSTS).</span><span class="lang-es">Fuerza conexiones HTTPS y previene ataques de degradación SSL Stripping (HSTS).</span></td>
+                </tr>
+                <tr>
+                  <td class="font-monospace text-primary">X-Frame-Options</td>
+                  <td><code>SAMEORIGIN</code> o <code>DENY</code></td>
+                  <td><span class="lang-va">Evita que la web siga incrustada en iframes aliens (atacs de <em>Clickjacking</em>).</span><span class="lang-es">Evita que la web sea incrustada en iframes ajenos (ataques de <em>Clickjacking</em>).</span></td>
+                </tr>
+                <tr>
+                  <td class="font-monospace text-primary">X-Content-Type-Options</td>
+                  <td><code>nosniff</code></td>
+                  <td><span class="lang-va">Força el navegador a respectar el MIME Type i prevé atacs de confusió de tipus.</span><span class="lang-es">Fuerza al navegador a respetar el MIME Type y previene ataques de confusión de tipos.</span></td>
+                </tr>
+                <tr>
+                  <td class="font-monospace text-primary">Content-Security-Policy</td>
+                  <td><code>default-src 'self'; script-src 'self' ...</code></td>
+                  <td><span class="lang-va">Restringeix orígens autoritzats d'scripts evitant atacs XSS (Cross-Site Scripting).</span><span class="lang-es">Restringe orígenes autorizados de scripts evitando ataques XSS (Cross-Site Scripting).</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓ 7 -->
+    <section id="sec-mvc" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-layers-fill"></i>
+          <span class="lang-va">7. Patrons d'arquitectura: El patró MVC (Model-Vista-Controlador)</span>
+          <span class="lang-es">7. Patrones de arquitectura: El patrón MVC (Modelo-Vista-Controlador)</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">El patró de disseny per excel·lència per a estructurar una aplicació web garantint la separació de responsabilitats és el model <strong>MVC</strong>:</span>
+          <span class="lang-es">El patrón de diseño por excelencia para estructurar una aplicación web garantizando la separación de responsabilidades es el modelo <strong>MVC</strong>:</span>
+        </p>
+
+        <!-- Diagrama Mermaid del Flujo MVC -->
+        <div class="card bg-body-tertiary border p-3 mb-4 text-center">
+          <h6 class="fw-bold text-primary mb-3">
+            <span class="lang-va">Diagrama de relació del patró Model-Vista-Controlador</span>
+            <span class="lang-es">Diagrama de relación del patrón Modelo-Vista-Controlador</span>
+          </h6>
+          <pre class="mermaid bg-transparent border-0 p-0 mb-0">
+flowchart LR
+    User([Usuari / Client / Cliente]) -->|1. Petició / Petición HTTP| C[Controlador / Controller]
+    C -->|2. Consulta / Modifica dades| M[(Model / Modelo)]
+    M -->|3. Retorna dades / datos| C
+    C -->|4. Selecciona i envia dades| V[Vista / View]
+    V -->|5. Renderitza resposta / Renderiza respuesta| User
+          </pre>
+          <small class="text-body-secondary mt-2 d-block">
+            <span class="lang-va">Flux de dades i aïllament de capes en una arquitectura MVC.</span>
+            <span class="lang-es">Flujo de datos y aislamiento de capas en una arquitectura MVC.</span>
+          </small>
+        </div>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card bg-body-tertiary border h-100">
+              <div class="card-body">
+                <span class="badge text-bg-primary mb-2">Model / Modelo</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Encapsula les regles de negoci i la lògica de dades. Gestiona les operacions CRUD sobre la base de dades sense dependència de com es presentaran.</span>
+                  <span class="lang-es">Encapsula las reglas de negocio y la lógica de datos. Gestiona las operaciones CRUD sobre la base de datos sin dependencia de cómo se presentarán.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-body-tertiary border h-100">
+              <div class="card-body">
+                <span class="badge text-bg-warning text-dark mb-2">Controlador / Controller</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">Intercepta la petició de l'usuari, valida entrades, sol·licita informació al Model corresponent i selecciona la Vista adequada per a remetre la resposta.</span>
+                  <span class="lang-es">Intercepta la petición del usuario, valida entradas, solicita información al Modelo correspondiente y selecciona la Vista adecuada para remitir la respuesta.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-body-tertiary border h-100">
+              <div class="card-body">
+                <span class="badge text-bg-success mb-2">Vista / View</span>
+                <p class="small text-body-secondary mb-0">
+                  <span class="lang-va">S'encarrega exclusivament de la capa de presentació. Produeix el document HTML o estructura el paquet de dades JSON que rebrà el client.</span>
+                  <span class="lang-es">Se encarga exclusivamente de la capa de presentación. Produce el documento HTML o estructura el paquete de datos JSON que recibirá el cliente.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th scope="col" style="width: 20%;">
+                  <span class="lang-va">Component MVC</span>
+                  <span class="lang-es">Componente MVC</span>
+                </th>
+                <th scope="col" style="width: 35%;">
+                  <span class="lang-va">Funció en l'aplicació</span>
+                  <span class="lang-es">Función en la aplicación</span>
+                </th>
+                <th scope="col">
+                  <span class="lang-va">Impacte en l'administració de sistemes (ASIR)</span>
+                  <span class="lang-es">Impacto en la administración de sistemas (ASIR)</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-primary">Model / Modelo</td>
+                <td><span class="lang-va">Connexió a la base de dades i lògica de dades.</span><span class="lang-es">Conexión a la base de datos y lógica de datos.</span></td>
+                <td><span class="lang-va">Optimitza l'escalabilitat del clúster de base de dades (rèpliques de lectura, memòria cau Redis).</span><span class="lang-es">Optimiza la escalabilidad del clúster de base de datos (réplicas de lectura, memoria caché Redis).</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-warning text-dark">Controlador / Controller</td>
+                <td><span class="lang-va">Enrutament i gestió de peticions HTTP.</span><span class="lang-es">Enrutamiento y gestión de peticiones HTTP.</span></td>
+                <td><span class="lang-va">Afecta al consum de CPU/RAM del runtime (PHP-FPM, Node.js) i a la configuració del servidor web.</span><span class="lang-es">Afecta al consumo de CPU/RAM del runtime (PHP-FPM, Node.js) y a la configuración del servidor web.</span></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-success">Vista / View</td>
+                <td><span class="lang-va">Generació de sortida (HTML, CSS o JSON).</span><span class="lang-es">Generación de salida (HTML, CSS o JSON).</span></td>
+                <td><span class="lang-va">Optimització de la memòria cau HTTP, compressió Gzip/Brotli i integració amb CDN.</span><span class="lang-es">Optimización de la memoria caché HTTP, compresión Gzip/Brotli e integración con CDN.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECCIÓ 8: PREGUNTES CLAU DE REPAS (FAQS DE EXAMEN) -->
+    <section id="sec-faqs" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-question-circle-fill"></i>
+          <span class="lang-va">8. Preguntes clau d'autoavaluació conceptual</span>
+          <span class="lang-es">8. Preguntas clave de autoevaluación conceptual</span>
+        </h2>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">Comprova la teua comprensió dels conceptes fonamentals abans de passar al test autocorregible:</span>
+          <span class="lang-es">Comprueba tu comprensión de los conceptos fundamentales antes de pasar al test autocorregible:</span>
+        </p>
+
+        <div class="accordion accordion-flush border rounded" id="accordionFaqs">
+          
+          <div class="accordion-item bg-transparent">
+            <h3 class="accordion-header" id="faqH1">
+              <button class="accordion-button collapsed fw-semibold small" type="button" data-bs-toggle="collapse" data-bs-target="#faqC1">
+                <span class="lang-va">1. Per què en un entorn de producció modern PHP s'executa amb PHP-FPM en comptes del clàssic mòdul d'Apache?</span>
+                <span class="lang-es">1. ¿Por qué en un entorno de producción moderno PHP se ejecuta con PHP-FPM en lugar del clásico módulo de Apache?</span>
+              </button>
+            </h3>
+            <div id="faqC1" class="accordion-collapse collapse" data-bs-parent="#accordionFaqs">
+              <div class="accordion-body small text-body-secondary bg-body-tertiary">
+                <span class="lang-va">Perquè PHP-FPM desacobla completament el servidor web del motor d'execució de codi. Això permet que servidors d'alt rendiment com Nginx servisquen fitxers estàtics a gran velocitat sense carregar l'intèrpret de PHP en memòria, i gestiona els processos de PHP de forma dinàmica i aïllada.</span>
+                <span class="lang-es">Porque PHP-FPM desacopla por completo el servidor web del motor de ejecución de código. Esto permite que servidores de alto rendimiento como Nginx sirvan archivos estáticos a gran velocidad sin cargar el intérprete de PHP en memoria, gestionando los procesos de PHP de forma dinámica y aislada.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item bg-transparent">
+            <h3 class="accordion-header" id="faqH2">
+              <button class="accordion-button collapsed fw-semibold small" type="button" data-bs-toggle="collapse" data-bs-target="#faqC2">
+                <span class="lang-va">2. Quina diferència tècnica fonamental hi ha entre HTTP/2 i HTTP/3?</span>
+                <span class="lang-es">2. ¿Qué diferencia técnica fundamental existe entre HTTP/2 y HTTP/3?</span>
+              </button>
+            </h3>
+            <div id="faqC2" class="accordion-collapse collapse" data-bs-parent="#accordionFaqs">
+              <div class="accordion-body small text-body-secondary bg-body-tertiary">
+                <span class="lang-va">Mentre que HTTP/2 fa servir multiplexació sobre una única connexió <strong>TCP</strong> (on la pèrdua d'un paquet bloqueja tots els fluxos per mecanismes de control de flux de TCP), HTTP/3 implementa el protocol <strong>QUIC sobre UDP</strong>, aconseguint multiplexació real sense bloqueig en transport i connexions més ràpides (0-RTT).</span>
+                <span class="lang-es">Mientras que HTTP/2 utiliza multiplexación sobre una única conexión <strong>TCP</strong> (donde la pérdida de un paquete bloquea todos los flujos por mecanismos de control de flujo de TCP), HTTP/3 implementa el protocolo <strong>QUIC sobre UDP</strong>, logrando multiplexación real sin bloqueo en transporte y conexiones más rápidas (0-RTT).</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item bg-transparent">
+            <h3 class="accordion-header" id="faqH3">
+              <button class="accordion-button collapsed fw-semibold small" type="button" data-bs-toggle="collapse" data-bs-target="#faqC3">
+                <span class="lang-va">3. Què significa que el protocol HTTP és "stateless" (sense estat) i com se soluciona a les aplicacions web?</span>
+                <span class="lang-es">3. ¿Qué significa que el protocolo HTTP sea "stateless" (sin estado) y cómo se soluciona en las aplicaciones web?</span>
+              </button>
+            </h3>
+            <div id="faqC3" class="accordion-collapse collapse" data-bs-parent="#accordionFaqs">
+              <div class="accordion-body small text-body-secondary bg-body-tertiary">
+                <span class="lang-va">Significa que cada petició HTTP és independent i el servidor no recorda per si mateix qui fa la petició entre connexions successives. Se soluciona mitjançant mecanismes de persistència com <strong>Cookies</strong> de sessió, magatzems <code>session</code> al servidor o tokens criptogràfics com <strong>JWT</strong> (JSON Web Tokens).</span>
+                <span class="lang-es">Significa que cada petición HTTP es independiente y el servidor no recuerda por sí mismo quién hace la petición entre conexiones sucesivas. Se soluciona mediante mecanismos de persistencia como <strong>Cookies</strong> de sesión, almacenes de <code>session</code> en servidor o tokens criptográficos como <strong>JWT</strong> (JSON Web Tokens).</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓ 9: CALL TO ACTION TEST AUTOCORREGIBLE -->
+    <section class="card border-0 shadow-sm bg-primary text-white mb-4">
+      <div class="card-body p-4 p-md-5 text-center">
+        <h3 class="fw-bold mb-2">
+          <span class="lang-va">Ja has completat l'estudi del Tema 1?</span>
+          <span class="lang-es">¿Has completado el estudio del Tema 1?</span>
+        </h3>
+        <p class="lead mb-4 text-white-50">
+          <span class="lang-va">Comprova la teua nota en temps real amb el qüestionari autocorregible del tema.</span>
+          <span class="lang-es">Comprueba tu nota en tiempo real con el cuestionario autocorregible del tema.</span>
+        </p>
+        <a href="./t1_cuestionari_autocorregible.html" class="btn btn-light btn-lg text-primary fw-bold px-4 shadow">
+          <i class="bi bi-patch-check-fill me-2"></i>
+          <span class="lang-va">Realitzar Autoavaluació Tema 1</span>
+          <span class="lang-es">Realizar Autoevaluación Tema 1</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Pie del Documento -->
+    <footer class="text-center text-body-secondary small py-3">
+      <p class="mb-1">Implantació d'Aplicacions Web · 2n ASIR</p>
+      <p class="mb-0 text-muted">
+        <span class="lang-va">Format web bilingüe millorat i actualitzat amb Bootstrap 5.3 a partir del temari oficial</span>
+        <span class="lang-es">Formato web bilingüe mejorado y actualizado con Bootstrap 5.3 a partir del temario oficial</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap 5.3 Bundle JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lógica Bilingüe y Sincronización con el Portal Principal -->
+  <script>
+    (function () {
+      'use strict';
+
+      const labelEl = document.getElementById('currentLangLabel');
+      const langBtns = document.querySelectorAll('.lang-btn');
+
+      function setLang(lang) {
+        const selectedLang = lang === 'es' ? 'es' : 'va';
+        document.documentElement.setAttribute('data-lang', selectedLang);
+        document.documentElement.lang = selectedLang === 'va' ? 'ca' : 'es';
+        localStorage.setItem('iaw_lang', selectedLang);
+
+        if (labelEl) {
+          labelEl.textContent = selectedLang === 'va' ? 'Valencià' : 'Castellano';
+        }
+
+        langBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-set-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+        });
+
+        // Notificar al portal padre si está dentro de un iframe
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'SET_LANG', lang: selectedLang }, '*');
+        }
+      }
+
+      // Eventos botones del selector
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          setLang(this.getAttribute('data-set-lang'));
+        });
+      });
+
+      // Escuchar cambios de idioma del portal principal (si está incrustado en iframe)
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'SET_LANG') {
+          setLang(e.data.lang);
+        }
+      });
+
+      // Inicializar según preferencia almacenada en localStorage o por defecto
+      const stored = localStorage.getItem('iaw_lang') || 'va';
+      setLang(stored);
+
+    })();
+  </script>
+
+</body>
+</html>

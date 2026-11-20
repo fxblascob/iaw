@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="ca" data-lang="va" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 2: Maquetació, Components i Formularis · Disseny Web</title>
+
+  <!-- Bootstrap 5.3 CSS & Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estils del portal -->
+  <link rel="stylesheet" href="../../css/styles.css">
+
+  <style>
+    /* Conmutacio neta d'idioma amb Bootstrap */
+    html[data-lang="va"] .lang-es { display: none; }
+    html[data-lang="es"] .lang-va { display: none; }
+
+    /* Diagrama didàctic de posicionament */
+    .pos-parent-box {
+      position: relative;
+      height: 180px;
+      background-color: rgba(13, 110, 253, 0.08);
+      border: 2px dashed #0d6efd;
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .pos-child-absolute {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      padding: 8px 12px;
+      background-color: #ffc107;
+      color: #000;
+      font-weight: bold;
+      border-radius: 6px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+
+  <!-- Mermaid.js per a diagrames tècnics -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose'
+      });
+    });
+  </script>
+</head>
+<body class="bg-body-tertiary py-4">
+
+  <div class="container" style="max-width: 1020px;">
+
+    <!-- Capçalera del Tema amb Selector d'Idioma -->
+    <header class="card border shadow-sm mb-4 bg-body">
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <span class="badge bg-primary px-3 py-2 rounded-pill">IAW · Bloc 2 · Tema 2</span>
+          
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Selector Bilingüe -->
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="btnLangToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-translate text-primary"></i>
+                <span id="currentLangLabel">Valencià</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn active" data-set-lang="va">
+                    <span>Valencià</span>
+                    <span class="badge text-bg-primary-subtle text-primary border ms-2">VA</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn" data-set-lang="es">
+                    <span>Castellano</span>
+                    <span class="badge text-bg-secondary-subtle text-secondary border ms-2">ES</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botó Descarregar PDF Original -->
+            <a href="./t2_maquetacio_components_formularis_val.pdf" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" target="_blank" download>
+              <i class="bi bi-file-earmark-pdf"></i>
+              <span class="lang-va">Descarregar PDF</span>
+              <span class="lang-es">Descargar PDF</span>
+            </a>
+            <!-- Botó Accés Exercicis -->
+            <a href="#sec-exercicis" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
+              <i class="bi bi-code-slash"></i>
+              <span class="lang-va">13 Exercicis</span>
+              <span class="lang-es">13 Ejercicios</span>
+            </a>
+          </div>
+        </div>
+
+        <h1 class="display-6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Tema 2: Maquetació, Components i Formularis</span>
+          <span class="lang-es">Tema 2: Maquetación, Componentes y Formularios</span>
+        </h1>
+        <p class="lead text-primary fw-semibold mb-3">
+          <span class="lang-va">Posicionament CSS, estructures de contingut (llistes, taules, multimèdia) i captura segura de dades amb formularis</span>
+          <span class="lang-es">Posicionamiento CSS, estructuras de contenido (listas, tablas, multimedia) y captura segura de datos con formularios</span>
+        </p>
+        <p class="text-body-secondary mb-0 small">
+          <i class="bi bi-mortarboard me-1"></i>
+          <span class="lang-va">Implantació d'Aplicacions Web (IAW) — 2n ASIR · Bloc 2: Disseny Web</span>
+          <span class="lang-es">Implantación de Aplicaciones Web (IAW) — 2º ASIR · Bloque 2: Diseño Web</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- Barra Ràpida de Navegació / Índex de Continguts -->
+    <nav class="card border shadow-sm mb-4 bg-body sticky-top" style="top: 1rem; z-index: 1020;">
+      <div class="card-body p-2 p-md-3">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <span class="fw-bold text-primary small d-flex align-items-center gap-1">
+            <i class="bi bi-list-nested"></i>
+            <span class="lang-va">Índex del tema:</span>
+            <span class="lang-es">Índice del tema:</span>
+          </span>
+          <div class="d-flex flex-wrap gap-1 small">
+            <a href="#sec-divisors" class="btn btn-sm btn-light border py-1 px-2">1. <span class="lang-va">Divisors & Caixes</span><span class="lang-es">Divisores & Cajas</span></a>
+            <a href="#sec-posicionament" class="btn btn-sm btn-light border py-1 px-2">2. <span class="lang-va">Posicionament CSS</span><span class="lang-es">Posicionamiento CSS</span></a>
+            <a href="#sec-llistes-enllacos" class="btn btn-sm btn-light border py-1 px-2">3. <span class="lang-va">Llistes & Enllaços</span><span class="lang-es">Listas & Enlaces</span></a>
+            <a href="#sec-taules-media" class="btn btn-sm btn-light border py-1 px-2">4. <span class="lang-va">Taules & Multimèdia</span><span class="lang-es">Tablas & Multimedia</span></a>
+            <a href="#sec-estils-menus" class="btn btn-sm btn-light border py-1 px-2">5. <span class="lang-va">Menús & Visibilitat</span><span class="lang-es">Menús & Visibilidad</span></a>
+            <a href="#sec-formularis" class="btn btn-sm btn-light border py-1 px-2">6. <span class="lang-va">Formularis Web</span><span class="lang-es">Formularios Web</span></a>
+            <a href="#sec-validacio" class="btn btn-sm btn-light border py-1 px-2">7. <span class="lang-va">Validació & Avançat</span><span class="lang-es">Validación & Avanzado</span></a>
+            <a href="#sec-exercicis" class="btn btn-sm btn-primary-subtle text-primary border py-1 px-2 fw-semibold">
+              <i class="bi bi-check2-circle"></i>
+              <span class="lang-va">13 Pràctiques</span>
+              <span class="lang-es">13 Prácticas</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 1: DIVISORS I CAIXES CSS           -->
+    <!-- ========================================== -->
+    <section id="sec-divisors" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-layout-three-columns"></i>
+          <span class="lang-va">1. Els Divisors HTML i les Propietats de les Caixes</span>
+          <span class="lang-es">1. Los Divisores HTML y las Propiedades de las Cajas</span>
+        </h2>
+        <span class="badge bg-primary-subtle text-primary border">Estructura & CSS</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">Els documents HTML sense CSS presenten un flux vertical rígid. Els elements <code>&lt;div&gt;</code> i les etiquetes semàntiques d'HTML5 (<code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>aside</code>, <code>footer</code>) permeten agrupar continguts en blocs i aplicar-los regles d'estil i dimensions pròpies.</span>
+          <span class="lang-es">Los documentos HTML sin CSS presentan un flujo vertical rígido. Los elementos <code>&lt;div&gt;</code> y las etiquetas semánticas de HTML5 (<code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>article</code>, <code>aside</code>, <code>footer</code>) permiten agrupar contenidos en bloques y aplicarles reglas de estilo y dimensiones propias.</span>
+        </p>
+
+        <!-- Comparativa visual abans i després de CSS -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Document cru (sense CSS)</span><span class="lang-es">Documento en bruto (sin CSS)</span></h5>
+              <img src="./img/web_sense_css.png" alt="HTML sense CSS" class="img-fluid rounded border mb-2" style="max-height: 140px;">
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Elements en bloc apilats per defecte un davall de l'altre.</span><span class="lang-es">Elementos en bloque apilados por defecto uno debajo del otro.</span></p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <h5 class="h6 fw-bold text-primary mb-2"><span class="lang-va">Document maquetat (amb CSS)</span><span class="lang-es">Documento maquetado (con CSS)</span></h5>
+              <img src="./img/web_amb_css.jpg" alt="HTML maquetat amb CSS" class="img-fluid rounded border mb-2" style="max-height: 140px;">
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Contenidors estilitzats, colors, amplàries i espaiats controlats.</span><span class="lang-es">Contenedores estilizados, colores, anchuras y espaciados controlados.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <span class="lang-va">Propietats de dimensió i vora de les caixes:</span>
+          <span class="lang-es">Propiedades de dimensión y borde de las cajas:</span>
+        </h3>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Dimensions: width & height</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Permeten fixar l'amplària i alçària en píxels (<code>px</code>), percentatge (<code>%</code>) o unitats de finestra (<code>vw</code>, <code>vh</code>). Propietats protectores com <code>min-width</code> o <code>max-width: 100%</code> eviten desbordaments en mòbils.</span>
+                <span class="lang-es">Permiten fijar la anchura y altura en píxeles (<code>px</code>), porcentaje (<code>%</code>) o unidades de ventana (<code>vw</code>, <code>vh</code>). Propiedades protectoras como <code>min-width</code> o <code>max-width: 100%</code> evitan desbordamientos en móviles.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Marges: margin & padding</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va"><code>margin</code> separa la caixa d'altres elements veïns (admet <code>auto</code> per a centrar horitzontalment). <code>padding</code> és l'espai interior de seguretat entre el contingut i la vora.</span>
+                <span class="lang-es"><code>margin</code> separa la caja de otros elementos vecinos (admite <code>auto</code> para centrar horizontalmente). <code>padding</code> es el espacio interior de seguridad entre el contenido y el borde.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Vores: border individualitzat</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Podem configurar cadascun dels quatre costats de forma independent: <code>border-top</code>, <code>border-right</code>, <code>border-bottom</code> i <code>border-left</code>, definint gruix, estil (<code>solid</code>, <code>dashed</code>) i color.</span>
+                <span class="lang-es">Podemos configurar cada uno de los cuatro lados de forma independiente: <code>border-top</code>, <code>border-right</code>, <code>border-bottom</code> y <code>border-left</code>, definiendo grosor, estilo (<code>solid</code>, <code>dashed</code>) y color.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 01 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 01</span>
+                <span class="lang-es">Ejercicio Práctico 01</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">01_caixesCSS.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Model de caixes i vores asimètriques amb CSS</span>
+                  <span class="lang-es">Modelo de cajas y bordes asimétricos con CSS</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>01_caixesCSS.html</code> aplicant a un paràgraf els següents estils: marge superior de 30px, marges esquerre i dret del 20%, fons groc, farciment interior (padding) de 10px, vora superior roja de 4px sòlida, vora dreta blava de 6px sòlida, vora inferior verda de 2px sòlida i vora esquerra sense vora (<code>none</code>).</span>
+                  <span class="lang-es">Crea <code>01_caixesCSS.html</code> aplicando a un párrafo los siguientes estilos: margen superior de 30px, márgenes izquierdo y derecho del 20%, fondo amarillo, relleno interior (padding) de 10px, borde superior rojo de 4px sólido, borde derecho azul de 6px sólido, borde inferior verde de 2px sólido y borde izquierdo sin borde (<code>none</code>).</span>
+                </p>
+                <a href="./ejercicios/01_caixesCSS.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 01_caixesCSS.html</span>
+                  <span class="lang-es">Abrir Archivo 01_caixesCSS.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex01_caixes.png" alt="Exercici 01 Caixes" class="img-fluid rounded border shadow-sm" style="max-height: 110px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 2: POSICIONAMENT EN CSS             -->
+    <!-- ========================================== -->
+    <section id="sec-posicionament" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-pin-map-fill"></i>
+          <span class="lang-va">2. Posicionament de les Caixes: La Propietat position</span>
+          <span class="lang-es">2. Posicionamiento de las Cajas: La Propiedad position</span>
+        </h2>
+        <span class="badge bg-warning-subtle text-warning-emphasis border">CSS Layout</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">La propietat <code>position</code> determina com es col·loca un element en el document i com reacciona a les coordenades <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> i <code>z-index</code>.</span>
+          <span class="lang-es">La propiedad <code>position</code> determina cómo se coloca un elemento en el documento y cómo reacciona a las coordenadas <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> y <code>z-index</code>.</span>
+        </p>
+
+        <!-- Taula de Posicionament -->
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 20%;">Valor de position</th>
+                <th style="width: 45%;"><span class="lang-va">Comportament de flux i referència</span><span class="lang-es">Comportamiento de flujo y referencia</span></th>
+                <th style="width: 35%;"><span class="lang-va">Cas d'ús habitual</span><span class="lang-es">Caso de uso habitual</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>static</code></td>
+                <td><span class="lang-va"><strong>Valor per defecte.</strong> Segueix el flux normal del document. Ignora <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> i <code>z-index</code>.</span><span class="lang-es"><strong>Valor por defecto.</strong> Sigue el flujo normal del documento. Ignora <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> y <code>z-index</code>.</span></td>
+                <td><span class="lang-va">Textos i blocs estàndard.</span><span class="lang-es">Textos y bloques estándar.</span></td>
+              </tr>
+              <tr>
+                <td><code>relative</code></td>
+                <td><span class="lang-va">Es desplaça respecte a la seua <strong>posició original</strong> sense deixar buit en el flux (els altres elements no ocupen el seu lloc). Crea un <em>context de posició</em> per als fills absoluts.</span><span class="lang-es">Se desplaza respecto a su <strong>posición original</strong> sin dejar hueco en el flujo (los otros elementos no ocupan su lugar). Crea un <em>contexto de posición</em> para los hijos absolutos.</span></td>
+                <td><span class="lang-va">Contenidors pares d'insígnies o elements superposats.</span><span class="lang-es">Contenedores padres de insignias o elementos superpuestos.</span></td>
+              </tr>
+              <tr>
+                <td><code>absolute</code></td>
+                <td><span class="lang-va"><strong>S'extrau completament del flux.</strong> Es posiciona respecte al seu <strong>ancestre posicionat més proper</strong> (que tinga <code>relative</code>, <code>absolute</code> o <code>fixed</code>). Si no en té cap, es posiciona respecte a l'arrel <code>&lt;html&gt;</code>.</span><span class="lang-es"><strong>Se extrae completamente del flujo.</strong> Se posiciona respecto a su <strong>ancestro posicionado más cercano</strong> (que tenga <code>relative</code>, <code>absolute</code> o <code>fixed</code>). Si no tiene ninguno, se posiciona respecto a la raíz <code>&lt;html&gt;</code>.</span></td>
+                <td><span class="lang-va">Badges a la cantonada d'una targeta, botons flotants interns.</span><span class="lang-es">Badges en la esquina de una tarjeta, botones flotantes internos.</span></td>
+              </tr>
+              <tr>
+                <td><code>fixed</code></td>
+                <td><span class="lang-va">Extret del flux. Es posiciona de forma fixa respecte al <strong>viewport del navegador</strong>. No es mou mai encara que l'usuari faça scroll a la pàgina.</span><span class="lang-es">Extraído del flujo. Se posiciona de forma fija respecto al <strong>viewport del navegador</strong>. No se mueve nunca aunque el usuario haga scroll en la página.</span></td>
+                <td><span class="lang-va">Barres de navegació superiors (navbar sticky), botons de WhatsApp/xat flotant.</span><span class="lang-es">Barras de navegación superiores (navbar sticky), botones de WhatsApp/chat flotante.</span></td>
+              </tr>
+              <tr>
+                <td><code>sticky</code></td>
+                <td><span class="lang-va">Híbrid entre <code>relative</code> i <code>fixed</code>: es comporta com a flux normal fins que l'scroll assoleix el punt definit (ex. <code>top: 0;</code>), moment en què es queda clavat.</span><span class="lang-es">Híbrido entre <code>relative</code> y <code>fixed</code>: se comporta como flujo normal hasta que el scroll alcanza el punto definido (ej. <code>top: 0;</code>), momento en que se queda fijado.</span></td>
+                <td><span class="lang-va">Capçaleres de taules o menús d'índex que s'acompanyen durant la lectura.</span><span class="lang-es">Cabeceras de tablas o menús de índice que acompañan durante la lectura.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- MILLORA TÈCNICA: CONTEXT DE POSICIÓ -->
+        <div class="card border-warning border-opacity-50 bg-warning-subtle bg-opacity-10 p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-warning text-dark"><i class="bi bi-lightbulb-fill me-1"></i><span class="lang-va">Clau Tècnica</span><span class="lang-es">Clave Técnica</span></span>
+            <h4 class="h6 fw-bold text-warning-emphasis m-0">
+              <span class="lang-va">El tàndem fonamental: Parent relative + Child absolute</span>
+              <span class="lang-es">El tándem fundamental: Parent relative + Child absolute</span>
+            </h4>
+          </div>
+          <div class="row g-3 align-items-center">
+            <div class="col-lg-7">
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Un error típic de l'alumnat és declarar <code>position: absolute; top: 10px; right: 10px;</code> i sorprendre's que la caixa se'n vaja a l'extrem superior dret de tota la finestra.</span>
+                <span class="lang-es">Un error típico del alumnado es declarar <code>position: absolute; top: 10px; right: 10px;</code> y sorprenderse de que la caja se vaya al extremo superior derecho de toda la ventana.</span>
+              </p>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Perquè un fill absolut quede contingut dins de la seua caixa mare, el pare <strong>ha de tindre obligatòriament <code>position: relative;</code></strong>.</span>
+                <span class="lang-es">Para que un hijo absoluto quede contenido dentro de su caja madre, el padre <strong>debe tener obligatoriamente <code>position: relative;</code></strong>.</span>
+              </p>
+            </div>
+            <div class="col-lg-5">
+              <div class="pos-parent-box">
+                <span class="badge text-bg-primary">Contenidor Pare (position: relative)</span>
+                <div class="pos-child-absolute">
+                  <i class="bi bi-pin-angle-fill me-1"></i>
+                  <span>Child (absolute; bottom: 12px; right: 12px;)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 02 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 02</span>
+                <span class="lang-es">Ejercicio Práctico 02</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">02_caixes.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Maquetació de blocs amb amplàries percentuals i flexbox</span>
+              <span class="lang-es">Maquetación de bloques con anchuras porcentuales y flexbox</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea <code>02_caixes.html</code> definint tres caixes amb diferents colors de fons i proporcions: Caixa 1 (50% d'ample, 100px d'altura), Caixa 2 (20% d'ample, 60px d'altura) i Caixa 3 (30% d'ample, 80px d'altura), integrades en un contenidor pare amb flexbox per a comprovar el seu flux i adaptabilitat en redimensionar la finestra.</span>
+              <span class="lang-es">Crea <code>02_caixes.html</code> definiendo tres cajas con diferentes colores de fondo y proporciones: Caja 1 (50% de ancho, 100px de altura), Caja 2 (20% de ancho, 60px de altura) y Caja 3 (30% de ancho, 80px de altura), integradas en un contenedor padre con flexbox para comprobar su flujo y adaptabilidad al redimensionar la ventana.</span>
+            </p>
+            <a href="./ejercicios/02_caixes.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 02_caixes.html</span>
+              <span class="lang-es">Abrir Archivo 02_caixes.html</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 3: LLISTES I ENLLAÇOS               -->
+    <!-- ========================================== -->
+    <section id="sec-llistes-enllacos" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-link-45deg"></i>
+          <span class="lang-va">3. Llistes d'Informació i Sistemes d'Enllaços (Hipertext)</span>
+          <span class="lang-es">3. Listas de Información y Sistemas de Enlaces (Hipertexto)</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">Components Web</span>
+      </div>
+      <div class="card-body p-4">
+
+        <!-- Llistes -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Tipus de Llistes en HTML: Ordenades, No Ordenades i de Definició</span>
+          <span class="lang-es">Tipos de Listas en HTML: Ordenadas, No Ordenadas y de Definición</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;ol&gt; (Ordered List)</h4>
+              <p class="small text-body-secondary mb-2"><span class="lang-va">Per a passos o ítems on l'ordre té significat:</span><span class="lang-es">Para pasos o ítems donde el orden tiene significado:</span></p>
+              <ol class="small text-body-secondary ps-3 mb-0">
+                <li>Primer element (1, A, i...)</li>
+                <li>Segon element</li>
+              </ol>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;ul&gt; (Unordered List)</h4>
+              <p class="small text-body-secondary mb-2"><span class="lang-va">Per a col·leccions sense jerarquia temporal (punts):</span><span class="lang-es">Para colecciones sin jerarquía temporal (viñetas):</span></p>
+              <ul class="small text-body-secondary ps-3 mb-0">
+                <li>disc, circle, square</li>
+                <li>Menús de navegació</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;dl&gt; (Description List)</h4>
+              <p class="small text-body-secondary mb-2"><span class="lang-va">Per a glossaris i fitxes de dades clau-valor:</span><span class="lang-es">Para glosarios y fichas de datos clave-valor:</span></p>
+              <dl class="small text-body-secondary mb-0">
+                <dt class="fw-bold">&lt;dt&gt; Terme</dt>
+                <dd class="ms-2">&lt;dd&gt; Definició del concepte</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 03 & 04 -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 03</span><span class="lang-es">Ejercicio 03</span> · 03_llistes.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Llistes bàsiques i combinades</span><span class="lang-es">Listas básicas y combinadas</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Crea <code>03_llistes.html</code> amb tres seccions: una llista ordenada <code>&lt;ol&gt;</code> per a pel·lícules, una desordenada <code>&lt;ul&gt;</code> per a assignatures del cicle i una llista ordenada per al temari.</span>
+                  <span class="lang-es">Crea <code>03_llistes.html</code> con tres secciones: una lista ordenada <code>&lt;ol&gt;</code> para películas, una desordenada <code>&lt;ul&gt;</code> para asignaturas del ciclo y una lista ordenada para el temario.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex03_llistes.png" alt="Exercici 03" class="img-fluid rounded border shadow-sm" style="max-height: 100px;">
+                </div>
+                <a href="./ejercicios/03_llistes.html" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 03_llistes.html</span><span class="lang-es">Abrir 03_llistes.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 04</span><span class="lang-es">Ejercicio 04</span> · 04_prehistoriador.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Llistes niades i vinyetes personalitzades</span><span class="lang-es">Listas anidadas y viñetas personalizadas</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Crea <code>04_prehistoriador.html</code> reproduint la periodització de la Prehistòria amb llistes de múltiples nivells fent servir estils <code>disc</code> en el primer nivell i <code>circle</code> en els subnivells niats.</span>
+                  <span class="lang-es">Crea <code>04_prehistoriador.html</code> reproduciendo la periodización de la Prehistoria con listas de múltiples niveles empleando estilos <code>disc</code> en el primer nivel y <code>circle</code> en los subniveles anidados.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex04_prehistoria.jpg" alt="Exercici 04" class="img-fluid rounded border shadow-sm" style="max-height: 100px;">
+                </div>
+                <a href="./ejercicios/04_prehistoriador.html" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 04_prehistoriador.html</span><span class="lang-es">Abrir 04_prehistoriador.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enllaços i Rutes -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Enllaços d'Hipertext: Rutes Absolutes, Rutes Relatives i Ancoratges</span>
+          <span class="lang-es">Enlaces de Hipertexto: Rutas Absolutas, Rutas Relativas y Anclajes</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">L'etiqueta <code>&lt;a href=&quot;...&quot;&gt;</code> és la pedra angular de la web. Cal dominar tres tipus d'enllaços:</span>
+          <span class="lang-es">La etiqueta <code>&lt;a href=&quot;...&quot;&gt;</code> es la piedra angular de la web. Es imprescindible dominar tres tipos de enlaces:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Rutes Absolutes</h4>
+              <p class="small text-body-secondary mb-1">
+                <span class="lang-va">Incloent protocol i domini (<code>https://...</code>). S'obrin sovint en nova pestanya amb <code>target=&quot;_blank&quot;</code> i <code>rel=&quot;noopener noreferrer&quot;</code> per seguretat.</span>
+                <span class="lang-es">Incluyen protocolo y dominio (<code>https://...</code>). Se suelen abrir en nueva pestaña con <code>target=&quot;_blank&quot;</code> y <code>rel=&quot;noopener noreferrer&quot;</code> por seguridad.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Rutes Relatives</h4>
+              <p class="small text-body-secondary mb-1">
+                <span class="lang-va">Naveguen per l'arbre local: <code>./fitxer.html</code> (mateixa carpeta), <code>../</code> (pujar un nivell), <code>sub/fitxer.html</code> (baixar a subcarpeta).</span>
+                <span class="lang-es">Navegan por el árbol local: <code>./archivo.html</code> (misma carpeta), <code>../</code> (subir un nivel), <code>sub/archivo.html</code> (bajar a subcarpeta).</span>
+              </p>
+              <div class="text-center mt-2">
+                <img src="./img/arbre_carpetes.png" alt="Arbre de carpetes" class="img-fluid rounded" style="max-height: 70px;">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Ancoratges Interns (#id)</h4>
+              <p class="small text-body-secondary mb-1">
+                <span class="lang-va">Permeten botar instantàniament a qualsevol secció de la mateixa pàgina associant l'<code>href=&quot;#nomId&quot;</code> a un element amb <code>id=&quot;nomId&quot;</code>.</span>
+                <span class="lang-es">Permiten saltar instantáneamente a cualquier sección de la misma página asociando el <code>href=&quot;#nombreId&quot;</code> a un elemento con <code>id=&quot;nombreId&quot;</code>.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 05 & 06 -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 05</span><span class="lang-es">Ejercicio 05</span> · 05_instituts.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Enllaços externs a centres educatius</span><span class="lang-es">Enlaces externos a centros educativos</span></h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>05_instituts.html</code> amb una llista d'instituts de secundària de la província enllaçant a les seues webs oficials mitjançant rutes absolutes i obertura en nova pestanya (<code>target=&quot;_blank&quot;</code>).</span>
+                  <span class="lang-es">Crea <code>05_instituts.html</code> con una lista de institutos de secundaria de la provincia enlazando a sus webs oficiales mediante rutas absolutas y apertura en nueva pestaña (<code>target=&quot;_blank&quot;</code>).</span>
+                </p>
+                <a href="./ejercicios/05_instituts.html" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 05_instituts.html</span><span class="lang-es">Abrir 05_instituts.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 06</span><span class="lang-es">Ejercicio 06</span> · 06_harrypotter.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Índex de navegació interna amb ancoratges</span><span class="lang-es">Índice de navegación interna con anclajes</span></h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>06_harrypotter.html</code> amb un índex complet al principi que permeta saltar directament a cadascun dels capítols i apartats de la saga mitjançant ancoratges <code>#id</code>.</span>
+                  <span class="lang-es">Crea <code>06_harrypotter.html</code> con un índice completo al inicio que permita saltar directamente a cada uno de los capítulos y apartados de la saga mediante anclajes <code>#id</code>.</span>
+                </p>
+                <a href="./ejercicios/06_harrypotter.html" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 06_harrypotter.html</span><span class="lang-es">Abrir 06_harrypotter.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 4: TAULES I MULTIMÈDIA             -->
+    <!-- ========================================== -->
+    <section id="sec-taules-media" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-table"></i>
+          <span class="lang-va">4. Taules Semàntiques, Imatges i Multimèdia</span>
+          <span class="lang-es">4. Tablas Semánticas, Imágenes y Multimedia</span>
+        </h2>
+        <span class="badge bg-success-subtle text-success border">Dades & Multimèdia</span>
+      </div>
+      <div class="card-body p-4">
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Estructura Semàntica de Taules i Combinació de Cel·les</span>
+          <span class="lang-es">Estructura Semántica de Tablas y Combinación de Celdas</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">Una taula accessible requereix separar capçalera (<code>&lt;thead&gt;</code>), cos (<code>&lt;tbody&gt;</code>) i peus de resum (<code>&lt;tfoot&gt;</code>). Els atributs de combinació són:</span>
+          <span class="lang-es">Una tabla accesible requiere separar cabecera (<code>&lt;thead&gt;</code>), cuerpo (<code>&lt;tbody&gt;</code>) y pies de resumen (<code>&lt;tfoot&gt;</code>). Los atributos de combinación son:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-primary mb-2 align-self-start">colspan="N"</span>
+              <h4 class="h6 fw-bold text-body-emphasis mb-1"><span class="lang-va">Combinació horitzontal</span><span class="lang-es">Combinación horizontal</span></h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Fa que una cel·la s'estenga cap a la dreta ocupant <em>N</em> columnes en la mateixa fila.</span>
+                <span class="lang-es">Hace que una celda se extienda hacia la derecha ocupando <em>N</em> columnas en la misma fila.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-success mb-2 align-self-start">rowspan="N"</span>
+              <h4 class="h6 fw-bold text-body-emphasis mb-1"><span class="lang-va">Combinació vertical</span><span class="lang-es">Combinación vertical</span></h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Fa que una cel·la s'estenga cap avall ocupant <em>N</em> files consecutives.</span>
+                <span class="lang-es">Hace que una celda se extienda hacia abajo ocupando <em>N</em> filas consecutivas.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 07 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 07</span>
+                <span class="lang-es">Ejercicio Práctico 07</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">07_taules.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Taules amb cel·les fusionades (colspan i rowspan)</span>
+                  <span class="lang-es">Tablas con celdas fusionadas (colspan y rowspan)</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>07_taules.html</code> maquetant una taula d'alumnes amb qualificacions i resum final. Empra <code>rowspan</code> per a agrupar el curs escolar verticalment i <code>colspan</code> per a la fila de resum de mitjana general.</span>
+                  <span class="lang-es">Crea <code>07_taules.html</code> maquetando una tabla de alumnos con calificaciones y resumen final. Emplea <code>rowspan</code> para agrupar el curso escolar verticalmente y <code>colspan</code> para la fila de resumen de media general.</span>
+                </p>
+                <a href="./ejercicios/07_taules.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 07_taules.html</span>
+                  <span class="lang-es">Abrir Archivo 07_taules.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex07_taules.png" alt="Exercici 07 Taula" class="img-fluid rounded border shadow-sm" style="max-height: 120px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Imatges i Multimèdia HTML5 -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Imatges, Vídeo i Àudio Nadius en HTML5</span>
+          <span class="lang-es">Imágenes, Vídeo y Audio Nativos en HTML5</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">HTML5 va eliminar la dependència d'antiquats connectors com Flash gràcies a etiquetes multimèdia natives:</span>
+          <span class="lang-es">HTML5 eliminó la dependencia de antiguos complementos como Flash gracias a etiquetas multimedia nativas:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;img&gt; i Favicon</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">L'atribut <code>alt</code> és obligatori per accessibilitat (lectors de pantalla) i quan falla la càrrega. El favicon es vincula al <code>&lt;head&gt;</code> amb <code>&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;logo.png&quot;&gt;</code>.</span>
+                <span class="lang-es">El atributo <code>alt</code> es obligatorio por accesibilidad (lectores de pantalla) y cuando falla la carga. El favicon se vincula en el <code>&lt;head&gt;</code> con <code>&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;logo.png&quot;&gt;</code>.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;video controls&gt;</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Reprodueix fitxers MP4/WebM amb controls nadius (pausa, volum, pantalla completa). Admet atributs com <code>poster=&quot;caratula.jpg&quot;</code>, <code>autoplay</code> i <code>loop</code>.</span>
+                <span class="lang-es">Reproduce archivos MP4/WebM con controles nativos (pausa, volumen, pantalla completa). Admite atributos como <code>poster=&quot;caratula.jpg&quot;</code>, <code>autoplay</code> y <code>loop</code>.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;audio controls&gt;</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Reproductor de so nadiu per a MP3, OGG o WAV sense necessitat de biblioteques externes.</span>
+                <span class="lang-es">Reproductor de sonido nativo para MP3, OGG o WAV sin necesidad de librerías externas.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 08 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 08</span>
+                <span class="lang-es">Ejercicio Práctico 08</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">08_harrypotter.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Integració d'imatges i portades en la saga Harry Potter</span>
+              <span class="lang-es">Integración de imágenes y portadas en la saga Harry Potter</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Modifica l'arxiu d'enllaços de la saga per a crear <code>08_harrypotter.html</code>: afegeix la imatge de portada centrada sota el títol de cada pel·lícula i una foto de retrat al costat del nom de cadascun dels personatges principals a la secció d'intèrprets.</span>
+              <span class="lang-es">Modifica el archivo de enlaces de la saga para crear <code>08_harrypotter.html</code>: añade la imagen de portada centrada bajo el título de cada película y una foto de retrato junto al nombre de cada uno de los personajes principales en la sección de intérpretes.</span>
+            </p>
+            <a href="./ejercicios/08_harrypotter.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 08_harrypotter.html</span>
+              <span class="lang-es">Abrir Archivo 08_harrypotter.html</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 5: MENÚS I ESTILS CSS AVANÇATS      -->
+    <!-- ========================================== -->
+    <section id="sec-estils-menus" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-menu-button-wide-fill"></i>
+          <span class="lang-va">5. Menús de Navegació, Visibilitat i Estils d'Enllaç</span>
+          <span class="lang-es">5. Menús de Navegación, Visibilidad y Estilos de Enlace</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">UI & Estils</span>
+      </div>
+      <div class="card-body p-4">
+
+        <!-- Visibilitat -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Diferència Clau: display: none vs visibility: hidden</span>
+          <span class="lang-es">Diferencia Clave: display: none vs visibility: hidden</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-danger mb-2 align-self-start">display: none;</span>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">L'element <strong>desapareix del renderitzat</strong> i no ocupa cap espai visual. Els elements veïns es reacomoden com si no existira.</span>
+                <span class="lang-es">El elemento <strong>desaparece del renderizado</strong> y no ocupa ningún espacio visual. Los elementos vecinos se reacomodan como si no existiera.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-warning text-dark mb-2 align-self-start">visibility: hidden;</span>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">L'element es torna transparent/invisible, però <strong>continua ocupant el seu espai físic original</strong> en el flux del document.</span>
+                <span class="lang-es">El elemento se vuelve transparente/invisible, pero <strong>continúa ocupando su espacio físico original</strong> en el flujo del documento.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estils per a enllaços i regla LVHA -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Estils per a Enllaços: La Regla d'Or LVHA</span>
+          <span class="lang-es">Estilos para Enlaces: La Regla de Oro LVHA</span>
+        </h3>
+        <p class="small text-body-secondary mb-2">
+          <span class="lang-va">Perquè les pseudoclasses d'enllaç funcionen sense xocs de cascada, han de declarar-se en l'ordre nemotècnic <strong>L-V-H-A</strong>:</span>
+          <span class="lang-es">Para que las pseudoclases de enlace funcionen sin choques de cascada, deben declararse en el orden nemotécnico <strong>L-V-H-A</strong>:</span>
+        </p>
+        <div class="p-2 bg-body rounded border font-monospace small mb-4">
+          <code>a:link { color: #0d6efd; text-decoration: none; }</code> /* <strong>L</strong>ink no visitat */<br>
+          <code>a:visited { color: #6f42c1; }</code> /* <strong>V</strong>isitat */<br>
+          <code>a:hover { color: #ff0000; text-decoration: underline; }</code> /* <strong>H</strong>over (ratolí a sobre) */<br>
+          <code>a:active { color: #198754; }</code> /* <strong>A</strong>ctiu (mentre es fa clic) */
+        </div>
+
+        <!-- EXERCICI 09 & 10 -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 09</span><span class="lang-es">Ejercicio 09</span> · 09_harrypotter.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Estilització d'enllaços amb hover</span><span class="lang-es">Estilización de enlaces con hover</span></h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>09_harrypotter.html</code> definint estils visuals per a l'índex: enllaços blancs sense subratllar en estat normal i taronja viu amb subratllat en passar el cursor (<code>:hover</code>).</span>
+                  <span class="lang-es">Crea <code>09_harrypotter.html</code> definiendo estilos visuales para el índice: enlaces blancos sin subrayar en estado normal y naranja vivo con subrayado al pasar el cursor (<code>:hover</code>).</span>
+                </p>
+                <a href="./ejercicios/09_harrypotter.html" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 09_harrypotter.html</span><span class="lang-es">Abrir 09_harrypotter.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 10</span><span class="lang-es">Ejercicio 10</span> · 10_menuLlistat.html</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Menú horitzontal a partir d'una llista</span><span class="lang-es">Menú horizontal a partir de una lista</span></h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>10_menuLlistat.html</code> transformant una llista desordenada <code>&lt;ul&gt;</code> en una barra de menú horitzontal utilitzant <code>display: inline-block</code> i efectes de transició de color al passar el ratolí.</span>
+                  <span class="lang-es">Crea <code>10_menuLlistat.html</code> transformando una lista desordenada <code>&lt;ul&gt;</code> en una barra de menú horizontal utilizando <code>display: inline-block</code> y efectos de transición de color al pasar el ratón.</span>
+                </p>
+                <div class="text-center my-2">
+                  <img src="./img/ex10_menu.png" alt="Exercici 10 Menú" class="img-fluid rounded border shadow-sm" style="max-height: 50px;">
+                </div>
+                <a href="./ejercicios/10_menuLlistat.html" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-box-arrow-up-right me-1"></i> <span class="lang-va">Obrir 10_menuLlistat.html</span><span class="lang-es">Abrir 10_menuLlistat.html</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 6: FORMULARIS WEB I SEGURETAT       -->
+    <!-- ========================================== -->
+    <section id="sec-formularis" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-ui-checks"></i>
+          <span class="lang-va">6. Formularis Web i Seguretat per a Sistemes (ASIR)</span>
+          <span class="lang-es">6. Formularios Web y Seguridad para Sistemas (ASIR)</span>
+        </h2>
+        <span class="badge bg-danger-subtle text-danger border">Backend Ready</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">Els formularis són el canal principal mitjançant el qual l'usuari interactua amb les aplicacions web i envia dades al servidor (que processarem en PHP). L'etiqueta mare és <code>&lt;form action=&quot;processa.php&quot; method=&quot;POST&quot;&gt;</code>.</span>
+          <span class="lang-es">Los formularios son el canal principal mediante el cual el usuario interactúa con las aplicaciones web y envía datos al servidor (que procesaremos en PHP). La etiqueta madre es <code>&lt;form action=&quot;procesa.php&quot; method=&quot;POST&quot;&gt;</code>.</span>
+        </p>
+
+        <!-- MILLORA TÈCNICA ASIR: GET VS POST -->
+        <div class="card border-danger border-opacity-50 bg-danger-subtle bg-opacity-10 p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-danger"><i class="bi bi-shield-lock-fill me-1"></i><span class="lang-va">Seguretat en la Transmissió</span><span class="lang-es">Seguridad en la Transmisión</span></span>
+            <h4 class="h6 fw-bold text-danger-emphasis m-0">GET vs POST</h4>
+          </div>
+          <div class="table-responsive mb-2">
+            <table class="table table-sm table-bordered bg-body small align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 20%;">Mètode</th>
+                  <th style="width: 40%;"><span class="lang-va">Com viatgen les dades?</span><span class="lang-es">¿Cómo viajan los datos?</span></th>
+                  <th style="width: 40%;"><span class="lang-va">Quan s'ha d'utilitzar?</span><span class="lang-es">¿Cuándo se debe utilizar?</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-bold text-primary">GET</td>
+                  <td><span class="lang-va">Adossades visiblement a la URL en format Query String: <code>pagina.php?usuari=joan&amp;edat=20</code>. Limitades a ~2048 caràcters. Es guarden a l'historial del navegador i en els logs d'accés del servidor web (Nginx/Apache).</span><span class="lang-es">Adosadas visiblemente a la URL en formato Query String: <code>pagina.php?usuario=juan&amp;edad=20</code>. Limitadas a ~2048 caracteres. Se guardan en el historial del navegador y en los logs de acceso del servidor web (Nginx/Apache).</span></td>
+                  <td><span class="lang-va"><strong>Operacions de consulta o cerca</strong> que puguen ser desades en favorits o compartides. <em>Mai per a contrasenyes o dades confidencials!</em></span><span class="lang-es"><strong>Operaciones de consulta o búsqueda</strong> que puedan ser guardadas en favoritos o compartidas. <em>¡Nunca para contraseñas o datos confidenciales!</em></span></td>
+                </tr>
+                <tr>
+                  <td class="fw-bold text-success">POST</td>
+                  <td><span class="lang-va">Ocultes dins del <strong>cos de la petició HTTP</strong> (Request Body). No tenen límit pràctic de grandària (configurat en <code>php.ini</code>) i no apareixen a la barra d'adreces ni a l'historial.</span><span class="lang-es">Ocultas dentro del <strong>cuerpo de la petición HTTP</strong> (Request Body). No tienen límite práctico de tamaño (configurado en <code>php.ini</code>) y no aparecen en la barra de direcciones ni en el historial.</span></td>
+                  <td><span class="lang-va"><strong>Modificacions de base de dades, autenticació (login)</strong>, enviament de dades personals i pujada de fitxers.</span><span class="lang-es"><strong>Modificaciones de base de datos, autenticación (login)</strong>, envío de datos personales y subida de ficheros.</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warning py-1 px-2 small mb-0">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i>
+            <span class="lang-va"><strong>Requisit indispensable per a fitxers:</strong> Si un formulari conté <code>&lt;input type=&quot;file&quot;&gt;</code>, el formulari <strong>ha de tindre <code>enctype=&quot;multipart/form-data&quot;</code></strong>, altrament el servidor rebrà només el nom del fitxer sense els seus bytes!</span>
+            <span class="lang-es"><strong>Requisito indispensable para ficheros:</strong> Si un formulario contiene <code>&lt;input type=&quot;file&quot;&gt;</code>, el formulario <strong>debe tener <code>enctype=&quot;multipart/form-data&quot;</code></strong>, de lo contrario el servidor recibirá solo el nombre del fichero sin sus bytes!</span>
+          </div>
+        </div>
+
+        <!-- Elements d'un Formulari -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Elements Bàsics: input, label, textarea i select</span>
+          <span class="lang-es">Elementos Básicos: input, label, textarea y select</span>
+        </h3>
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 25%;">Element / Atribut</th>
+                <th style="width: 40%;"><span class="lang-va">Descripció i Sintaxi</span><span class="lang-es">Descripción y Sintaxis</span></th>
+                <th style="width: 35%;"><span class="lang-va">Atributs clau</span><span class="lang-es">Atributos clave</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>&lt;label for=&quot;id&quot;&gt;</code></td>
+                <td><span class="lang-va">Etiqueta de text associada al camp. Fer clic sobre el label enfoca automàticament el camp (millora clau en pantalles tàctils i accessibilitat).</span><span class="lang-es">Etiqueta de texto asociada al campo. Hacer clic sobre el label enfoca automáticamente el campo (mejora clave en pantallas táctiles y accesibilidad).</span></td>
+                <td><code>for=&quot;id_del_camp&quot;</code></td>
+              </tr>
+              <tr>
+                <td><code>&lt;input type=&quot;...&quot;&gt;</code></td>
+                <td><span class="lang-va">Camp d'entrada polivalent. El seu comportament canvia radicalment segons l'atribut <code>type</code>.</span><span class="lang-es">Campo de entrada polivalente. Su comportamiento cambia radicalmente según el atributo <code>type</code>.</span></td>
+                <td><code>text</code>, <code>password</code>, <code>email</code>, <code>radio</code>, <code>checkbox</code>, <code>file</code></td>
+              </tr>
+              <tr>
+                <td><code>&lt;textarea&gt;</code></td>
+                <td><span class="lang-va">Àrea d'edició multillínia per a comentaris o missatges llargs. Admet tancament <code>&lt;/textarea&gt;</code>.</span><span class="lang-es">Área de edición multilínea para comentarios o mensajes largos. Admite cierre <code>&lt;/textarea&gt;</code>.</span></td>
+                <td><code>rows=&quot;5&quot;</code>, <code>cols=&quot;40&quot;</code>, <code>placeholder</code></td>
+              </tr>
+              <tr>
+                <td><code>&lt;select&gt;</code> &amp; <code>&lt;option&gt;</code></td>
+                <td><span class="lang-va">Llista desplegable d'opcions. Admet <code>size</code> per a mostrar-ne múltiples i <code>multiple</code> per a selecció múltiple amb Ctrl/Majús.</span><span class="lang-es">Lista desplegable de opciones. Admite <code>size</code> para mostrar múltiples y <code>multiple</code> para selección múltiple con Ctrl/Shift.</span></td>
+                <td><code>selected</code>, <code>size=&quot;4&quot;</code>, <code>multiple</code></td>
+              </tr>
+              <tr>
+                <td><code>name=&quot;clau&quot;</code></td>
+                <td><span class="lang-va"><strong>Crític:</strong> És el nom de la variable que rebrà el servidor backend en PHP (<code>$_POST['clau']</code>). Sense <code>name</code>, la dada mai s'envia.</span><span class="lang-es"><strong>Crítico:</strong> Es el nombre de la variable que recibirá el servidor backend en PHP (<code>$_POST['clave']</code>). Sin <code>name</code>, el dato jamás se envía.</span></td>
+                <td><code>name=&quot;nom_parametre&quot;</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- EXERCICI 11 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 11</span>
+                <span class="lang-es">Ejercicio Práctico 11</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">11_formDades.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Formulari complet de recollida de dades personals</span>
+                  <span class="lang-es">Formulario completo de recogida de datos personales</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>11_formDades.html</code> estructurant un formulari amb mètode POST i recollida d'arxiu (<code>enctype=&quot;multipart/form-data&quot;</code>), integrant camps per a Nom, Cognoms, DNI, Correu, Ràdio de Sexe (Home/Dona), Llista desplegable de Províncies, Àrea de text de Comentaris i casella Checkbox per a subscripció.</span>
+                  <span class="lang-es">Crea <code>11_formDades.html</code> estructurando un formulario con método POST y recogida de archivo (<code>enctype=&quot;multipart/form-data&quot;</code>), integrando campos para Nombre, Apellidos, DNI, Correo, Radio de Sexo (Hombre/Mujer), Lista desplegable de Provincias, Área de texto de Comentarios y casilla Checkbox para suscripción.</span>
+                </p>
+                <a href="./ejercicios/11_formDades.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 11_formDades.html</span>
+                  <span class="lang-es">Abrir Archivo 11_formDades.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex11_formulari.png" alt="Exercici 11 Formulari" class="img-fluid rounded border shadow-sm" style="max-height: 140px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 7: VALIDACIÓ I OPCIONS AVANÇADES    -->
+    <!-- ========================================== -->
+    <section id="sec-validacio" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-check-circle-fill"></i>
+          <span class="lang-va">7. Validació Nativa d'HTML5 i Opcions Avançades</span>
+          <span class="lang-es">7. Validación Nativa de HTML5 y Opciones Avanzadas</span>
+        </h2>
+        <span class="badge bg-success-subtle text-success border">HTML5 Validation</span>
+      </div>
+      <div class="card-body p-4">
+
+        <!-- Validació nativa -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Atributs de Validació en el Client</span>
+          <span class="lang-es">Atributos de Validación en el Cliente</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">HTML5 permet verificar les dades abans de l'enviament sense necessitat obligatòria de JavaScript:</span>
+          <span class="lang-es">HTML5 permite verificar los datos antes del envío sin necesidad obligatoria de JavaScript:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-danger mb-1">required</code>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Impedeix enviar el formulari si el camp està buit.</span><span class="lang-es">Impide enviar el formulario si el campo está vacío.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-primary mb-1">pattern="[A-Z]{3}"</code>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Força una expressió regular (regex) per al format (ex. DNI, codi postal).</span><span class="lang-es">Fuerza una expresión regular (regex) para el formato (ej. DNI, código postal).</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-success mb-1">min="1" max="100"</code>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Límits numèrics o dates màximes i mínimes permeses.</span><span class="lang-es">Límites numéricos o fechas máximas y mínimas permitidas.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <code class="fw-bold text-info-emphasis mb-1">placeholder & autofocus</code>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Text d'exemple orientatiu i focus automàtic al carregar la pàgina.</span><span class="lang-es">Texto de ejemplo orientativo y foco automático al cargar la página.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 12 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 12</span>
+                <span class="lang-es">Ejercicio Práctico 12</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">12_formValidat.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Validació nativa de formularis amb HTML5</span>
+              <span class="lang-es">Validación nativa de formularios con HTML5</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Modifica el formulari anterior per a crear <code>12_formValidat.html</code>: fes que el Nom i el DNI siguen obligatoris (<code>required</code>), valida el format del DNI mitjançant una expressió regular (<code>pattern=&quot;[0-9]{8}[A-Za-z]{1}&quot;</code>) i verifica que el correu tinga format vàlid d'email.</span>
+              <span class="lang-es">Modifica el formulario anterior para crear <code>12_formValidat.html</code>: haz que el Nombre y el DNI sean obligatorios (<code>required</code>), valida el formato del DNI mediante una expresión regular (<code>pattern=&quot;[0-9]{8}[A-Za-z]{1}&quot;</code>) y verifica que el correo tenga formato válido de email.</span>
+            </p>
+            <a href="./ejercicios/12_formValidat.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 12_formValidat.html</span>
+              <span class="lang-es">Abrir Archivo 12_formValidat.html</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Agrupació amb fieldset i optgroup -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Opcions Avançades: fieldset, legend i optgroup</span>
+          <span class="lang-es">Opciones Avanzadas: fieldset, legend y optgroup</span>
+        </h3>
+        <p class="small text-body-secondary mb-3">
+          <span class="lang-va">Per a formularis extensos, és una bona pràctica agrupar camps en blocs lògics amb <code>&lt;fieldset&gt;</code> i <code>&lt;legend&gt;</code>, així com categoritzar desplegables amb <code>&lt;optgroup label=&quot;Categoria&quot;&gt;</code>.</span>
+          <span class="lang-es">Para formularios extensos, es una buena práctica agrupar campos en bloques lógicos con <code>&lt;fieldset&gt;</code> y <code>&lt;legend&gt;</code>, así como categorizar desplegables con <code>&lt;optgroup label=&quot;Categoría&quot;&gt;</code>.</span>
+        </p>
+
+        <!-- EXERCICI 13 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 13</span>
+                <span class="lang-es">Ejercicio Práctico 13</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">13_formProducte.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Formulari comercial complet amb agrupació per fieldsets</span>
+                  <span class="lang-es">Formulario comercial completo con agrupación por fieldsets</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>13_formProducte.html</code> estructurant la informació d'un producte en dos conjunts de camps: <em>Dades bàsiques</em> (Nom, Descripció, Imatge) i <em>Dades econòmiques</em> (Preu, Impostos, Promoció), amb un botó d'enviament centrat en la part inferior.</span>
+                  <span class="lang-es">Crea <code>13_formProducte.html</code> estructurando la información de un producto en dos conjuntos de campos: <em>Datos básicos</em> (Nombre, Descripción, Imagen) y <em>Datos económicos</em> (Precio, Impuestos, Promoción), con un botón de envío centrado en la parte inferior.</span>
+                </p>
+                <a href="./ejercicios/13_formProducte.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 13_formProducte.html</span>
+                  <span class="lang-es">Abrir Archivo 13_formProducte.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex13_producte.jpg" alt="Exercici 13 Formulari Producte" class="img-fluid rounded border shadow-sm" style="max-height: 140px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 8: QUADRE DE LES 13 PRÀCTIQUES     -->
+    <!-- ========================================== -->
+    <section id="sec-exercicis" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-list-check"></i>
+          <span class="lang-va">8. Resum dels 13 Exercicis Pràctics del Tema</span>
+          <span class="lang-es">8. Resumen de los 13 Ejercicios Prácticos del Tema</span>
+        </h2>
+        <span class="badge bg-primary">Avaluació Contínua</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">Accés directe a totes les pràctiques disponibles a la carpeta <code>ejercicios/</code>:</span>
+          <span class="lang-es">Acceso directo a todas las prácticas disponibles en la carpeta <code>ejercicios/</code>:</span>
+        </p>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 8%;">Núm.</th>
+                <th style="width: 25%;">Arxiu</th>
+                <th style="width: 50%;">Objectiu Docent</th>
+                <th style="width: 17%;">Acció</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-center">01</td>
+                <td><code>01_caixesCSS.html</code></td>
+                <td><span class="lang-va">Model de caixes, vores asimètriques i marges percentuals.</span><span class="lang-es">Modelo de cajas, bordes asimétricos y márgenes porcentuales.</span></td>
+                <td><a href="./ejercicios/01_caixesCSS.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">02</td>
+                <td><code>02_caixes.html</code></td>
+                <td><span class="lang-va">Maquetació adaptativa de tres caixes amb flexbox.</span><span class="lang-es">Maquetación adaptativa de tres cajas con flexbox.</span></td>
+                <td><a href="./ejercicios/02_caixes.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">03</td>
+                <td><code>03_llistes.html</code></td>
+                <td><span class="lang-va">Llistes ordenades (ol) i no ordenades (ul) bàsiques.</span><span class="lang-es">Listas ordenadas (ol) y no ordenadas (ul) básicas.</span></td>
+                <td><a href="./ejercicios/03_llistes.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">04</td>
+                <td><code>04_prehistoriador.html</code></td>
+                <td><span class="lang-va">Llistes niades amb múltiples vinyetes (disc, circle).</span><span class="lang-es">Listas anidadas con múltiples viñetas (disc, circle).</span></td>
+                <td><a href="./ejercicios/04_prehistoriador.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">05</td>
+                <td><code>05_instituts.html</code></td>
+                <td><span class="lang-va">Enllaços externs amb rutes absolutes i target="_blank".</span><span class="lang-es">Enlaces externos con rutas absolutas y target="_blank".</span></td>
+                <td><a href="./ejercicios/05_instituts.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">06</td>
+                <td><code>06_harrypotter.html</code></td>
+                <td><span class="lang-va">Navegació interna d'hipertext mitjançant ancoratges (#id).</span><span class="lang-es">Navegación interna de hipertexto mediante anclajes (#id).</span></td>
+                <td><a href="./ejercicios/06_harrypotter.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">07</td>
+                <td><code>07_taules.html</code></td>
+                <td><span class="lang-va">Taules amb combinació horitzontal (colspan) i vertical (rowspan).</span><span class="lang-es">Tablas con combinación horizontal (colspan) y vertical (rowspan).</span></td>
+                <td><a href="./ejercicios/07_taules.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">08</td>
+                <td><code>08_harrypotter.html</code></td>
+                <td><span class="lang-va">Integració d'imatges i multimèdia en contingut web.</span><span class="lang-es">Integración de imágenes y multimedia en contenido web.</span></td>
+                <td><a href="./ejercicios/08_harrypotter.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">09</td>
+                <td><code>09_harrypotter.html</code></td>
+                <td><span class="lang-va">Estils tipogràfics i transicions de color en :hover d'enllaços.</span><span class="lang-es">Estilos tipográficos y transiciones de color en :hover de enlaces.</span></td>
+                <td><a href="./ejercicios/09_harrypotter.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">10</td>
+                <td><code>10_menuLlistat.html</code></td>
+                <td><span class="lang-va">Maquetació de barra de navegació horitzontal amb llistes.</span><span class="lang-es">Maquetación de barra de navegación horizontal con listas.</span></td>
+                <td><a href="./ejercicios/10_menuLlistat.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">11</td>
+                <td><code>11_formDades.html</code></td>
+                <td><span class="lang-va">Formulari complet amb mètode POST i recollida d'arxius.</span><span class="lang-es">Formulario completo con método POST y recogida de archivos.</span></td>
+                <td><a href="./ejercicios/11_formDades.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">12</td>
+                <td><code>12_formValidat.html</code></td>
+                <td><span class="lang-va">Validació nativa de dades: required, pattern regex i correu.</span><span class="lang-es">Validación nativa de datos: required, pattern regex y correo.</span></td>
+                <td><a href="./ejercicios/12_formValidat.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">13</td>
+                <td><code>13_formProducte.html</code></td>
+                <td><span class="lang-va">Formulari avançat amb agrupacions l'ús de fieldset i legend.</span><span class="lang-es">Formulario avanzado con agrupaciones mediante el uso de fieldset y legend.</span></td>
+                <td><a href="./ejercicios/13_formProducte.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Peu del Document -->
+    <footer class="text-center text-body-secondary small py-3">
+      <p class="mb-1">Implantació d'Aplicacions Web · 2n ASIR</p>
+      <p class="mb-0 text-muted">
+        <span class="lang-va">Format web bilingüe millorat i actualitzat amb Bootstrap 5.3 a partir del temari oficial</span>
+        <span class="lang-es">Formato web bilingüe mejorado y actualizado con Bootstrap 5.3 a partir del temario oficial</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap 5.3 Bundle JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lògica Bilingüe i Sincronització amb el Portal Principal -->
+  <script>
+    (function () {
+      'use strict';
+
+      const labelEl = document.getElementById('currentLangLabel');
+      const langBtns = document.querySelectorAll('.lang-btn');
+
+      function setLang(lang) {
+        const selectedLang = lang === 'es' ? 'es' : 'va';
+        document.documentElement.setAttribute('data-lang', selectedLang);
+        document.documentElement.lang = selectedLang === 'va' ? 'ca' : 'es';
+        localStorage.setItem('iaw_lang', selectedLang);
+
+        if (labelEl) {
+          labelEl.textContent = selectedLang === 'va' ? 'Valencià' : 'Castellano';
+        }
+
+        langBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-set-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+        });
+
+        // Notificar al portal pare si està incrustat en un iframe
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'SET_LANG', lang: selectedLang }, '*');
+        }
+      }
+
+      // Esdeveniments botons del selector
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          setLang(this.getAttribute('data-set-lang'));
+        });
+      });
+
+      // Escoltar canvis d'idioma del portal principal
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'SET_LANG') {
+          setLang(e.data.lang);
+        }
+      });
+
+      // Inicialitzar segons preferència desada o per defecte
+      const stored = localStorage.getItem('iaw_lang') || 'va';
+      setLang(stored);
+
+    })();
+  </script>
+
+</body>
+</html>

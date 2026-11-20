@@ -1,0 +1,50 @@
+<html>
+<head>
+   <script type="text/javascript">
+
+      var xmlhttp;
+
+      function enviarPeticion()
+      {
+         if (window.XMLHttpRequest)
+         {
+            xmlhttp=new XMLHttpRequest();
+         }
+         else if (window.ActiveXObject)
+         {
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+         }
+         if (xmlhttp)
+         {
+            xmlhttp.onreadystatechange=recogerPeticion;
+            xmlhttp.open("GET","listado.php",true);
+            xmlhttp.send(null);
+         }
+      }
+
+      function recogerPeticion()
+      {
+         if (xmlhttp.readyState==4)
+         {
+            if (xmlhttp.status==200)
+            {
+               document.getElementById("asincrono").innerHTML=
+                  xmlhttp.responseText;
+            }
+            else
+            {
+               alert("Problema conectando con servidor: " + xmlhttp.status);
+            }
+         }
+      }
+
+   </script>
+</head>
+<body>
+<h1>Listado de planetas interiores</h1>
+<p>Los planetas interiores son los planetas más cercanos al Sol en el Sistema Solar, y también los que quedan dentro del cinturón de asteroides que divide nuestro sistema en dos.</p>
+<p><a href="javascript:enviarPeticion()">Solicitar listado</a></p>
+<div id="asincrono">
+</div>
+</body>
+</html>

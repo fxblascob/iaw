@@ -1,0 +1,2 @@
+# Si usas Apache, asegura que el docroot apunte a /public
+# (esto es opcional; para el servidor integrado de PHP no hace falta)

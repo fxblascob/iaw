@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercici 07 - Taula de Servidors</title>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #d3d3d3;
+            padding: 8px;
+        }
+        th {
+            background-color: #333;
+            color: #ffffff;
+            text-align: left;
+        }
+        .resum {
+            text-align: right;
+            font-weight: bold;
+        }
+        .total-valor {
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Servidor</th>
+            <th>IP</th>
+            <th>SO</th>
+            <th>Estat</th>
+        </tr>
+        <tr>
+            <td>web-prod</td>
+            <td>192.168.1.10</td>
+            <td>Debian 12</td>
+            <td>Actiu</td>
+        </tr>
+        <tr>
+            <td>db-mysql</td>
+            <td>192.168.1.20</td>
+            <td>Ubuntu 24.04</td>
+            <td>Actiu</td>
+        </tr>
+        <tr>
+            <td>proxy-nginx</td>
+            <td>192.168.1.5</td>
+            <td>Rocky Linux 9</td>
+            <td>Actiu</td>
+        </tr>
+        <tr>
+            <td colspan="3" class="resum">Total servidors actius</td>
+            <td class="total-valor">3</td>
+        </tr>
+    </table>
+</body>
+</html>

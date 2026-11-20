@@ -1,0 +1,27 @@
+$num1 = 3; 
+$num2 = 5;
+$num3 = 8;
+$num1 *= 4;
+
+echo $num1;
+--> Saca 12
+
+echo $num1 <= $num2;
+--> Saca false (en este caso, no saca nada por pantalla)
+
+echo $num3 > $num1 and $num3 > $num2;
+--> Saca false ($num3 no es mayor que $num1; tampoco saca nada por pantalla)
+
+echo $num3 > $num1 or $num3 > $num2;
+--> Saca true ($num3 no es mayor que $num1, pero es mayor que $num2; el valor de true se representa con un 1 en pantalla)
+
+echo $num1 > $num2 xor $num1 > $num3;
+--> Saca false ($num1 es mayor que los dos, y como se cumplen las dos cosas, el xor es falso; solo debe cumplirse una de ellas; no saca nada por pantalla)
+
+$num3--;
+echo $num3;
+--> Saca 7
+
+$num3 += $num1;
+echo $num3;
+--> Saca 19

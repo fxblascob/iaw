@@ -1,0 +1,82 @@
+<html>
+	<head>
+		<title>Documento sin t&iacute;tulo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		<script>
+			function comprobar() {
+				if (form1.nombre.value.length<2) {
+					alert("Rellena el nombre");
+					return false;
+				}
+				if (form1.apellidos.value.length<2) {
+					alert("Rellena el apellido");
+					return false;
+				}
+				if (form1.dni.value.length<2) {
+					alert("Rellena el dni");
+					return false;
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<form name="form1" method="get" action="" onSubmit="comprobar()">
+			  <table width="70%" border="0">
+				    <tr>
+				      <td>Nombre: 
+				      <input name="nombre" type="text" id="nombre"></td>
+				      <td>Apellidos:
+				      <input name="apellidos" type="text" id="apellidos"></td>
+				      <td>DNI:
+				      <input name="dni" type="text" id="dni"></td>
+				    </tr>
+				    <tr>
+				      <td>Sexo:
+					<p>
+					  <label>
+					  <input type="radio" name="sexo" value="h">
+				  Hombre</label>
+					  <br>
+					  <label>
+					  <input type="radio" name="sexo" value="m">
+				  Mujer</label>
+					  <br>
+				      </p></td>
+				      <td>Idiomas: 
+					<select name="idiomas[]" size="5" multiple>
+					  <option>Castellano</option>
+					  <option>Valenciano</option>
+					  <option>Ingles</option>
+					  <option>Aleman</option>
+					  <option>Ruso</option>
+					    </select></td>
+				      <td><p>Cursos Inform&aacute;tica:</p>
+					<p>1e:
+					  <input name="cursos_inf[]" type="checkbox" id="cursos_inf" value="1e">
+				     2e      
+				     <input name="cursos_inf[]" type="checkbox" id="cursos_inf" value="2e">
+				     3e
+					  <input name="cursos_inf[]" type="checkbox" id="cursos_inf" value="e3">
+					  4e
+					  <input name="cursos_inf[]" type="checkbox" id="cursos_inf" value="e4"> 
+					  1b
+					  <input name="cursos_inf[]" type="checkbox" id="cursos_inf" value="1b">
+					</p></td>
+				    </tr>
+				    <tr>
+				      <td colspan="3"><p>comentarios:</p>
+				      <p>
+					<textarea name="comentarios" cols="100%"></textarea>
+				      </p></td>
+				    </tr>
+				    <tr>
+				      <td><input type="submit" name="enviar" value="Enviar" ></td>
+				      <td><input type="reset" name="Submit2" value="Restablecer"></td>
+				      <td>&nbsp;</td>
+				    </tr>
+			</table>
+		</form>
+		<p>&nbsp;</p>
+	</body>
+</html>

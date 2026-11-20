@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="ca" data-lang="va" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 1: HTML5 i CSS3 · Disseny Web i Maquetació Moderna</title>
+
+  <!-- Bootstrap 5.3 CSS & Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Estils del portal -->
+  <link rel="stylesheet" href="../../css/styles.css">
+
+  <style>
+    /* Conmutacio neta d'idioma amb Bootstrap */
+    html[data-lang="va"] .lang-es { display: none; }
+    html[data-lang="es"] .lang-va { display: none; }
+
+    /* Playground didàctic del Box Model */
+    .box-model-outer {
+      background-color: rgba(255, 193, 7, 0.15);
+      border: 2px dashed #ffc107;
+      padding: 15px;
+      transition: all 0.2s ease;
+    }
+    .box-model-border {
+      background-color: rgba(13, 110, 253, 0.15);
+      border: 3px solid #0d6efd;
+      padding: 10px;
+      transition: all 0.2s ease;
+    }
+    .box-model-padding {
+      background-color: rgba(25, 135, 84, 0.15);
+      border: 2px dashed #198754;
+      padding: 15px;
+      transition: all 0.2s ease;
+    }
+    .box-model-content {
+      background-color: rgba(13, 202, 240, 0.25);
+      border: 1px solid #0dcaf0;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- Mermaid.js per a diagrames tècnics -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: isDark ? 'dark' : 'neutral',
+        securityLevel: 'loose'
+      });
+    });
+  </script>
+</head>
+<body class="bg-body-tertiary py-4">
+
+  <div class="container" style="max-width: 1020px;">
+
+    <!-- Capçalera del Tema amb Selector d'Idioma -->
+    <header class="card border shadow-sm mb-4 bg-body">
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+          <span class="badge bg-primary px-3 py-2 rounded-pill">IAW · Bloc 2 · Tema 1</span>
+          
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <!-- Selector Bilingüe -->
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1" id="btnLangToggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-translate text-primary"></i>
+                <span id="currentLangLabel">Valencià</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn active" data-set-lang="va">
+                    <span>Valencià</span>
+                    <span class="badge text-bg-primary-subtle text-primary border ms-2">VA</span>
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="dropdown-item d-flex align-items-center justify-content-between lang-btn" data-set-lang="es">
+                    <span>Castellano</span>
+                    <span class="badge text-bg-secondary-subtle text-secondary border ms-2">ES</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Botó Descarregar PDF Original -->
+            <a href="./t1_html5_css3_val.pdf" class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" target="_blank" download>
+              <i class="bi bi-file-earmark-pdf"></i>
+              <span class="lang-va">Descarregar PDF</span>
+              <span class="lang-es">Descargar PDF</span>
+            </a>
+            <!-- Botó Accés Exercicis -->
+            <a href="#sec-exercicis" class="btn btn-sm btn-outline-success d-flex align-items-center gap-1">
+              <i class="bi bi-code-slash"></i>
+              <span class="lang-va">10 Exercicis</span>
+              <span class="lang-es">10 Ejercicios</span>
+            </a>
+          </div>
+        </div>
+
+        <h1 class="display-6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Tema 1: HTML5 i CSS3</span>
+          <span class="lang-es">Tema 1: HTML5 y CSS3</span>
+        </h1>
+        <p class="lead text-primary fw-semibold mb-3">
+          <span class="lang-va">Fonaments d'estructura semàntica, tipografia, selectors, model de caixa i estils visuals moderns</span>
+          <span class="lang-es">Fundamentos de estructura semántica, tipografía, selectores, modelo de caja y estilos visuales modernos</span>
+        </p>
+        <p class="text-body-secondary mb-0 small">
+          <i class="bi bi-mortarboard me-1"></i>
+          <span class="lang-va">Implantació d'Aplicacions Web (IAW) — 2n ASIR · Bloc 2: Disseny Web</span>
+          <span class="lang-es">Implantación de Aplicaciones Web (IAW) — 2º ASIR · Bloque 2: Diseño Web</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- Barra Ràpida de Navegació / Índex de Continguts -->
+    <nav class="card border shadow-sm mb-4 bg-body sticky-top" style="top: 1rem; z-index: 1020;">
+      <div class="card-body p-2 p-md-3">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+          <span class="fw-bold text-primary small d-flex align-items-center gap-1">
+            <i class="bi bi-list-nested"></i>
+            <span class="lang-va">Índex del tema:</span>
+            <span class="lang-es">Índice del tema:</span>
+          </span>
+          <div class="d-flex flex-wrap gap-1 small">
+            <a href="#sec-html5-base" class="btn btn-sm btn-light border py-1 px-2">1. <span class="lang-va">Estructura HTML5</span><span class="lang-es">Estructura HTML5</span></a>
+            <a href="#sec-elements-semantica" class="btn btn-sm btn-light border py-1 px-2">2. <span class="lang-va">Etiquetes & Semàntica</span><span class="lang-es">Etiquetas & Semántica</span></a>
+            <a href="#sec-css3-fonaments" class="btn btn-sm btn-light border py-1 px-2">3. <span class="lang-va">Fonaments CSS3</span><span class="lang-es">Fundamentos CSS3</span></a>
+            <a href="#sec-selectors" class="btn btn-sm btn-light border py-1 px-2">4. <span class="lang-va">Selectors & Cascada</span><span class="lang-es">Selectores & Cascada</span></a>
+            <a href="#sec-box-model" class="btn btn-sm btn-light border py-1 px-2">5. <span class="lang-va">Box Model & Mides</span><span class="lang-es">Box Model & Medidas</span></a>
+            <a href="#sec-colors-estils" class="btn btn-sm btn-light border py-1 px-2">6. <span class="lang-va">Colors & Fons</span><span class="lang-es">Colores & Fondos</span></a>
+            <a href="#sec-transformacions" class="btn btn-sm btn-light border py-1 px-2">7. <span class="lang-va">Transicions</span><span class="lang-es">Transiciones</span></a>
+            <a href="#sec-exercicis" class="btn btn-sm btn-primary-subtle text-primary border py-1 px-2 fw-semibold">
+              <i class="bi bi-check2-circle"></i>
+              <span class="lang-va">Pràctiques (1-10)</span>
+              <span class="lang-es">Prácticas (1-10)</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 1: ESTRUCTURA BÀSICA D'HTML5        -->
+    <!-- ========================================== -->
+    <section id="sec-html5-base" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-filetype-html"></i>
+          <span class="lang-va">1. Estructura Bàsica d'una Pàgina HTML5</span>
+          <span class="lang-es">1. Estructura Básica de una Página HTML5</span>
+        </h2>
+        <span class="badge bg-primary-subtle text-primary border">HTML5 Standard</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">Una pàgina web és un document de text pla amb una sèrie d'<strong>etiquetes</strong> (tags) que delimiten l'estructura, el contingut i el significat de cada element. L'estàndard actual és <strong>HTML5</strong>, regulat pel consorci internacional <strong>W3C</strong> i el grup <strong>WHATWG</strong>.</span>
+          <span class="lang-es">Una página web es un documento de texto plano con una serie de <strong>etiquetas</strong> (tags) que delimitan la estructura, el contenido y el significado de cada elemento. El estándar actual es <strong>HTML5</strong>, regulado por el consorcio internacional <strong>W3C</strong> y el grupo <strong>WHATWG</strong>.</span>
+        </p>
+
+        <div class="card bg-body-tertiary border mb-4">
+          <div class="card-header py-2 px-3 bg-body-secondary border-bottom d-flex align-items-center justify-content-between">
+            <span class="small fw-bold text-body-emphasis font-monospace">&lt;plantilla_base.html&gt;</span>
+            <span class="badge text-bg-light border small">HTML5 boilerplate</span>
+          </div>
+          <div class="card-body p-3 font-monospace small">
+            <pre class="m-0 text-body"><code>&lt;!-- Francisco Javier Blasco Boronat --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ca&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta name=&quot;author&quot; content=&quot;Francisco Javier Blasco Boronat&quot;&gt;
+    &lt;meta name=&quot;description&quot; content=&quot;Descripció del lloc web per a cercadors&quot;&gt;
+    &lt;title&gt;La meua primera pàgina HTML&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;Francisco Javier Blasco Boronat&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+        </div>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <i class="bi bi-layers-fill text-primary me-2"></i>
+          <span class="lang-va">Components essencials de l'esquelet HTML5:</span>
+          <span class="lang-es">Componentes esenciales del esqueleto HTML5:</span>
+        </h3>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;!DOCTYPE html&gt;</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">En HTML5 és extremadament senzill i no distingeix majúscules de minúscules. Indica al motor del navegador que renderitze el document en mode estàndard (evita el mode <em>quirks</em> dels navegadors antics).</span>
+                <span class="lang-es">En HTML5 es sumamente simple y no distingue mayúsculas de minúsculas. Indica al motor del navegador que procese el documento en modo estándar (evitando el modo <em>quirks</em> de navegadores antiguos).</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;html lang=&quot;ca&quot;&gt;</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Arrel del document. L'atribut <code>lang</code> és crític per a l'accessibilitat (lectors de pantalla) i el posicionament SEO internacional (<code>ca</code>, <code>es</code>, <code>en</code>...).</span>
+                <span class="lang-es">Raíz del documento. El atributo <code>lang</code> es crítico para accesibilidad (lectores de pantalla) y posicionamiento SEO internacional (<code>ca</code>, <code>es</code>, <code>en</code>...).</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">&lt;head&gt; i Metaetiquetes</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Conté les metadades que <strong>no es mostren directament</strong> a la pantalla: codificació de caràcters (<code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code>) per a accents i caràcters especials, títol a la pestanya (<code>&lt;title&gt;</code>), i vinculació de fulls d'estils o scripts.</span>
+                <span class="lang-es">Contiene los metadatos que <strong>no se muestran directamente</strong> en la pantalla: codificación de caracteres (<code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code>) para tildes y caracteres especiales, título en pestaña (<code>&lt;title&gt;</code>), y vinculación de hojas de estilo o scripts.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">Meta Viewport (Responsive)</h4>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va"><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code>: Adapta l'amplària lògica de renderitzat a l'amplària real del dispositiu mòbil, evitant que el mòbil aplique un zoom reductor artificial.</span>
+                <span class="lang-es"><code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</code>: Adapta el ancho lógico de renderizado al ancho real del dispositivo móvil, evitando que el móvil aplique un zoom reductor artificial.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 01 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mt-3">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 01</span>
+                <span class="lang-es">Ejercicio Práctico 01</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">01_pagina1.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Creació de la primera pàgina web amb estructura bàsica</span>
+              <span class="lang-es">Creación de la primera página web con estructura básica</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea amb el teu editor de codi (VS Code) un fitxer anomenat <code>01_pagina1.html</code> amb un comentari inicial amb el teu nom, títol &ldquo;La meua primera pàgina HTML&rdquo;, joc de caràcters UTF-8, metadada d'autor, configuració del viewport per a mòbil i un paràgraf al <code>&lt;body&gt;</code> amb el teu nom.</span>
+              <span class="lang-es">Crea con tu editor de código (VS Code) un archivo llamado <code>01_pagina1.html</code> con un comentario inicial con tu nombre, título &ldquo;La meua primera pàgina HTML&rdquo;, juego de caracteres UTF-8, metadato de autor, configuración del viewport para móvil y un párrafo en el <code>&lt;body&gt;</code> con tu nombre.</span>
+            </p>
+            <div class="d-flex gap-2">
+              <a href="./t1_Exercicis/01_pagina1.html" target="_blank" class="btn btn-sm btn-primary">
+                <i class="bi bi-box-arrow-up-right me-1"></i>
+                <span class="lang-va">Obrir Fitxer de l'Exercici</span>
+                <span class="lang-es">Abrir Archivo del Ejercicio</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 2: ETIQUETES DE TEXT I SEMÀNTICA    -->
+    <!-- ========================================== -->
+    <section id="sec-elements-semantica" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-diagram-3-fill"></i>
+          <span class="lang-va">2. Elements en Línia, Elements en Bloc i HTML5 Semàntic</span>
+          <span class="lang-es">2. Elementos en Línea, Elementos en Bloque y HTML5 Semántico</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">Semàntica Web</span>
+      </div>
+      <div class="card-body p-4">
+
+        <!-- Bloc vs En Línia -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Comportament natural de flux: Elements Block vs Inline</span>
+          <span class="lang-es">Comportamiento natural de flujo: Elementos Block vs Inline</span>
+        </h3>
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">Tot element en HTML té un comportament de visualització per defecte (propietat CSS <code>display</code>):</span>
+          <span class="lang-es">Todo elemento en HTML tiene un comportamiento de visualización por defecto (propiedad CSS <code>display</code>):</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge text-bg-warning">display: inline</span>
+                <h4 class="h6 fw-bold text-body-emphasis m-0"><span class="lang-va">Elements en línia</span><span class="lang-es">Elementos en línea</span></h4>
+              </div>
+              <ul class="small text-body-secondary mb-2 ps-3">
+                <li><span class="lang-va">Ocupen només l'espai estricte que necessita el seu contingut.</span><span class="lang-es">Ocupan únicamente el espacio estricto que requiere su contenido.</span></li>
+                <li><span class="lang-va">No inicien una nova línia (es col·loquen de costat si caben).</span><span class="lang-es">No inician una nueva línea (se colocan uno al lado de otro si caben).</span></li>
+                <li><span class="lang-va">No admeten propietats de dimensions d'amplària o altura (<code>width</code> / <code>height</code>).</span><span class="lang-es">No admiten propiedades de dimensiones de anchura o altura (<code>width</code> / <code>height</code>).</span></li>
+                <li><strong>Exemples:</strong> <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;img&gt;</code>.</li>
+              </ul>
+              <div class="text-center mt-2 p-2 bg-body rounded border">
+                <img src="./img/inline_block_ex.png" alt="Exemple inline" class="img-fluid rounded" style="max-height: 90px;">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge text-bg-primary">display: block</span>
+                <h4 class="h6 fw-bold text-body-emphasis m-0"><span class="lang-va">Elements en bloc</span><span class="lang-es">Elementos en bloque</span></h4>
+              </div>
+              <ul class="small text-body-secondary mb-2 ps-3">
+                <li><span class="lang-va">Ocupen tot l'ample disponible del seu contenidor pare (100% per defecte).</span><span class="lang-es">Ocupan todo el ancho disponible de su contenedor padre (100% por defecto).</span></li>
+                <li><span class="lang-va">Forcen un salt de línia automàtic abans i després.</span><span class="lang-es">Fuerzan un salto de línea automático antes y después.</span></li>
+                <li><span class="lang-va">Admeten marges, farciments (<code>padding</code>), <code>width</code> i <code>height</code>.</span><span class="lang-es">Admiten márgenes, rellenos (<code>padding</code>), <code>width</code> y <code>height</code>.</span></li>
+                <li><strong>Exemples:</strong> <code>&lt;p&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;h1&gt;</code>-<code>&lt;h6&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>.</li>
+              </ul>
+              <div class="text-center mt-2 p-2 bg-body rounded border">
+                <img src="./img/block_elements.png" alt="Exemple block" class="img-fluid rounded" style="max-height: 90px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Encapçalats i Text -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Encapçalats, Paràgrafs i Format de Text</span>
+          <span class="lang-es">Encabezados, Párrafos y Formato de Texto</span>
+        </h3>
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 25%;">Etiqueta</th>
+                <th style="width: 45%;"><span class="lang-va">Funció Semàntica</span><span class="lang-es">Función Semántica</span></th>
+                <th style="width: 30%;"><span class="lang-va">Comportament</span><span class="lang-es">Comportamiento</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>&lt;h1&gt;</code> ... <code>&lt;h6&gt;</code></td>
+                <td><span class="lang-va">Encapçalats jeràrquics. L'<code>&lt;h1&gt;</code> és el títol principal del document (recomanat únic per pàgina).</span><span class="lang-es">Encabezados jerárquicos. El <code>&lt;h1&gt;</code> es el título principal del documento (recomendado único por página).</span></td>
+                <td><span class="badge bg-primary-subtle text-primary">Block</span></td>
+              </tr>
+              <tr>
+                <td><code>&lt;p&gt;</code></td>
+                <td><span class="lang-va">Paràgraf de text regular amb marge vertical automàtic.</span><span class="lang-es">Párrafo de texto regular con margen vertical automático.</span></td>
+                <td><span class="badge bg-primary-subtle text-primary">Block</span></td>
+              </tr>
+              <tr>
+                <td><code>&lt;strong&gt;</code> / <code>&lt;b&gt;</code></td>
+                <td><span class="lang-va"><code>&lt;strong&gt;</code> afegeix <strong>importància o urgència semàntica</strong> (a més de negreta visual). <code>&lt;b&gt;</code> és merament estilístic.</span><span class="lang-es"><code>&lt;strong&gt;</code> añade <strong>importancia o urgencia semántica</strong> (además de negrita visual). <code>&lt;b&gt;</code> es meramente estilístico.</span></td>
+                <td><span class="badge bg-warning-subtle text-warning-emphasis">Inline</span></td>
+              </tr>
+              <tr>
+                <td><code>&lt;em&gt;</code> / <code>&lt;i&gt;</code></td>
+                <td><span class="lang-va"><code>&lt;em&gt;</code> indica èmfasi o to de veu distint; <code>&lt;i&gt;</code> és cursiva visual o termes tècnics/idiomes estrangers.</span><span class="lang-es"><code>&lt;em&gt;</code> indica énfasis o tono de voz distinto; <code>&lt;i&gt;</code> es cursiva visual o términos técnicos/idiomas extranjeros.</span></td>
+                <td><span class="badge bg-warning-subtle text-warning-emphasis">Inline</span></td>
+              </tr>
+              <tr>
+                <td><code>&lt;span&gt;</code></td>
+                <td><span class="lang-va">Contenidor genèric en línia per a aplicar estils CSS o seleccionar fragments amb JavaScript sense alterar el flux.</span><span class="lang-es">Contenedor genérico en línea para aplicar estilos CSS o seleccionar fragmentos con JavaScript sin alterar el flujo.</span></td>
+                <td><span class="badge bg-warning-subtle text-warning-emphasis">Inline</span></td>
+              </tr>
+              <tr>
+                <td><code>&lt;br&gt;</code> / <code>&lt;hr&gt;</code></td>
+                <td><span class="lang-va"><code>&lt;br&gt;</code> trenca la línia manualment. <code>&lt;hr&gt;</code> representa una fractura temàtica (línia horitzontal divisòria).</span><span class="lang-es"><code>&lt;br&gt;</code> rompe la línea manualmente. <code>&lt;hr&gt;</code> representa una fractura temática (línea horizontal divisoria).</span></td>
+                <td><span class="lang-va">Especials buides (sense tancament)</span><span class="lang-es">Especiales vacías (sin cierre)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- EXERCICI 02 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 02</span>
+                <span class="lang-es">Ejercicio Práctico 02</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">02_curriculum.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Estructura de currículum amb encapçalats i paràgrafs</span>
+              <span class="lang-es">Estructura de currículum con encabezados y párrafos</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea el document <code>02_curriculum.html</code> amb un títol de pestanya amb el teu nom, un encapçalat <code>&lt;h1&gt;</code> per a &ldquo;Dades personals&rdquo;, paràgrafs amb adreça/telèfon, un altre <code>&lt;h1&gt;</code> per a &ldquo;Formació&rdquo;, i subseccions <code>&lt;h2&gt;</code> per a &ldquo;Idiomes&rdquo; i &ldquo;Estudis&rdquo;.</span>
+              <span class="lang-es">Crea el documento <code>02_curriculum.html</code> con un título de pestaña con tu nombre, un encabezado <code>&lt;h1&gt;</code> para &ldquo;Datos personales&rdquo;, párrafos con dirección/teléfono, otro <code>&lt;h1&gt;</code> para &ldquo;Formación&rdquo;, y subsecciones <code>&lt;h2&gt;</code> para &ldquo;Idiomas&rdquo; y &ldquo;Estudios&rdquo;.</span>
+            </p>
+            <a href="./t1_Exercicis/02_curriculum.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 02_curriculum.html</span>
+              <span class="lang-es">Abrir Archivo 02_curriculum.html</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- EXERCICI 03 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 03</span>
+                <span class="lang-es">Ejercicio Práctico 03</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">03_historialnternet.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Format de text, regles horitzontals i èmfasi</span>
+                  <span class="lang-es">Formato de texto, reglas horizontales y énfasis</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>03_historialnternet.html</code> reproduint el text sobre ARPANET i la creació d'Internet. Utilitza <code>&lt;h1&gt;</code> amb una línia divisòria <code>&lt;hr&gt;</code> a sota, anys en negreta <code>&lt;strong&gt;</code>, sigles o termes tècnics en cursiva <code>&lt;em&gt;</code>, i un segon apartat <code>&lt;h2&gt;</code> per a &ldquo;Noms de domini&rdquo;.</span>
+                  <span class="lang-es">Crea <code>03_historialnternet.html</code> reproduciendo el texto sobre ARPANET y la creación de Internet. Utiliza <code>&lt;h1&gt;</code> con una línea divisoria <code>&lt;hr&gt;</code> debajo, años en negrita <code>&lt;strong&gt;</code>, siglas o términos técnicos en cursiva <code>&lt;em&gt;</code>, y un segundo apartado <code>&lt;h2&gt;</code> para &ldquo;Nombres de dominio&rdquo;.</span>
+                </p>
+                <a href="./t1_Exercicis/03_historialnternet.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 03_historialnternet.html</span>
+                  <span class="lang-es">Abrir Archivo 03_historialnternet.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex03_historia.jpg" alt="Exercici 03" class="img-fluid rounded border shadow-sm" style="max-height: 140px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MILLORA TÈCNICA: HTML5 SEMÀNTIC -->
+        <div class="card border-success border-opacity-50 bg-success-subtle bg-opacity-10 p-3 p-md-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-success"><i class="bi bi-stars me-1"></i><span class="lang-va">Millora Tècnica</span><span class="lang-es">Mejora Técnica</span></span>
+            <h4 class="h6 fw-bold text-success-emphasis m-0">
+              <span class="lang-va">Superació del &ldquo;Div Soup&rdquo;: Estructura Semàntica Moderna d'HTML5</span>
+              <span class="lang-es">Superación del &ldquo;Div Soup&rdquo;: Estructura Semántica Moderna de HTML5</span>
+            </h4>
+          </div>
+          <p class="small text-body-secondary mb-3">
+            <span class="lang-va">En versions antigues d'HTML, tota la maquetació es feia mitjançant <code>&lt;div id=&quot;header&quot;&gt;</code>, <code>&lt;div id=&quot;menu&quot;&gt;</code>, <code>&lt;div id=&quot;footer&quot;&gt;</code>. HTML5 va introduir etiquetes semàntiques que atorguen significat estructural real tant als motors de cerca com a les eines d'accessibilitat:</span>
+            <span class="lang-es">En versiones antiguas de HTML, toda la maquetación se realizaba mediante <code>&lt;div id=&quot;header&quot;&gt;</code>, <code>&lt;div id=&quot;menu&quot;&gt;</code>, <code>&lt;div id=&quot;footer&quot;&gt;</code>. HTML5 introdujo etiquetas semánticas que otorgan significado estructural real tanto a los motores de búsqueda como a las herramientas de accesibilidad:</span>
+          </p>
+          <div class="row g-2 small font-monospace">
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;header&gt;</code><br><span class="text-muted">Capçalera / Logo</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;nav&gt;</code><br><span class="text-muted">Menú navegació</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;main&gt;</code><br><span class="text-muted">Contingut central</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;section&gt;</code><br><span class="text-muted">Secció temàtica</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;article&gt;</code><br><span class="text-muted">Peça independent</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;aside&gt;</code><br><span class="text-muted">Barra lateral / extra</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;footer&gt;</code><br><span class="text-muted">Peu de pàgina</span></div></div>
+            <div class="col-md-3"><div class="p-2 bg-body rounded border text-center"><code>&lt;figure&gt;</code><br><span class="text-muted">Imatge + caption</span></div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 3: FONAMENTS DE CSS3                -->
+    <!-- ========================================== -->
+    <section id="sec-css3-fonaments" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-filetype-css"></i>
+          <span class="lang-va">3. Fonaments de CSS3 i Mètodes d'Inclusió</span>
+          <span class="lang-es">3. Fundamentos de CSS3 y Métodos de Inclusión</span>
+        </h2>
+        <span class="badge bg-primary-subtle text-primary border">Estils Web</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va"><strong>CSS</strong> (<em>Cascading Style Sheets</em>) s'encarrega de separar completament la capa de <strong>presentació visual</strong> de l'estructura semàntica d'HTML. La sintaxi bàsica es compon d'un <strong>selector</strong>, seguit d'un bloc de declaracions amb parelles <strong>propietat: valor;</strong>.</span>
+          <span class="lang-es"><strong>CSS</strong> (<em>Cascading Style Sheets</em>) se encarga de separar completamente la capa de <strong>presentación visual</strong> de la estructura semántica de HTML. La sintaxis básica se compone de un <strong>selector</strong>, seguido de un bloque de declaraciones con pares <strong>propiedad: valor;</strong>.</span>
+        </p>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-3">
+          <span class="lang-va">Les tres maneres d'aplicar estils a una pàgina web:</span>
+          <span class="lang-es">Las tres formas de aplicar estilos a una página web:</span>
+        </h3>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-secondary mb-2 align-self-start"><span class="lang-va">1. En línia (atribut style)</span><span class="lang-es">1. En línea (atributo style)</span></span>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">S'escriu directament dins l'etiqueta HTML:</span>
+                <span class="lang-es">Se escribe directamente dentro de la etiqueta HTML:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>&lt;p style=&quot;color: red;&quot;&gt;...&lt;/p&gt;</code></pre>
+              <div class="alert alert-warning py-1 px-2 small mb-0">
+                <i class="bi bi-exclamation-triangle me-1"></i>
+                <span class="lang-va"><strong>Desaconsellat:</strong> Difícil de mantindre i trenca la separació de capes.</span>
+                <span class="lang-es"><strong>Desaconsejado:</strong> Difícil de mantener y rompe la separación de capas.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <span class="badge bg-info-subtle text-info-emphasis border mb-2 align-self-start"><span class="lang-va">2. Incrustat (&lt;style&gt; en &lt;head&gt;)</span><span class="lang-es">2. Incrustado (&lt;style&gt; en &lt;head&gt;)</span></span>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Definit a la capçalera de la pàgina:</span>
+                <span class="lang-es">Definido en la cabecera de la página:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>&lt;style&gt;
+  p { color: red; }
+&lt;/style&gt;</code></pre>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Molt útil per a exercicis ràpids i proves aïllades.</span>
+                <span class="lang-es">Muy útil para ejercicios rápidos y pruebas aisladas.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3 border-success">
+              <span class="badge bg-success mb-2 align-self-start"><span class="lang-va">3. Fitxer extern (.css)</span><span class="lang-es">3. Archivo externo (.css)</span></span>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Vinculat des del <code>&lt;head&gt;</code>:</span>
+                <span class="lang-es">Vinculado desde el <code>&lt;head&gt;</code>:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;</code></pre>
+              <div class="alert alert-success py-1 px-2 small mb-0">
+                <i class="bi bi-check-circle me-1"></i>
+                <span class="lang-va"><strong>Estàndard professional:</strong> Reutilitzable en múltiples pàgines i emmagatzemable en memòria cau.</span>
+                <span class="lang-es"><strong>Estándar profesional:</strong> Reutilizable en múltiples páginas y almacenable en caché.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Propietats Tipogràfiques i de Format de Text Clau</span>
+          <span class="lang-es">Propiedades Tipográficas y de Formato de Texto Clave</span>
+        </h3>
+        <div class="table-responsive mb-4">
+          <table class="table table-bordered table-hover align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 30%;">Propietat CSS</th>
+                <th style="width: 40%;">Valors comuns</th>
+                <th style="width: 30%;">Descripció</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>font-family</code></td>
+                <td><code>Arial, Helvetica, sans-serif</code></td>
+                <td><span class="lang-va">Família tipogràfica amb font de reserva (fallback).</span><span class="lang-es">Familia tipográfica con fuente de reserva (fallback).</span></td>
+              </tr>
+              <tr>
+                <td><code>font-size</code></td>
+                <td><code>1rem</code>, <code>16px</code>, <code>1.2em</code>, <code>14pt</code></td>
+                <td><span class="lang-va">Grandària del text. Es recomana <code>rem</code> per accessibilitat.</span><span class="lang-es">Tamaño del texto. Se recomienda <code>rem</code> por accesibilidad.</span></td>
+              </tr>
+              <tr>
+                <td><code>font-weight</code></td>
+                <td><code>normal</code>, <code>bold</code>, <code>100</code> - <code>900</code></td>
+                <td><span class="lang-va">Gruix del traç de la lletra.</span><span class="lang-es">Grosor del trazo de la letra.</span></td>
+              </tr>
+              <tr>
+                <td><code>color</code></td>
+                <td><code>#ff0000</code>, <code>rgb(0, 128, 0)</code>, <code>blue</code></td>
+                <td><span class="lang-va">Color del text.</span><span class="lang-es">Color del texto.</span></td>
+              </tr>
+              <tr>
+                <td><code>text-align</code></td>
+                <td><code>left</code>, <code>right</code>, <code>center</code>, <code>justify</code></td>
+                <td><span class="lang-va">Alineació horitzontal del text en elements en bloc.</span><span class="lang-es">Alineación horizontal del texto en elementos en bloque.</span></td>
+              </tr>
+              <tr>
+                <td><code>text-decoration</code></td>
+                <td><code>none</code>, <code>underline</code>, <code>line-through</code></td>
+                <td><span class="lang-va">Subratllat, ratllat o supressió de la línia dels enllaços.</span><span class="lang-es">Subrayado, tachado o supresión de la línea de los enlaces.</span></td>
+              </tr>
+              <tr>
+                <td><code>line-height</code></td>
+                <td><code>1.5</code>, <code>1.6</code>, <code>24px</code></td>
+                <td><span class="lang-va">Interlineat vertical entre línies de text (essencial per a la llegibilitat).</span><span class="lang-es">Interlineado vertical entre líneas de texto (esencial para la legibilidad).</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- EXERCICI 04 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 04</span>
+                <span class="lang-es">Ejercicio Práctico 04</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">04_stilsText.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Format de caràcter i paràgraf amb estils CSS embeguts</span>
+              <span class="lang-es">Formato de carácter y párrafo con estilos CSS embebidos</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea el fitxer <code>04_stilsText.html</code> amb estils dins d'una etiqueta <code>&lt;style&gt;</code> al <code>&lt;head&gt;</code>: <code>&lt;h1&gt;</code> amb lletra Arial de 30pt, color roig i subratllat; <code>&lt;h2&gt;</code> amb Arial de 20pt, blau i alineat a la dreta; i <code>&lt;p&gt;</code> amb Times New Roman de 12pt, color gris i text justificat.</span>
+              <span class="lang-es">Crea el archivo <code>04_stilsText.html</code> con estilos dentro de una etiqueta <code>&lt;style&gt;</code> en el <code>&lt;head&gt;</code>: <code>&lt;h1&gt;</code> con letra Arial de 30pt, color rojo y subrayado; <code>&lt;h2&gt;</code> con Arial de 20pt, azul y alineado a la derecha; y <code>&lt;p&gt;</code> con Times New Roman de 12pt, color gris y texto justificado.</span>
+            </p>
+            <a href="./t1_Exercicis/04_stilsText.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 04_stilsText.html</span>
+              <span class="lang-es">Abrir Archivo 04_stilsText.html</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 4: SELECTORS I ESPECIFICITAT        -->
+    <!-- ========================================== -->
+    <section id="sec-selectors" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-cursor-fill"></i>
+          <span class="lang-va">4. Selectors CSS, Cascada i Càlcul d'Especificitat</span>
+          <span class="lang-es">4. Selectores CSS, Cascada y Cálculo de Especificidad</span>
+        </h2>
+        <span class="badge bg-warning-subtle text-warning-emphasis border">Prioritat CSS</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary">
+          <span class="lang-va">Els selectors permeten apuntar amb màxima precisió als elements del document HTML que volem estilitzar:</span>
+          <span class="lang-es">Los selectores permiten apuntar con máxima precisión a los elementos del documento HTML que queremos estilizar:</span>
+        </p>
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1"><span class="lang-va">Selectors Bàsics</span><span class="lang-es">Selectores Básicos</span></h4>
+              <ul class="small text-body-secondary mb-0 ps-3">
+                <li><code>*</code> : <span class="lang-va">Universal (selecciona absolutament tots els elements).</span><span class="lang-es">Universal (selecciona absolutamente todos los elementos).</span></li>
+                <li><code>p</code>, <code>h2</code>, <code>div</code> : <span class="lang-va">D'etiqueta o tipus d'element.</span><span class="lang-es">De etiqueta o tipo de elemento.</span></li>
+                <li><code>.miClase</code> : <span class="lang-va">De classe (aplicable a qualsevol element amb <code>class=&quot;miClase&quot;</code>).</span><span class="lang-es">De clase (aplicable a cualquier elemento con <code>class=&quot;miClase&quot;</code>).</span></li>
+                <li><code>#miID</code> : <span class="lang-va">D'identificador únic (<code>id=&quot;miID&quot;</code>). Ha de ser únic per pàgina.</span><span class="lang-es">De identificador único (<code>id=&quot;miID&quot;</code>). Debe ser único por página.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1"><span class="lang-va">Combinadors i Agrupació</span><span class="lang-es">Combinadores y Agrupación</span></h4>
+              <ul class="small text-body-secondary mb-0 ps-3">
+                <li><code>p.miClase</code> : <span class="lang-va">Paràgrafs que tinguen expressament la classe <code>miClase</code>.</span><span class="lang-es">Párrafos que tengan expresamente la clase <code>miClase</code>.</span></li>
+                <li><code>p .miClase</code> : <span class="lang-va"><strong>Descendent:</strong> qualsevol element amb classe <code>miClase</code> que estiga <em>dins</em> d'un <code>&lt;p&gt;</code>.</span><span class="lang-es"><strong>Descendente:</strong> cualquier elemento con clase <code>miClase</code> que esté <em>dentro</em> de un <code>&lt;p&gt;</code>.</span></li>
+                <li><code>h1, h2, p</code> : <span class="lang-va"><strong>Agrupació:</strong> aplica la mateixa regla a múltiples selectors separats per comes.</span><span class="lang-es"><strong>Agrupación:</strong> aplica la misma regla a múltiples selectores separados por comas.</span></li>
+                <li><code>p span em</code> : <span class="lang-va">Descendent niat múltiple (un <code>&lt;em&gt;</code> dins d'un <code>&lt;span&gt;</code> dins d'un <code>&lt;p&gt;</code>).</span><span class="lang-es">Descendente anidado múltiple (un <code>&lt;em&gt;</code> dentro de un <code>&lt;span&gt;</code> dentro de un <code>&lt;p&gt;</code>).</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- MILLORA TÈCNICA: FÓRMULA D'ESPECIFICITAT -->
+        <div class="card border-warning border-opacity-50 bg-warning-subtle bg-opacity-10 p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-warning text-dark"><i class="bi bi-calculator me-1"></i><span class="lang-va">Fórmula d'Especificitat (0-0-0-0)</span><span class="lang-es">Fórmula de Especificidad (0-0-0-0)</span></span>
+            <h4 class="h6 fw-bold text-warning-emphasis m-0">
+              <span class="lang-va">Com resol el navegador el conflicte entre estils?</span>
+              <span class="lang-es">¿Cómo resuelve el navegador el conflicto entre estilos?</span>
+            </h4>
+          </div>
+          <p class="small text-body-secondary mb-3">
+            <span class="lang-va">Quan dues o més regles afecten el mateix element, el navegador calcula un pes numèric de 4 dígits:</span>
+            <span class="lang-es">Cuando dos o más reglas afectan al mismo elemento, el navegador calcula un peso numérico de 4 dígitos:</span>
+          </p>
+
+          <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered bg-body small align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Nivell</th>
+                  <th>Tipus de Selector</th>
+                  <th>Pes</th>
+                  <th>Exemple</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="badge bg-danger">A (Màxim)</span></td>
+                  <td><span class="lang-va">Estil en línia directe</span><span class="lang-es">Estilo en línea directo</span></td>
+                  <td class="font-monospace fw-bold text-danger">1, 0, 0, 0</td>
+                  <td><code>&lt;p style=&quot;color: red;&quot;&gt;</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-warning text-dark">B</span></td>
+                  <td><span class="lang-va">Selectors d'Identificador (ID)</span><span class="lang-es">Selectores de Identificador (ID)</span></td>
+                  <td class="font-monospace fw-bold text-warning-emphasis">0, 1, 0, 0</td>
+                  <td><code>#titol-principal</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-primary">C</span></td>
+                  <td><span class="lang-va">Classes, atributs i pseudoclasses</span><span class="lang-es">Clases, atributos y pseudoclases</span></td>
+                  <td class="font-monospace fw-bold text-primary">0, 0, 1, 0</td>
+                  <td><code>.actiu</code>, <code>[type=&quot;text&quot;]</code>, <code>:hover</code></td>
+                </tr>
+                <tr>
+                  <td><span class="badge bg-secondary">D (Mínim)</span></td>
+                  <td><span class="lang-va">Etiquetes i pseudoelements</span><span class="lang-es">Etiquetas y pseudoelementos</span></td>
+                  <td class="font-monospace fw-bold text-secondary">0, 0, 0, 1</td>
+                  <td><code>p</code>, <code>h2</code>, <code>::before</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="alert alert-danger py-2 px-3 small mb-0">
+            <i class="bi bi-shield-slash-fill me-1"></i>
+            <span class="lang-va"><strong>I què passa amb <code>!important</code>?</strong> Sobreescriu qualsevol especificitat anterior. En les bones pràctiques d'arquitectura web i en aquest portal està <strong>terminantment prohibit</strong> perquè impossibilita la modularitat i crea deute tècnic.</span>
+            <span class="lang-es"><strong>¿Y qué ocurre con <code>!important</code>?</strong> Sobrescribe cualquier especificidad anterior. En las buenas prácticas de arquitectura web y en este portal está <strong>terminantemente prohibido</strong> porque imposibilita la modularidad y crea deuda técnica.</span>
+          </div>
+        </div>
+
+        <!-- EXERCICI 05 & 06 -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 05</span><span class="lang-es">Ejercicio 05</span> · 05_selectors.txt</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Definició de selectors objectiu</span><span class="lang-es">Definición de selectores objetivo</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Escriu quin selector faries servir per a:</span>
+                  <span class="lang-es">Escribe qué selector usarías para:</span>
+                </p>
+                <div class="p-2 bg-body rounded border small font-monospace mb-3">
+                  1. Tots els elements &rarr; <strong>*</strong><br>
+                  2. Tots els paràgrafs &rarr; <strong>p</strong><br>
+                  3. Un h2 amb id &ldquo;especial&rdquo; &rarr; <strong>h2#especial</strong><br>
+                  4. Negretes de classe &ldquo;clase1&rdquo; &rarr; <strong>strong.clase1</strong><br>
+                  5. Cursives dins d'h2 &rarr; <strong>h2 em</strong>
+                </div>
+                <a href="./t1_Exercicis/05_selectors.txt" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-file-text me-1"></i> <span class="lang-va">Veure arxiu 05_selectors.txt</span><span class="lang-es">Ver archivo 05_selectors.txt</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm h-100">
+              <div class="card-body p-3">
+                <span class="badge bg-primary text-white mb-2"><span class="lang-va">Exercici 06</span><span class="lang-es">Ejercicio 06</span> · 06_selectors.txt</span>
+                <h5 class="h6 fw-bold text-body-emphasis mb-2"><span class="lang-va">Abast i resolució de conflictes</span><span class="lang-es">Alcance y resolución de conflictos</span></h5>
+                <p class="small text-body-secondary mb-2">
+                  <span class="lang-va">Analitza a quines línies s'aplica cada regla:</span>
+                  <span class="lang-es">Analiza a qué líneas se aplica cada regla:</span>
+                </p>
+                <div class="p-2 bg-body rounded border small font-monospace mb-3">
+                  &bull; <code>p</code> &rarr; Línies 1, 2, 4 i 5<br>
+                  &bull; <code>p.miClase</code> &rarr; Línies 2 i 5<br>
+                  &bull; <code>p .miClase</code> &rarr; Línia 4 (span dins de p)<br>
+                  &bull; <code>p, #miID</code> &rarr; Línies 1, 2, 4 i 5<br>
+                  &bull; <code>p span em</code> &rarr; Text <em>blabla</em> de Línia 2<br>
+                  &bull; <code>.miClase .miClase2</code> &rarr; Línia 5 (span miClase2)
+                </div>
+                <a href="./t1_Exercicis/06_selectors.txt" target="_blank" class="btn btn-sm btn-outline-primary w-100">
+                  <i class="bi bi-file-text me-1"></i> <span class="lang-va">Veure arxiu 06_selectors.txt</span><span class="lang-es">Ver archivo 06_selectors.txt</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 5: BOX MODEL, MIDES I VARIABLES     -->
+    <!-- ========================================== -->
+    <section id="sec-box-model" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-bounding-box"></i>
+          <span class="lang-va">5. El Model de Caixa (Box Model), Unitats i Variables CSS</span>
+          <span class="lang-es">5. El Modelo de Caja (Box Model), Unidades y Variables CSS</span>
+        </h2>
+        <span class="badge bg-info-subtle text-info-emphasis border">CSS Layout Core</span>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- EXPLICACIÓ BOX MODEL -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Anatomia del Model de Caixa</span>
+          <span class="lang-es">Anatomía del Modelo de Caja</span>
+        </h3>
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">En CSS, cada element visible és una caixa rectangular composta per quatre capes concèntriques des de fora cap a dins:</span>
+          <span class="lang-es">En CSS, cada elemento visible es una caja rectangular compuesta por cuatro capas concéntricas desde fuera hacia dentro:</span>
+        </p>
+
+        <!-- DIAGRAMA VISUAL DEL BOX MODEL -->
+        <div class="box-model-outer rounded mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="badge text-bg-warning fw-bold">MARGIN (Marge extern invisible entre caixes)</span>
+            <span class="small text-body-secondary font-monospace">margin: 20px;</span>
+          </div>
+          <div class="box-model-border rounded">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="badge text-bg-primary fw-bold">BORDER (Vora visible amb gruix i estil)</span>
+              <span class="small text-body-secondary font-monospace">border: 3px solid #0d6efd;</span>
+            </div>
+            <div class="box-model-padding rounded">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="badge text-bg-success fw-bold">PADDING (Espai interior entre la vora i el contingut)</span>
+                <span class="small text-body-secondary font-monospace">padding: 15px;</span>
+              </div>
+              <div class="box-model-content rounded text-primary-emphasis">
+                <span>CONTENT (Text, imatge, etc. &mdash; width &times; height)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MILLORA TÈCNICA: BOX SIZING BORDER BOX -->
+        <div class="card border-success border-opacity-50 bg-success-subtle bg-opacity-10 p-3 p-md-4 mb-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-success"><i class="bi bi-check2-all me-1"></i><span class="lang-va">Regla d'Or</span><span class="lang-es">Regla de Oro</span></span>
+            <h4 class="h6 fw-bold text-success-emphasis m-0">box-sizing: border-box</h4>
+          </div>
+          <div class="row g-3 align-items-center">
+            <div class="col-lg-7">
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Amb el model tradicional per defecte (<code>content-box</code>), si una caixa té <code>width: 200px</code> i li afegeixes <code>padding: 20px</code> i <code>border: 5px</code>, l'amplària total en pantalla serà <strong>250px</strong> (200 + 40 + 10). Això trenca constantment les quadrícules!</span>
+                <span class="lang-es">Con el modelo tradicional por defecto (<code>content-box</code>), si una caja tiene <code>width: 200px</code> y le añades <code>padding: 20px</code> y <code>border: 5px</code>, el ancho total en pantalla será <strong>250px</strong> (200 + 40 + 10). ¡Esto descoloca constantemente las cuadrículas!</span>
+              </p>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Amb <code>box-sizing: border-box</code>, el <code>padding</code> i el <code>border</code> es resten de l'interior: si demanes 200px d'ample, la caixa mesurarà <strong>exactament 200px</strong>.</span>
+                <span class="lang-es">Con <code>box-sizing: border-box</code>, el <code>padding</code> y el <code>border</code> se restan del interior: si pides 200px de ancho, la caja medirá <strong>exactamente 200px</strong>.</span>
+              </p>
+            </div>
+            <div class="col-lg-5">
+              <div class="p-2 bg-body rounded border font-monospace small">
+                <span class="text-success fw-bold">/* Reset Universal Modern */</span><br>
+                *, *::before, *::after {<br>
+                &nbsp;&nbsp;box-sizing: border-box;<br>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MILLORA TÈCNICA: UNITATS MODERNES REM vs EM -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Unitats de Mesura: Per què guanya 'rem'?</span>
+          <span class="lang-es">Unidades de Medida: ¿Por qué gana 'rem'?</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h5 class="h6 fw-bold text-body-emphasis mb-1">Píxels (px) & Punts (pt)</h5>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Unitats absolutes. Els <code>pt</code> s'utilitzen per a impressió sobre paper. Els <code>px</code> són estàtics: no respecten les preferències de lletra gran configurades en el navegador per usuaris amb deficiència visual.</span>
+                <span class="lang-es">Unidades absolutas. Los <code>pt</code> se usan para impresión sobre papel. Los <code>px</code> son estáticos: no respetan las preferencias de letra grande configuradas en el navegador por usuarios con deficiencia visual.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h5 class="h6 fw-bold text-warning-emphasis mb-1">em (Element Father)</h5>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Relatiu a la mida de lletra del <strong>pare directe</strong>. El seu gran perill és l'<strong>efecte cascada acumulatiu</strong>: si un <code>&lt;ul&gt;</code> té <code>font-size: 0.8em</code>, una subllista niada tindrà <code>0.64em</code> (0.8 &times; 0.8), fent-se cada vegada minúscula.</span>
+                <span class="lang-es">Relativo al tamaño de letra del <strong>padre directo</strong>. Su gran peligro es el <strong>efecto cascada acumulativo</strong>: si una <code>&lt;ul&gt;</code> tiene <code>font-size: 0.8em</code>, una sublista anidada tendrá <code>0.64em</code> (0.8 &times; 0.8), haciéndose cada vez minúscula.</span>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 bg-body-tertiary border p-3 border-success">
+              <h5 class="h6 fw-bold text-success mb-1">rem (Root em) & Viewport</h5>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va"><code>rem</code> és sempre relatiu a la font de l'element arrel <code>&lt;html&gt;</code> (per defecte 16px = 1rem). És accessible, escalable i sense efectes acumulatius estranys. Juntament amb <code>100vh</code> (alçària de pantalla) i <code>100vw</code> (amplària de pantalla), formen el kit modern.</span>
+                <span class="lang-es"><code>rem</code> es siempre relativo a la fuente del elemento raíz <code>&lt;html&gt;</code> (por defecto 16px = 1rem). Es accesible, escalable y sin efectos acumulativos extraños. Junto con <code>100vh</code> (altura de pantalla) y <code>100vw</code> (anchura de pantalla), forman el kit moderno.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 07 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 07</span>
+                <span class="lang-es">Ejercicio Práctico 07</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">07_tamanysEM.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Ús d'unitats relatives EM i herència tipogràfica</span>
+              <span class="lang-es">Uso de unidades relativas EM y herencia tipográfica</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea el document <code>07_tamanysEM.html</code> amb un <code>body</code> a 20pt, i tres classes de mida: <code>.xicotet</code> (0.8em = 16pt), <code>.normal</code> (1em = 20pt) i <code>.gran</code> (1.2em = 24pt). Comprova com reaccionen en canviar la mida base del body.</span>
+              <span class="lang-es">Crea el documento <code>07_tamanysEM.html</code> con un <code>body</code> a 20pt, y tres clases de tamaño: <code>.xicotet</code> (0.8em = 16pt), <code>.normal</code> (1em = 20pt) y <code>.gran</code> (1.2em = 24pt). Comprueba cómo reaccionan al cambiar el tamaño base del body.</span>
+            </p>
+            <a href="./t1_Exercicis/07_tamanysEM.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 07_tamanysEM.html</span>
+              <span class="lang-es">Abrir Archivo 07_tamanysEM.html</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- MILLORA TÈCNICA: VARIABLES CSS -->
+        <div class="card border-info border-opacity-50 bg-info-subtle bg-opacity-10 p-3 p-md-4">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="badge bg-info text-dark"><i class="bi bi-code-square me-1"></i><span class="lang-va">Variables CSS Nadiues</span><span class="lang-es">Variables CSS Nativas</span></span>
+            <h4 class="h6 fw-bold text-info-emphasis m-0">:root { --color-marca: #0d6efd; }</h4>
+          </div>
+          <p class="small text-body-secondary mb-2">
+            <span class="lang-va">Les <em>Custom Properties</em> permeten definir valors reutilitzables en tot el projecte i canviar-los dinàmicament (essencials per al mode fosc/clar de Bootstrap 5.3):</span>
+            <span class="lang-es">Las <em>Custom Properties</em> permiten definir valores reutilizables en todo el proyecto y cambiarlos dinámicamente (esenciales para el modo oscuro/claro de Bootstrap 5.3):</span>
+          </p>
+          <div class="p-2 bg-body rounded border font-monospace small">
+            :root {<br>
+            &nbsp;&nbsp;--primary-color: #0d6efd;<br>
+            &nbsp;&nbsp;--spacing-unit: 1.5rem;<br>
+            }<br>
+            .boto {<br>
+            &nbsp;&nbsp;background-color: var(--primary-color);<br>
+            &nbsp;&nbsp;padding: var(--spacing-unit);<br>
+            }
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 6: COLORS, OMBRES I DEGRADATS       -->
+    <!-- ========================================== -->
+    <section id="sec-colors-estils" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-palette-fill"></i>
+          <span class="lang-va">6. Models de Color, Degradats, Vores i Ombres</span>
+          <span class="lang-es">6. Modelos de Color, Degradados, Bordes y Sombras</span>
+        </h2>
+        <span class="badge bg-success-subtle text-success border">Efectes Visuals</span>
+      </div>
+      <div class="card-body p-4">
+
+        <!-- Formats de Color -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Models de Representació de Color en CSS</span>
+          <span class="lang-es">Modelos de Representación de Color en CSS</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <div class="fw-bold text-primary mb-1">Hexadecimal</div>
+              <div class="font-monospace small mb-2">#FF0000 / #008000</div>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Tres parells per a Roig, Verd i Blau (00 a FF).</span><span class="lang-es">Tres pares para Rojo, Verde y Azul (00 a FF).</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <div class="fw-bold text-primary mb-1">RGB / RGBA</div>
+              <div class="font-monospace small mb-2">rgba(255, 0, 0, 0.5)</div>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Canals de 0 a 255 amb canal alfa 'A' per a transparència.</span><span class="lang-es">Canales de 0 a 255 con canal alfa 'A' para transparencia.</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <div class="fw-bold text-primary mb-1">HSL / HSLA</div>
+              <div class="font-monospace small mb-2">hsl(120, 100%, 50%)</div>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">Hue (to 0-360&deg;), Saturation (0-100%), Lightness (0-100%).</span><span class="lang-es">Hue (tono 0-360&deg;), Saturation (0-100%), Lightness (0-100%).</span></p>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <div class="fw-bold text-primary mb-1">Noms Estàndard</div>
+              <div class="font-monospace small mb-2">red, gold, tomato</div>
+              <p class="small text-body-secondary mb-0"><span class="lang-va">140 noms de colors reconeguts pel W3C.</span><span class="lang-es">140 nombres de colores reconocidos por el W3C.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 08 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm mb-4">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 08</span>
+                <span class="lang-es">Ejercicio Práctico 08</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">08_colorsCSS.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Definició de colors amb codi hexadecimal</span>
+              <span class="lang-es">Definición de colores con código hexadecimal</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea el document <code>08_colorsCSS.html</code> amb selectors de classe: <code>.groc</code> (<code>#FFFF00</code>), <code>.roig</code> (<code>#FF0000</code>) i <code>.verd</code> (<code>#008000</code>), aplicats a tres paràgrafs explicatius.</span>
+              <span class="lang-es">Crea el documento <code>08_colorsCSS.html</code> con selectores de clase: <code>.groc</code> (<code>#FFFF00</code>), <code>.roig</code> (<code>#FF0000</code>) y <code>.verd</code> (<code>#008000</code>), aplicados a tres párrafos explicativos.</span>
+            </p>
+            <a href="./t1_Exercicis/08_colorsCSS.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 08_colorsCSS.html</span>
+              <span class="lang-es">Abrir Archivo 08_colorsCSS.html</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Degradats i Vores -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Degradats Lineals i Radials</span>
+          <span class="lang-es">Degradados Lineales y Radiales</span>
+        </h3>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">linear-gradient()</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Transició recta entre dos o més colors seguint una direcció o angle:</span>
+                <span class="lang-es">Transición recta entre dos o más colores siguiendo una dirección o ángulo:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>background: linear-gradient(to right, white, red 50%, black);</code></pre>
+              <div class="text-center p-2 bg-body rounded border">
+                <img src="./img/linear_gradient.png" alt="Degradat lineal" class="img-fluid rounded" style="max-height: 80px;">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-1">radial-gradient()</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Transició que es propaga de forma concèntrica des d'un punt central cap a l'exterior:</span>
+                <span class="lang-es">Transición que se propaga de forma concéntrica desde un punto central hacia el exterior:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>background: radial-gradient(circle, #ff0, #f00, #000);</code></pre>
+              <div class="text-center p-2 bg-body rounded border">
+                <img src="./img/radial_gradient.png" alt="Degradat radial" class="img-fluid rounded" style="max-height: 80px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ombres de Caixa -->
+        <h3 class="h6 fw-bold text-body-emphasis mb-2">
+          <span class="lang-va">Ombres de Caixa: box-shadow</span>
+          <span class="lang-es">Sombras de Caja: box-shadow</span>
+        </h3>
+        <p class="small text-body-secondary mb-2">
+          <span class="lang-va">La sintaxi completa de <code>box-shadow</code> accepta fins a 5 valors:</span>
+          <span class="lang-es">La sintaxis completa de <code>box-shadow</code> acepta hasta 5 valores:</span>
+        </p>
+        <div class="p-2 bg-body rounded border font-monospace small mb-3 text-center">
+          box-shadow: <span class="text-primary">[offset-x]</span> <span class="text-success">[offset-y]</span> <span class="text-warning-emphasis">[desenfocament/blur]</span> <span class="text-info-emphasis">[propagació/spread]</span> <span class="text-danger">[color]</span>;
+        </div>
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <span class="small text-muted font-monospace mb-2">box-shadow: 5px 10px red;</span>
+              <img src="./img/shadow_simple.png" alt="Sombra bàsica" class="img-fluid rounded mx-auto border" style="max-height: 90px;">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3 text-center">
+              <span class="small text-muted font-monospace mb-2">box-shadow: 0 10px 10px -5px rgba(0,0,0,0.5);</span>
+              <img src="./img/shadow_spread.png" alt="Sombra amb propagació negativa" class="img-fluid rounded mx-auto border" style="max-height: 90px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 09 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 09</span>
+                <span class="lang-es">Ejercicio Práctico 09</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">09_estilsCSS3.html</span>
+            </div>
+            <div class="row g-3 align-items-center">
+              <div class="col-lg-8">
+                <h5 class="h6 fw-bold text-body-emphasis mb-2">
+                  <span class="lang-va">Composició de tres caixes amb degradats, vores arredonides i ombres</span>
+                  <span class="lang-es">Composición de tres cajas con degradados, bordes redondeados y sombras</span>
+                </h5>
+                <p class="small text-body-secondary mb-3">
+                  <span class="lang-va">Crea <code>09_estilsCSS3.html</code> amb un contenidor <code>display: flex</code> i 3 caixes: Caixa 1 (200x200px, radi 10px, degradat blanc a taronja); Caixa 2 (200x400px, radi 5px, fons roig clar); Caixa 3 (300x100px, vora grisa de 5px i ombra de 10px inferior-dreta negra).</span>
+                  <span class="lang-es">Crea <code>09_estilsCSS3.html</code> con un contenedor <code>display: flex</code> y 3 cajas: Caja 1 (200x200px, radio 10px, degradado blanco a naranja); Caja 2 (200x400px, radio 5px, fondo rojo claro); Caja 3 (300x100px, borde gris de 5px y sombra de 10px inferior-derecha negra).</span>
+                </p>
+                <a href="./t1_Exercicis/09_estilsCSS3.html" target="_blank" class="btn btn-sm btn-primary">
+                  <i class="bi bi-box-arrow-up-right me-1"></i>
+                  <span class="lang-va">Obrir Fitxer 09_estilsCSS3.html</span>
+                  <span class="lang-es">Abrir Archivo 09_estilsCSS3.html</span>
+                </a>
+              </div>
+              <div class="col-lg-4 text-center">
+                <img src="./img/ex09_capses.png" alt="Exercici 09 resultat" class="img-fluid rounded border shadow-sm" style="max-height: 140px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 7: TRANSFORMACIONS I TRANSICIONS    -->
+    <!-- ========================================== -->
+    <section id="sec-transformacions" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-arrow-repeat"></i>
+          <span class="lang-va">7. Transformacions 2D, Transicions i Animacions</span>
+          <span class="lang-es">7. Transformaciones 2D, Transiciones y Animaciones</span>
+        </h2>
+        <span class="badge bg-danger-subtle text-danger border">CSS Interactiu</span>
+      </div>
+      <div class="card-body p-4">
+
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-2">Transformacions 2D (transform)</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Modifiquen la geometria visual d'un element sense alterar el flux dels elements veïns:</span>
+                <span class="lang-es">Modifican la geometría visual de un elemento sin alterar el flujo de los elementos vecinos:</span>
+              </p>
+              <ul class="small text-body-secondary ps-3 mb-3">
+                <li><code>translate(x, y)</code> : Desplaça en píxels o percentatge.</li>
+                <li><code>rotate(45deg)</code> : Rota en sentit horari.</li>
+                <li><code>scale(1.2)</code> : Escala (augmenta o redueix).</li>
+                <li><code>skew(20deg, 5deg)</code> : Deforma oblicament els eixos.</li>
+              </ul>
+              <div class="text-center p-2 bg-body rounded border">
+                <img src="./img/transform_skew.jpg" alt="Transform skew" class="img-fluid rounded" style="max-height: 80px;">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card h-100 bg-body-tertiary border p-3">
+              <h4 class="h6 fw-bold text-primary mb-2">Transicions (transition)</h4>
+              <p class="small text-body-secondary mb-2">
+                <span class="lang-va">Permeten que el canvi d'una propietat d'un estat A a un estat B (per exemple, en fer <code>:hover</code>) siga suau i progressiu:</span>
+                <span class="lang-es">Permiten que el cambio de una propiedad de un estado A a un estado B (por ejemplo, al hacer <code>:hover</code>) sea suave y progresivo:</span>
+              </p>
+              <pre class="small font-monospace bg-body p-2 rounded border mb-2"><code>.caixa {
+  background-color: lightcoral;
+  transition: all 0.5s ease-in-out;
+}
+.caixa:hover {
+  background-color: lightblue;
+  transform: translateY(-10px);
+}</code></pre>
+              <p class="small text-body-secondary mb-0">
+                <span class="lang-va">Sintaxi abreujada: <code>transition: [propietat] [temps] [corba] [retard];</code></span>
+                <span class="lang-es">Sintaxis abreviada: <code>transition: [propiedad] [tiempo] [curva] [retardo];</code></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXERCICI 10 -->
+        <div class="card border-primary border-opacity-50 bg-primary-subtle bg-opacity-10 shadow-sm">
+          <div class="card-body p-3 p-md-4">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+              <span class="badge bg-primary text-white d-flex align-items-center gap-1">
+                <i class="bi bi-play-circle"></i>
+                <span class="lang-va">Exercici Pràctic 10</span>
+                <span class="lang-es">Ejercicio Práctico 10</span>
+              </span>
+              <span class="small font-monospace text-primary fw-semibold">10_estilsCSS3.html</span>
+            </div>
+            <h5 class="h6 fw-bold text-body-emphasis mb-2">
+              <span class="lang-va">Aplicació de transicions dinàmiques en estat :hover</span>
+              <span class="lang-es">Aplicación de transiciones dinámicas en estado :hover</span>
+            </h5>
+            <p class="small text-body-secondary mb-3">
+              <span class="lang-va">Crea <code>10_estilsCSS3.html</code> afegint transicions a les caixes de l'exercici anterior: la Caixa 2 canvia el color de fons de roig clar a blau clar en 2 segons; la Caixa 3 es desplaça 20px cap avall en 1 segon en passar el ratolí; i la Caixa 1 baixa 200px quan el cursor entra a la pàgina.</span>
+              <span class="lang-es">Crea <code>10_estilsCSS3.html</code> añadiendo transiciones a las cajas del ejercicio anterior: la Caja 2 cambia el color de fondo de rojo claro a azul claro en 2 segundos; la Caja 3 se desplaza 20px hacia abajo en 1 segundo al pasar el ratón; y la Caja 1 baja 200px cuando el cursor entra en la página.</span>
+            </p>
+            <a href="./t1_Exercicis/10_estilsCSS3.html" target="_blank" class="btn btn-sm btn-primary">
+              <i class="bi bi-box-arrow-up-right me-1"></i>
+              <span class="lang-va">Obrir Fitxer 10_estilsCSS3.html</span>
+              <span class="lang-es">Abrir Archivo 10_estilsCSS3.html</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECCIÓ 8: QUADRE DE LES 10 PRÀCTIQUES     -->
+    <!-- ========================================== -->
+    <section id="sec-exercicis" class="card border shadow-sm mb-4 bg-body">
+      <div class="card-header bg-body border-bottom py-3 px-4 d-flex align-items-center justify-content-between">
+        <h2 class="h5 fw-bold text-primary m-0 d-flex align-items-center gap-2">
+          <i class="bi bi-list-check"></i>
+          <span class="lang-va">8. Resum dels 10 Exercicis Pràctics del Tema</span>
+          <span class="lang-es">8. Resumen de los 10 Ejercicios Prácticos del Tema</span>
+        </h2>
+        <span class="badge bg-primary">Avaluació Contínua</span>
+      </div>
+      <div class="card-body p-4">
+        <p class="text-body-secondary small mb-3">
+          <span class="lang-va">Pots accedir directament a tots els exercicis preparats per a aquest tema a la carpeta <code>t1_Exercicis/</code>:</span>
+          <span class="lang-es">Puedes acceder directamente a todos los ejercicios preparados para este tema en la carpeta <code>t1_Exercicis/</code>:</span>
+        </p>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-bordered align-middle small mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 10%;">Núm.</th>
+                <th style="width: 25%;">Arxiu</th>
+                <th style="width: 45%;">Objectiu Docent</th>
+                <th style="width: 20%;">Acció</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-bold text-center">01</td>
+                <td><code>01_pagina1.html</code></td>
+                <td><span class="lang-va">Estructura bàsica HTML5, Doctype, metadades i viewport.</span><span class="lang-es">Estructura básica HTML5, Doctype, metadatos y viewport.</span></td>
+                <td><a href="./t1_Exercicis/01_pagina1.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">02</td>
+                <td><code>02_curriculum.html</code></td>
+                <td><span class="lang-va">Jerarquia d'encapçalats h1/h2 i paràgrafs per a un currículum.</span><span class="lang-es">Jerarquía de encabezados h1/h2 y párrafos para un currículum.</span></td>
+                <td><a href="./t1_Exercicis/02_curriculum.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">03</td>
+                <td><code>03_historialnternet.html</code></td>
+                <td><span class="lang-va">Separadors hr, negretes strong i cursives em en text històric.</span><span class="lang-es">Separadores hr, negritas strong y cursivas em en texto histórico.</span></td>
+                <td><a href="./t1_Exercicis/03_historialnternet.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">04</td>
+                <td><code>04_stilsText.html</code></td>
+                <td><span class="lang-va">Estils tipogràfics CSS: tipus de lletra, grandàries, colors i alineació.</span><span class="lang-es">Estilos tipográficos CSS: tipos de letra, tamaños, colores y alineación.</span></td>
+                <td><a href="./t1_Exercicis/04_stilsText.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">05</td>
+                <td><code>05_selectors.txt</code></td>
+                <td><span class="lang-va">Sintaxi de selectors: etiqueta, id, classe i combinador descendent.</span><span class="lang-es">Sintaxis de selectores: etiqueta, id, clase y combinador descendente.</span></td>
+                <td><a href="./t1_Exercicis/05_selectors.txt" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">06</td>
+                <td><code>06_selectors.txt</code></td>
+                <td><span class="lang-va">Anàlisi d'abast i resolució de conflictes en fragments HTML.</span><span class="lang-es">Análisis de alcance y resolución de conflictos en fragmentos HTML.</span></td>
+                <td><a href="./t1_Exercicis/06_selectors.txt" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">07</td>
+                <td><code>07_tamanysEM.html</code></td>
+                <td><span class="lang-va">Càlcul d'escales relatives mitjançant unitats EM en CSS.</span><span class="lang-es">Cálculo de escalas relativas mediante unidades EM en CSS.</span></td>
+                <td><a href="./t1_Exercicis/07_tamanysEM.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">08</td>
+                <td><code>08_colorsCSS.html</code></td>
+                <td><span class="lang-va">Ús del sistema hexadecimal per a definir colors de text.</span><span class="lang-es">Uso del sistema hexadecimal para definir colores de texto.</span></td>
+                <td><a href="./t1_Exercicis/08_colorsCSS.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">09</td>
+                <td><code>09_estilsCSS3.html</code></td>
+                <td><span class="lang-va">Maquetació amb caixes, flexbox, degradats, radis i ombres.</span><span class="lang-es">Maquetación con cajas, flexbox, degradados, radios y sombras.</span></td>
+                <td><a href="./t1_Exercicis/09_estilsCSS3.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+              <tr>
+                <td class="fw-bold text-center">10</td>
+                <td><code>10_estilsCSS3.html</code></td>
+                <td><span class="lang-va">Transicions dinàmiques en hover i desplaçament d'elements.</span><span class="lang-es">Transiciones dinámicas en hover y desplazamiento de elementos.</span></td>
+                <td><a href="./t1_Exercicis/10_estilsCSS3.html" target="_blank" class="btn btn-sm btn-outline-primary py-0 px-2"><i class="bi bi-eye"></i> Obrir</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Peu del Document -->
+    <footer class="text-center text-body-secondary small py-3">
+      <p class="mb-1">Implantació d'Aplicacions Web · 2n ASIR</p>
+      <p class="mb-0 text-muted">
+        <span class="lang-va">Format web bilingüe millorat i actualitzat amb Bootstrap 5.3 a partir del temari oficial</span>
+        <span class="lang-es">Formato web bilingüe mejorado y actualizado con Bootstrap 5.3 a partir del temario oficial</span>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Bootstrap 5.3 Bundle JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Lògica Bilingüe i Sincronització amb el Portal Principal -->
+  <script>
+    (function () {
+      'use strict';
+
+      const labelEl = document.getElementById('currentLangLabel');
+      const langBtns = document.querySelectorAll('.lang-btn');
+
+      function setLang(lang) {
+        const selectedLang = lang === 'es' ? 'es' : 'va';
+        document.documentElement.setAttribute('data-lang', selectedLang);
+        document.documentElement.lang = selectedLang === 'va' ? 'ca' : 'es';
+        localStorage.setItem('iaw_lang', selectedLang);
+
+        if (labelEl) {
+          labelEl.textContent = selectedLang === 'va' ? 'Valencià' : 'Castellano';
+        }
+
+        langBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-set-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+        });
+
+        // Notificar al portal pare si està incrustat en un iframe
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'SET_LANG', lang: selectedLang }, '*');
+        }
+      }
+
+      // Esdeveniments botons del selector
+      langBtns.forEach(btn => {
+        btn.addEventListener('click', function () {
+          setLang(this.getAttribute('data-set-lang'));
+        });
+      });
+
+      // Escoltar canvis d'idioma del portal principal
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'SET_LANG') {
+          setLang(e.data.lang);
+        }
+      });
+
+      // Inicialitzar segons preferència desada o per defecte
+      const stored = localStorage.getItem('iaw_lang') || 'va';
+      setLang(stored);
+
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Usuarios</title>
+    <script>
+        // Función para realizar la búsqueda
+        async function buscarUsuarios() {
+            const texto = document.getElementById('busqueda').value; // Texto ingresado
+            const url = `busca.php?texto=${encodeURIComponent(texto)}`; // Construye la URL
+
+            try {
+                const response = await fetch(url); // Llama al archivo busca.php
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                const resultados = await response.text(); // Obtiene el texto devuelto
+                document.getElementById('resultados').innerHTML = resultados; // Muestra los resultados
+            } catch (error) {
+                console.error(error);
+                document.getElementById('resultados').innerHTML = `<p style="color: red;">Error al obtener los datos.</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Buscador de Usuarios</h1>
+    <input type="text" id="busqueda" onkeyup="buscarUsuarios()"  />
+    <div id="resultados">
+        <!-- Aquí se mostrarán los resultados -->
+    </div>
+</body>
+</html>
